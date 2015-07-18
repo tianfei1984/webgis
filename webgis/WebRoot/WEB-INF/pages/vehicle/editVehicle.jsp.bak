@@ -1,0 +1,362 @@
+
+<%@ include file="/common/taglibs.jsp"%>
+<!--分页查询共用的页面-->
+<%@ include file="/common/common.jsp"%>
+
+<%@ include file="/common/dateUtil.jsp"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
+<script>
+
+function viewTerminal()
+{
+	  var termId = $("#termId").val();
+	  InfoWindow.viewTerminal(termId);
+}
+function newTerminal()
+{
+	 InfoWindow.viewTerminal(0);
+}
+
+function getDate(strDate) {
+            var date = eval('new Date(' + strDate.replace(/\d+(?=-[^-]+$)/,
+             function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');
+            return date;
+        }
+
+/**
+ * 根据安装时间，设置服务的开始和截止日期
+ */
+function setServiceDate(strDate)
+{
+		//alert(strDate);
+		var startDate =  getDate(strDate);
+		//alert(startDate.getMonth());
+		startDate =  new Date(startDate.getTime()+1* 24 * 60 * 60 * 1000);
+		var endDate =  new Date(startDate.getFullYear(), startDate.getMonth(), 0);
+		endDate.setMonth(startDate.getMonth()+11);
+		//endDate.setDate(0);
+			//new Date(startDate.getTime() + 365 * 24 * 60 * 60 * 1000);
+		//alert(startDate);
+
+		$("#startDate").val(Utility.dateToString(startDate, "yyyy-MM-dd"));
+		$("#endDate").val(Utility.dateToString(endDate,"yyyy-MM-dd"));
+}
+
+
+function doSelectDep()
+{
+	InfoWindow.selectDep();
+}
+function onDepSelected(depId,depName)
+{
+	$("#depId").combotree("setValue", depId);
+}
+
+
+$().ready(function() {
+ $("#EntityForm").validate();
+
+ var defaultPlateColor = ${entity.plateColor}; //取出当前车辆的车牌颜色，默认选中
+ var defaultVehicleType = "${entity.vehicleType}"; 
+ var defaultIndustry = "${entity.industry}"; 
+ var defaultTermId = "${entity.termId}";
+ var entityId = ${entity.entityId}; 
+ if(entityId == 0)
+ {
+       defaultPlateColor = 2;
+	   defaultVehicleType = 20;
+	   defaultIndustry = 21;
+	   $("#vehicleType").val(defaultVehicleType);
+	   $("#industry").val(defaultIndustry);
+ }
+
+	var saveAndNew = ${saveAndNew};
+ if(saveAndNew > 0)
+	{
+	    defaultTermId = "";
+	}
+ 
+//ajax填充下拉框数据
+ $("#plateColor").lookup({category:"plateColor", selectedValue:defaultPlateColor});
+ $("#runStatus").lookup({category:"runStatus", selectedValue:"${entity.runStatus}"});
+ $("#useType").lookup({category:"CargoType", selectedValue:"${entity.useType}"});
+ //$("#industry").lookup({category:"industry", selectedValue:"${entity.industry}"});
+ //$("#region").lookup({category:"region", selectedValue:""});
+ //$("#vehicleType").lookup({category:"vehicleType", selectedValue:"${entity.vehicleType}"});
+ //终端列表
+ $("#termId").lookup({queryID:"selectUnbindTerms", selectedValue:defaultTermId, termId:defaultTermId});
+ $("#memberId").lookup({queryID:"selectMemberList", selectedValue:"${entity.memberId}"});
+
+ 
+		 $("#termType").lookup({category:"TerminalType", selectedValue:"${terminal.termType}"});//终端类型
+		 $("#state").lookup({category:"TerminalState", selectedValue:"${terminal.state}"}); //终端状态
+
+ //创建车组下拉树菜单, 参数是下拉框id和 默认的部门id
+	Utility.createDepTree("depId", ${entity.depId});
+
+	 //创建行业类型下拉树菜单
+	 var url = "<%=ApplicationPath%>/data/comboTree.action?queryID=selectIndustryType";
+	 Utility.createComboTree('industry', url, defaultIndustry);
+		 //创建车籍地区下拉树菜单
+	 var url = "<%=ApplicationPath%>/data/comboTree.action?queryID=selectRegion";
+	 var defaultRegion = "${entity.region}";
+	 Utility.createComboTree('region', url, defaultRegion);
+	
+	 //创建车辆类型下拉树菜单
+	 var url = "<%=ApplicationPath%>/data/comboTree.action?queryID=selectVehicleType";
+	 var defaultRegion = "${entity.region}";
+	 Utility.createComboTree('vehicleType', url, defaultVehicleType);
+
+	$("#termId").change(function()
+	{
+		//当什么也不选择的时候，就是解除绑定,更新车辆绑定终端Id为0
+		  var val = $("#termId option:selected").val();
+		  //alert(val);
+		  if(val.length == 0)
+			{
+				//$("#termId option:selected").val("0");
+				$("#termNo").val(""); //清空录入的数据
+				return;
+			}
+
+			var url = "<%=ApplicationPath%>/vehicle/getTerminalInfo.action";
+			  $.getJSON(url, {terminalId:val}, 
+			         function(result){		
+				         if(result.success)
+						  {
+							  var term = result.data;
+							  $("#termNo").val(term.termNo);
+							  $("#termType").val(term.termType);
+							  $("#state").val(term.state);
+							  var installTime = term.installTime;
+							  if(installTime.length > 10)
+							  {
+								  installTime = installTime.substring(0,10);
+							  }
+							  $("#installTime").val(installTime);
+						  }else
+						  {
+							  //后台出错
+							  alert(result.message);
+						  }
+			  });
+	});
+
+	var message = "${message}";
+	if(message.length > 0)
+	{
+		//保存成功后，刷新主窗口数据
+         window.parent.refreshDataWindow();
+		 //如果是保存并新增，则需要清空关键数据
+		 if(saveAndNew > 0 && message.indexOf("成功")>0)
+		{
+			$("#entityID").val("0");
+			$("#plateNo").val("");
+			$("#simNo").val("");
+			$("#termNo").val("");
+			$("#termId").val("");
+		}
+	}
+	//保存并新增按钮点击
+	$("#btnNew").click(function()
+	{
+		$("#saveAndNew").val(1);
+		$("#btnSubmit").click();
+	});
+	//安装时间设置后，需要重新设置服务开始和截止日期
+	jQuery('#installTime').datetimepicker({
+			 format:'Y-m-d',
+	  timepicker:false,
+	  onChangeDateTime:function(dp,$input){
+		
+           var strDate = $input.val();
+		   setServiceDate(strDate);		
+	  }
+	});
+
+	//如果是新增车辆，初始化服务开始日期和结束日期
+	if(entityId == 0)
+	{
+	var installTime = $("#installTime").val();
+	setServiceDate(installTime);
+	}
+});
+</script>
+
+
+ <BODY>
+	<form id="EntityForm" name="EntityForm" 
+			action='<c:url value="/vehicle/saveVehicle.action" />' method="POST">
+				<input type="hidden" id="entityID" name="entityID"
+					value="${entity.entityId}"/>
+					<input type="hidden" id="saveAndNew" name="saveAndNew"
+					value="0"/>
+  <table width="100%"  class="TableBlock">
+					<tbody><tr>
+						<td colspan="4" style="font-weight: bold; background: #EFEFEF;" height="25">车辆信息
+						<span class="MessageFromServer">${message}</span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">车牌号码:</td>
+						<td align="left"><input  id="plateNo" value="${entity.plateNo}"
+						name="plateNo" class="required" maxlength="10" maxlength="11" size="20"> 
+						</td>
+						<td align="right">车牌颜色:</td>
+						<td><select id="plateColor"  style="width: 150px;" name="plateColor" class="required">
+						   </select>
+
+							</td>
+					</tr>
+					<tr>
+						
+						<td align="right">所属业户:</td>
+						<td align="left"><select id="memberId" name="memberId"></select>
+						</td>
+						
+						<td align="right">车辆组:</td>
+						<td align="left">
+							<select id="depId"  style="width: 150px;" name="depId" value="" class="required">
+							</select>
+							<a id="btnSelectVehicle" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="doSelectDep();"></a>
+						</td>
+						
+					</tr>
+
+					<tr>
+					<td align="right">行业类型:</td>
+						<td align="left">
+							<select id="industry"  style="width: 150px;" name="industry" >
+						</td>
+
+						<td align="right">终端卡号
+							:</td>
+						<td><input type="text" name="simNo" size="20" maxlength="11" value="${entity.simNo}" id="simNo" class="required"></td>
+					</tr>
+							<tr>
+						<td align="right">车籍地:</td>
+						<td align="left">
+						
+							<select id="region"  style="width: 150px;" name="region" >
+						</td>
+						<td align="right">绑定终端:
+							</td>
+						<td><select name="termId" id="termId" style="width: 150px;">
+
+                             </select>
+							 <input type="button" class="button gray medium" value="编辑" onclick="viewTerminal();">
+							
+						</td>
+					</tr>
+
+					<tr>				
+				<td align="right">唯一终端ID号
+					:</td>
+				<td align="left"><input type="text" 
+					id="termNo" value="${terminal.termNo}"
+					name="terminal.termNo" maxLength="7"
+					size="20" class="{required:true,maxlength:7}"  /> <span class="star">*</span>
+				</td>
+				<td align="right">终端类型
+					:</td>
+				<td>
+				<select name="terminal.termType" id="termType" style="width:150px" class="required">  
+				</select>
+					</td>
+			</tr>
+			
+			<tr>
+			<td align="right">设备当前状态:</td>
+				<td align="left"><select name="terminal.state" id="state" style="width:150px;" class="required">
+</select>
+				</td>
+				<td align="right">安装时间:</td>
+				<td align="left">
+							  <input type="text"  id="installTime"  name="terminal.installTime"   value='<s:date name="terminal.installTime" format="yyyy-MM-dd"/>' readonly=false></input>
+				</td>
+				</tr>
+
+					<tr>
+						
+						<td align="right">入网时间
+							:</td>
+						<td>
+      <input type="text" name="installDate" class="datepicker" value='<s:date name="entity.installDate" format="yyyy-MM-dd"/>'></input>
+						</td>
+						
+						<td align="right">车辆类型
+							:</td>
+						<td>
+						
+							<select id="vehicleType"  style="width: 150px;" name="vehicleType" >
+						</td>
+						
+					</tr>
+
+					<tr>
+						<td align="right">物料类型:</td>
+						<td align="left"><select id="useType" name="useType">
+						   
+						
+						</select>
+						</td>
+						
+						    	<td align="right">运行状态:
+							:</td>
+						<td>
+						<select id="runStatus" name="runStatus" class="required"></select>
+					
+						</td>
+					</tr>
+					<tr>
+						
+						<td align="right">服务开始时间:</td>
+						<td>
+						  <input type="text" name="startDate" id="startDate" class="datepicker" value='<s:date name="entity.startDate" format="yyyy-MM-dd"/>'></input>
+						</td>
+<td align="right">服务结束时间:</td>
+						<td align="left">
+							  <input type="text" name="endDate" id="endDate" class="datepicker" value='<s:date name="entity.endDate" format="yyyy-MM-dd"/>'></input>
+							
+						</div>
+						</td>
+
+					</tr>
+					<!--
+					<tr>
+						
+						<td align="right">厂牌型号:</td>
+						<td align="left"><input id="vendor" name="vendor" value="${entity.vendor}" maxlength="16" size="20" >
+						</td>
+<td align="right">购买时间:</td>
+						<td align="left">
+							  <input type="text" name="buyTime" class="datepicker" value='<s:date name="entity.buyTime" format="yyyy-MM-dd"/>'></input>
+							
+						</div>
+						</td>
+
+					</tr>
+					-->
+			
+					<tr><td align="right">经营许可:</td>
+						<td align="left"><input id="operPermit" name="operPermit"  value="${entity.operPermit}" maxlength="16" size="20" >
+						</td>
+						<td align="right">发动机号
+							:</td>
+						<td><input type="text" name="motorID" size="20" maxlength="50" value="${entity.motorID}" id="engineNo"></td>
+					</tr>
+					
+					<tr>
+						<td colspan="4" align="center">
+							<div align="center">
+								<input type="submit" id="btnSubmit" class="button gray medium" value="保存">
+								
+						        <input type="button" id="btnNew"  class="button gray medium" value="保存并新增"> 
+								<!--
+								 <input type="button" class="button gray medium" value="添加终端"  onclick="newTerminal();">
+								 -->
+							</div></td>
+					</tr>
+				</tbody></table>
+ </BODY>
+</HTML>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.1.xsd">
+
+	<http auto-config="true" lowercase-comparisons="false">
+		<intercept-url pattern="/goss_user/*.action*" access="ROLE_USER,ROLE_ADMIN,ROLE_OPR,ROLE_CORP,ROLE_CARUSER" />
+		<intercept-url pattern="/goss_vehicle/*.action*" access="ROLE_CARUSER,ROLE_USER,ROLE_ADMIN,ROLE_OPR,ROLE_CORP" />
+		<intercept-url pattern="/goss_moniter/*.action*" access="ROLE_USER,ROLE_ADMIN,ROLE_OPR,ROLE_CORP" />
+		<intercept-url pattern="/goss_system/*.action*" access="ROLE_ADMIN" />
+		<intercept-url pattern="/main.jsp" access="ROLE_USER,ROLE_ADMIN,ROLE_OPR,ROLE_CARUSER,ROLE_CORP" />
+		<form-login login-page="/login.jsp"
+			authentication-failure-url="/login.jsp?error=true"
+			login-processing-url="/j_security_check" />
+		<remember-me user-service-ref="userAuthService"
+			key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" />
+	</http>
+
+	<authentication-provider user-service-ref="userAuthService">
+		<password-encoder ref="passwordEncoder" />
+	</authentication-provider>
+</beans:beans>

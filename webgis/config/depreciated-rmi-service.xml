@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-lazy-init="true">
+
+
+	<bean id="carTypeManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>${rmi_url}/carTypeManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.yuweitek.goss.service.CarTypeManager</value>
+		</property>
+	</bean>
+
+	<bean id="factoryInfoManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>${rmi_url}/factoryInfoManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.yuweitek.goss.service.FactoryInfoManager</value>
+		</property>
+	</bean>
+
+	<bean id="asyncObjectService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>${rmi_url}/asyncObjectService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.yuweitek.goss.service.AsyncObjectService</value>
+		</property>
+	</bean>
+
+	<bean id="regionManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>${rmi_url}/regionManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.yuweitek.goss.service.RegionManager</value>
+		</property>
+	</bean>
+
+	<bean id="imageManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>${rmi_url}/imageManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.yuweitek.goss.service.ImageManager</value>
+		</property>
+	</bean>
+
+	<bean id="backUpDataManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>${rmi_url}/backUpDataManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.yuweitek.goss.service.BackUpDataManager</value>
+		</property>
+	</bean>
+
+	<bean id="mapAreaManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>${rmi_url}/mapAreaManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.yuweitek.goss.service.MapAreaManager</value>
+		</property>
+	</bean>
+
+	<bean id="industryTypeManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>${rmi_url}/industryTypeManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.yuweitek.goss.service.IndustryTypeManager</value>
+		</property>
+	</bean>
+
+	<bean id="systemConfigManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>${rmi_url}/systemConfigManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.yuweitek.goss.service.SystemConfigManager</value>
+		</property>
+	</bean>
+
+	<bean id="highwaysLineManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/highwaysLineManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.HighwaysLineManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="userInfoManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/userInfoManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.UserInfoManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="vehicleGroupManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/vehicleGroupManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.VehicleGroupManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="smslogManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/smslogManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.SmslogManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="fittingManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/fittingManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.FittingManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="configInfoManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/configInfoManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.ConfigInfoManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="channelsInfoManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/channelsInfoManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.ChannelsInfoManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="gossRoleManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/gossRoleManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.GossRoleManager
+			</value>
+		</property>
+	</bean>
+
+
+	<bean class="org.springframework.remoting.rmi.RmiServiceExporter"
+		lazy-init="false">
+		<property name="service">
+			<ref bean="moniterCommandRspService" />
+		</property>
+		<property name="serviceName">
+			<value>moniterCommandRspService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.yuweitek.goss.webapp.service.MoniterCommandRspService
+			</value>
+		</property>
+		<property name="registryPort" value="${rmi_port}" />
+	</bean>
+
+	<bean id="moniterCommandReqService"
+		class="com.yuweitek.goss.webapp.proxy.MoniterCommandReqServiceProxy">
+	</bean>
+
+
+	<bean id="moniterCommandReqService1" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		scope="prototype">
+		<property name="serviceUrl">
+			<value>${rmi_moniter_url}/moniterCommandReqService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.mmp.moniter.service.MoniterCommandReqService
+			</value>
+		</property>
+	</bean>
+
+	<bean id="gpsInfoManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/gpsInfoManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.GpsInfoManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="reportService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/reportService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.ReportService
+			</value>
+		</property>
+	</bean>
+
+	<bean id="polygonInfoManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/polygonInfoManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.PolygonInfoManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="userVechGroupManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/userVechGroupManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.UserVechGroupManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="busLineManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/busLineManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.BusLineManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="gossRoleTypeManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/gossRoleTypeManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.GossRoleTypeManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="sysFuncManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/sysFuncManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.SysFuncManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="driverInfoManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/driverInfoManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.DriverInfoManager
+			</value>
+		</property>
+	</bean>
+
+
+	<bean id="vehicle2DriverManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/vehicle2DriverManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.Vehicle2DriverManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="warnMsgInformManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/warnMsgInformManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.WarnMsgInformManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="warnMsgInformTipsManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/warnMsgInformTipsManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.WarnMsgInformTipsManager
+			</value>
+		</property>
+	</bean>
+
+
+	<bean id="warnMsgUrgeTodoReqManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/warnMsgUrgeTodoReqManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.WarnMsgUrgeTodoReqManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="postQueryReqManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/postQueryReqManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.PostQueryReqManager
+			</value>
+		</property>
+	</bean>
+
+
+	<bean id="platFormMsgInfoReqManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/platFormMsgInfoReqManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.PlatFormMsgInfoReqManager
+			</value>
+		</property>
+	</bean>
+
+
+	<bean id="takeTravelReqManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/takeTravelReqManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.TakeTravelReqManager
+			</value>
+		</property>
+	</bean>
+
+
+	<bean id="ewayBillInfoReqManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/ewayBillInfoReqManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.EwayBillInfoReqManager
+			</value>
+		</property>
+	</bean>
+
+
+	<bean id="driverInfoReqManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/driverInfoReqManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.DriverInfoReqManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="group2PolygonManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/group2PolygonManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.Group2PolygonManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="object2BuslineManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/object2BuslineManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.Object2BuslineManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="loggerService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/loggerService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.LoggerService
+			</value>
+		</property>
+	</bean>
+
+	<bean id="systemLogManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/systemLogManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.SystemLogManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="crmVehicleParamManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/crmVehicleParamManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.CrmVehicleParamManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="mediaManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/mediaManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.MediaManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="fitting2Manager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/fitting2Manager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.Fitting2Manager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="vehicleTerminalManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/vehicleTerminalManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.VehicleTerminalManager
+			</value>
+		</property>
+	</bean>
+
+
+	<bean id="driverUniversalService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_driver_url}/driverUniversalService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.driver.service.UniversalService
+			</value>
+		</property>
+	</bean>
+
+	<bean id="studentManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_driver_url}/studentManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.driver.service.StudentManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="workHoursManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_driver_url}/workHoursManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.driver.service.WorkHoursManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="studentHoursManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_driver_url}/studentHoursManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.driver.service.StudentHoursManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="coachManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_driver_url}/coachManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.driver.service.CoachManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="driverschoolManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_driver_url}/driverschoolManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.driver.service.DriverschoolManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="coachFingerManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_driver_url}/coachFingerManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.driver.service.CoachFingerManager
+				
+			</value>
+		</property>
+	</bean>
+
+	<bean id="studentFingerManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_driver_url}/studentFingerManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.driver.service.StudentFingerManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="adInfoManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/adInfoManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.AdInfoManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="vehicle2AdInfoManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/vehicle2AdInfoManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.Vehicle2AdInfoManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="mapMarkerManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/mapMarkerManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.MapMarkerManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="carMaintainLogManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/carMaintainLogManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.CarMaintainLogManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="terminalParamManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/terminalParamManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.TerminalParamManager
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="terminalOprLogManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/terminalOprLogManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.TerminalOprLogManager
+			</value>
+		</property>
+	</bean>
+
+	<bean id="dictionaryManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/dictionaryManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.DictionaryManager
+			</value>
+		</property>
+	</bean>
+	
+	
+	<bean id="liveTaiManager" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
+		lazy-init="true">
+		<property name="serviceUrl">
+			<value>${rmi_url}/liveTaiManager</value>
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.yuweitek.goss.service.LiveTaiManager
+			</value>
+		</property>
+	</bean>
+	
+	
+</beans>

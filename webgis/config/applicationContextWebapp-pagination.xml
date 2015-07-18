@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-autowire="byName"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-lazy-init="true">
+
+	<!-- 分页查询 -->
+
+	<bean id="paginateAction" class="com.ltmonitor.web.action.PaginateAction"
+		scope="prototype">
+		<!-- 日期转换字段名称 -->
+		<property name="dateFields">
+			<list>
+				<value>createDate</value>
+				<value>endDate</value>
+				<value>installDate</value>
+				<value>updateDate</value>
+				<value>statisticDate</value>
+				<value>startTime</value>
+				<value>endTime</value>
+				<value>staticDate</value>
+			</list>
+		</property>
+		<!-- 数据列转换，将引用列的Id显示成可读的名称 -->
+		<property name="queryConfigMap">
+			<map>
+				<entry key="selectVehicles">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="runStatus" value="runStatus">
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectVehicleModifyRecord">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="termType" value="TerminalType">
+						</entry>
+						<entry key="type" value="VehicleModifyType">
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectBindVehicles">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="runStatus" value="runStatus">
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectMileageStatic">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+					</map>
+				</entry>
+				
+				<entry key="selectMileageStaticByTimeSpan">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+					</map>
+				</entry>
+				
+				<entry key="selectTerminalCommand">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="status" value="TCommandStatus">
+						</entry>
+						<entry key="cmdType" value="808CmdType">
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectBindEnclosures">
+					<map>
+						<entry key="enclosureType" value="EnclosureType">
+						</entry>
+						<entry key="commandStatus" value="TCommandStatus">
+						</entry>
+						<entry key="configType" value="AreaConfigCommand">
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectOnlineVehicles">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="runStatus" value="runStatus">
+						</entry>
+						<entry key="offlineTimeSpan" value="timeSpan">
+						</entry>
+						<entry key="simNo" value="onlineStatus">
+						</entry>
+						
+						<entry key="useType" value="CargoType">
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectDeps">
+					<map>
+						<entry key="type" value="groupType" />
+					</map>
+				</entry>
+				<entry key="selectMediaItems">
+					<map>
+						<entry key="mediaType" value="MediaType">
+						</entry>
+						<entry key="codeFormat" value="CodeFormat">
+						</entry>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectEnclosures">
+					<map>
+						<entry key="enclosureType" value="EnclosureType"></entry>
+					</map>
+				</entry>
+				<entry key="selectVehicleRecorders">
+					<map>
+						<entry key="cmd" value="CmdWord"></entry>
+						<entry key="plateColor" value="plateColor"></entry>
+					</map>
+				</entry>
+				<entry key="selectUsers">
+					<map>
+						<entry key="userState" value="userState"></entry>
+					</map>
+				</entry>
+				<entry key="selectVehicleOnlineRate">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="onlineTime" value="timeSpan">
+						</entry>
+						<entry key="offlineTime" value="timeSpan">
+						</entry>
+						<entry key="totalTime" value="timeSpan">
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectAlarms">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="childType" value="alarmType">
+						</entry>
+						<entry key="type" value="AlarmSource">
+						</entry>
+						<entry key="processed" value="processType">
+						</entry>
+						<entry key="timeSpan" value="timeSpan">
+						</entry>
+						<entry key="plateNo" value="depName"><!-- 根据车牌号转换成部门 -->
+						</entry>
+					</map>
+				</entry>
+				
+				<entry key="selectOnlineRecord">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="childType" value="alarmType">
+						</entry>
+						<entry key="type" value="AlarmSource">
+						</entry>
+						<entry key="processed" value="processType">
+						</entry>
+						<entry key="timeSpan" value="timeSpan">
+						</entry>
+						<entry key="plateNo" value="depName"><!-- 根据车牌号转换成部门 -->
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectProcessedAlarms">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="alarmType" value="alarmType">
+						</entry>
+						<entry key="alarmSource" value="AlarmSource">
+						</entry>
+						<entry key="processed" value="processType">
+						</entry>
+						<entry key="plateNo" value="depName"><!-- 根据车牌号转换成部门 -->
+						</entry>
+					</map>
+				</entry>
+				
+				<entry key="selectProcessedAlarmsIn2Months">
+					<map>
+						
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="alarmType" value="alarmType">
+						</entry>
+						<entry key="alarmSource" value="AlarmSource">
+						</entry>
+						<entry key="processed" value="processType">
+						</entry>
+						<entry key="plateNo" value="depName"><!-- 根据车牌号转换成部门 -->
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectHisotryGpsInfos">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="valid" value="GpsValid">
+						</entry>
+						<entry key="status" value="GpsStatus">
+						</entry>
+						<entry key="alarmState" value="AlarmStateDescr">
+						</entry>
+						<entry key="direction" value="DirectionDescr">
+						</entry>
+						<entry key="plateNo" value="depName"><!-- 根据车牌号转换成部门 -->
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectGpsInfosIn2Days">
+					<map>
+						<entry key="plateColor" value="plateColor">
+						</entry>
+						<entry key="valid" value="GpsValid">
+						</entry>
+						<entry key="status" value="GpsStatus">
+						</entry>
+						<entry key="alarmState" value="AlarmStateDescr">
+						</entry>
+						<entry key="direction" value="DirectionDescr">
+						</entry>
+						<entry key="plateNo" value="depName"><!-- 根据车牌号转换成部门 -->
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectTerminals">
+					<map>
+						<entry key="state" value="TerminalState">
+						</entry>
+						<entry key="termType" value="TerminalType"><!-- 根据车牌号转换成部门 -->
+						</entry>
+					</map>
+				</entry>
+				<entry key="selectFuncInfos">
+					<map>
+						<entry key="funcType" value="FunctionType">
+						</entry>
+					</map>
+				</entry>
+			</map>
+		</property>
+		<!-- 单元格的列号与数据表的列名及中文名对照 -->
+		<property name="columnMap">
+			<map>
+				<entry key="selectVehicles">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>simNo,Sim卡号</value>
+						<value>driverName,司机</value>
+						<value>runStatus,运营状态</value>
+						<value>depName1,车组</value>
+						<value>vendor,厂牌型号</value>
+						<value>vehicleTypeName,车辆类型</value>
+						<value>industryTypeName,行业</value>
+						<value>regionName,车籍地</value>
+						<value>installDate,入网时间</value>
+					</list>
+				</entry>
+				<entry key="selectUsers">
+					<list>
+						<value>name,用户名称</value>
+						<value>loginName,登录名</value>
+						<value>userState,状态</value>
+						<value>roleName,角色</value>
+						<value>owner,创建人</value>
+						<value>createDate,创建日期</value>
+					</list>
+				</entry>
+				<entry key="selectDeps">
+					<list>
+						<value>name,车组名称</value>
+						<value>memNo,所属业户</value>
+						<value>type,部门类型</value>
+						<value>roadPermitWord,经营许可证字</value>
+						<value>roadPermitNo,经营许可证号</value>
+						<value>businessScope,经营范围</value>
+						<value>assoMan,联系人</value>
+						<value>assoTel,联系电话</value>
+						<value>region,所属地区</value>
+						<value>parentDepName,父车辆组</value>
+					</list>
+				</entry>
+				<entry key="selectTerminals">
+					<list>
+						<value>termNo,终端号</value>
+						<value>devNo,出厂号</value>
+						<value>termType,终端类型</value>
+						<value>simNo,手机号码</value>
+						<value>plateNo,绑定车辆</value>
+						<value>state,设备当前状态</value>
+					</list>
+				</entry>
+
+				<entry key="selectVehicleRecorders">
+					<list>
+
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>depName,车组</value>
+						<value>simNo,Sim卡号</value>
+						<value>cmd,命令类型</value>
+						<value>cmdData,内容</value>
+						<value>createDate,上传时间</value>
+					</list>
+				</entry>
+				<entry key="selectDrivers">
+					<list>
+						<value>driverCode,编号</value>
+						<value>driverName,姓名</value>
+						<value>identityCard,身份证号</value>
+						<value>mobilePhone,移动电话</value>
+						<value>driverLicence,丛业资格证</value>
+						<value>licenseAgency,发证机构</value>
+						<value>plateNo,驾驶车辆</value>
+					</list>
+				</entry>
+				<entry key="selectAlarms">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>childType,报警类型</value>
+						<value>type,报警来源</value>
+						<value>location,报警地点</value>
+						<value>startTime,开始时间</value>
+						<value>endTime,结束时间</value>
+						<value>timeSpan,时长</value>
+						<value>depName,车组</value>
+						<value>velocity,车速</value>
+					</list>
+				</entry>
+				<entry key="selectOnlineRecord">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>childType,报警类型</value>
+						<value>type,报警来源</value>
+						<value>location,报警地点</value>
+						<value>startTime,开始时间</value>
+						<value>endTime,结束时间</value>
+						<value>timeSpan,时长</value>
+						<value>depName,车组</value>
+						<value>velocity,车速</value>
+					</list>
+				</entry>
+				<entry key="selectProcessedAlarms">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>depName,车组</value>
+						<value>alarmType,报警类型</value>
+						<value>alarmSource,报警来源</value>
+						<value>location,报警地点</value>
+						<value>alarmTime,报警时间</value>
+						<value>speed,车速</value>
+						<value>processed,处理状态</value>
+						<value>processedTime,处理时间</value>
+						<value>processedUserName,处理人</value>
+						<value>remark,备注</value>
+					</list>
+				</entry>
+				<entry key="selectProcessedAlarmsIn2Months">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>depName,车组</value>
+						<value>alarmType,报警类型</value>
+						<value>alarmSource,报警来源</value>
+						<value>location,报警地点</value>
+						<value>alarmTime,报警时间</value>
+						<value>speed,车速</value>
+						<value>processed,处理状态</value>
+						<value>processedTime,处理时间</value>
+						<value>processedUserName,处理人</value>
+						<value>remark,备注</value>
+					</list>
+				</entry>
+				<entry key="selectHisotryGpsInfos">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>depName,车组</value>
+						<value>sendTime,Gps时间</value>
+						<value>longitude,经度</value>
+						<value>latitude,纬度</value>
+						<value>velocity,速度</value>
+						<value>location,位置</value>
+						<value>recordVelocity,记录仪速度</value>
+						<value>mileage,里程</value>
+						<value>gas,油量</value>
+						<value>directionDescr,方向</value>
+						<value>altitude,海拔</value>
+						<value>status,状态</value>
+						<value>alarmStateDescr,报警</value>
+						<value>valid,有效性</value>
+					</list>
+				</entry>
+
+				<entry key="selectGpsInfosIn2Days">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>depName,车组</value>
+						<value>sendTime,Gps时间</value>
+						<value>longitude,经度</value>
+						<value>latitude,纬度</value>
+						<value>velocity,速度</value>
+						<value>recordVelocity,记录仪速度</value>
+						<value>location,位置</value>
+						<value>mileage,里程</value>
+						<value>gas,油量</value>
+						<value>directionDescr,方向</value>
+						<value>altitude,海拔</value>
+						<value>status,状态</value>
+						<value>alarmStateDescr,报警</value>
+						<value>valid,有效性</value>
+					</list>
+				</entry>
+				<entry key="selectTerminalCommand">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>simNo,卡号</value>
+						<value>remark,信息显示类型</value>
+						<value>cmdData,信息内容</value>
+						<value>status,执行结果</value>
+						<value>createDate,下发时间</value>
+						<value>updateDate,执行时间</value>
+						<value>owner,操作人</value>
+					</list>
+				</entry>
+				<entry key="selectMileageStatic">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>depName,车组</value>
+						<value>mileage,里程(km)</value>
+						<value>gas,油量(L)</value>
+						<value>staticDate,统计日期</value>
+					</list>
+				</entry>
+				
+				<entry key="selectMileageStaticByTimeSpan">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>depName,车组</value>
+						<value>mileage,里程(km)</value>
+						<value>gas,油量(L)</value>
+						<value>staticDate,统计日期</value>
+					</list>
+				</entry>
+				<entry key="selectVehicleOnlineRate">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depName,车组</value>
+						<value>onlineTime,上线时间</value>
+						<value>offlineTime,离线时间</value>
+						<value>totalTime,总时间</value>
+						<value>onlineRate,上线率</value>
+						<value>staticDate,统计日期</value>
+					</list>
+				</entry>
+				<entry key="selectOnlineVehicles">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>simNo,终端卡号</value>
+						<value>depName1,车组</value>
+						<value>online,上线状态</value>
+						<value>sendTime,上线时间</value>
+						<value>offlineTimeSpan,离线时长</value>
+						<value>runStatus,运行状态</value>
+						<value>vehicleTypeName,车辆类型</value>
+						<value>industryType,行业</value>
+						<value>installDate,入网时间</value>
+					</list>
+				</entry>
+				<entry key="selectDepartmentOnlineRate">
+					<list>
+						<value>depName,车组</value>
+						<value>onlineNum,上线车辆数</value>
+						<value>offlineNum,离线车辆数</value>
+						<value>vehicleNum,车辆总数</value>
+						<value>onlineRate,上线率</value>
+						<value>statisticDate,统计时间</value>
+					</list>
+				</entry>
+				<entry key="selectOperationLog">
+					<list>
+						<value>userName,操作员</value>
+						<value>operationDescr,操作</value>
+						<value>createDate,操作时间</value>
+						<value>url,http地址</value>
+						<value>ip,用户IP</value>
+					</list>
+				</entry>
+			</map>
+		</property>
+		<!-- 查询条件描述的映射，用于写入到Excel当中 -->
+		<property name="queryConditionMap">
+			<map>
+				<entry key="selectVehicles">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>simNo,卡号</value>
+						<value>depId,车组</value>
+						<value>driverName,驾驶员名称</value>
+						<value>runStatusText,运营状态</value>
+					</list>
+				</entry>
+				<entry key="selectOnlineRecord">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>childTypeName,记录类型</value>
+						<value>startTime,开始时间</value>
+						<value>endTime,结束时间</value>
+					</list>
+				</entry>
+				
+				<entry key="selectUsers">
+					<list>
+						<value>loginName,用户登录名称</value>
+						<value>userStateName,用户状态</value>
+						<value>roleName,角色</value>
+					</list>
+				</entry>
+				<entry key="selectTerminals">
+					<list>
+						<value>termNo,终端号</value>
+						<value>devNo,出厂号</value>
+						<value>simNo,Sim卡号码</value>
+						<value>bindName,是否绑定</value>
+						<value>stateName,设备当前状态</value>
+					</list>
+				</entry>
+				<entry key="selectDrivers">
+					<list>
+						<value>name,姓名</value>
+						<value>identityCard,身份证号</value>
+					</list>
+				</entry>
+				<entry key="selectDeps">
+					<list>
+						<value>name,车组名称</value>
+					</list>
+				</entry>
+				<!-- 里程统计 -->
+				<entry key="selectMileageStatic">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>intervalTypeName,统计类型</value>
+						<value>startDate,统计开始日期</value>
+						<value>endDate,统计结束日期</value>
+					</list>
+				</entry>
+				<!-- 车辆上线率统计 -->
+				<entry key="selectVehicleOnlineRate">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>startDate,统计开始时间</value>
+						<value>endDate,统计结束时间</value>
+					</list>
+				</entry>
+				<!-- 报警查询 -->
+				<entry key="selectAlarms">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>childTypeName,记录类型</value>
+						<value>alarmSourceName,报警来源</value>
+						<value>startTime,开始时间</value>
+						<value>endTime,结束时间</value>
+					</list>
+				</entry>
+				<!-- 报警处理查询 -->
+				<entry key="selectProcessedAlarms">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>alarmTypeName,报警类型</value>
+						<value>processedName,报警处理</value>
+						<value>startTime,开始时间</value>
+						<value>endTime,结束时间</value>
+					</list>
+				</entry>
+				
+				<entry key="selectProcessedAlarmsIn2Months">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>alarmTypeName,报警类型</value>
+						<value>processedName,报警处理</value>
+						<value>startTime,开始时间</value>
+						<value>endTime,结束时间</value>
+					</list>
+				</entry>
+				<!-- 行驶记录仪查询 -->
+				<entry key="selectVehicleRecorders">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>cmdWordName,命令类型</value>
+						<value>startTime,上传开始时间</value>
+						<value>endTime,上传结束时间</value>
+					</list>
+				</entry>
+				<!-- 车辆上下线记录查询 -->
+				<entry key="selectAlarms">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>childTypeName,记录类型</value>
+						<value>alarmSourceName,报警来源</value>
+						<value>startTime,开始时间</value>
+						<value>endTime,结束时间</value>
+					</list>
+				</entry>
+				<!-- 上线车辆查询 -->
+				<entry key="selectOnlineVehicles">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>simNo,终端卡号</value>
+						<value>statusName,上线状态</value>
+					</list>
+				</entry>
+				<!-- GPS数据查询 -->
+				
+				<entry key="selectGpsInfosIn2Days">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>startTime,开始时间</value>
+						<value>endTime,结束时间</value>
+						<value>validName,过滤有效点</value>
+						<value>maxSpeed,最大速度</value>
+						<value>minSpeed,最小速度</value>
+					</list>
+				</entry>
+				<entry key="selectHisotryGpsInfos">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>depId,车组</value>
+						<value>startTime,开始时间</value>
+						<value>endTime,结束时间</value>
+						<value>validName,过滤有效点</value>
+						<value>maxSpeed,最大速度</value>
+						<value>minSpeed,最小速度</value>
+					</list>
+				</entry>
+				<!-- 企业上线率统计 -->
+				<entry key="selectDepartmentOnlineRate">
+					<list>
+						<value>depId,车组</value>
+						<value>intervalTypeName,统计类型</value>
+						<value>startDate,统计开始日期</value>
+						<value>endDate,统计结束日期</value>
+					</list>
+				</entry>
+				<!-- 调度记录查询 -->
+				<entry key="selectTerminalCommand">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>simNo,卡号</value>
+						<value>startDate,操作开始时间</value>
+						<value>endDate,操作结束时间</value>
+					</list>
+				</entry>
+				<!-- 操作日志查询 -->
+				<entry key="selectOperationLog">
+					<list>
+						<value>userName,用户名称</value>
+						<value>startDate,操作开始时间</value>
+						<value>endDate,操作结束时间</value>
+					</list>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+
+</beans>

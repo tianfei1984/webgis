@@ -1,0 +1,576 @@
+package com.ltmonitor.map.action;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.beanutils.BeanUtils;
+
+import com.ltmonitor.entity.Department;
+import com.ltmonitor.entity.Enclosure;
+import com.ltmonitor.entity.LineBufferPoint;
+import com.ltmonitor.entity.LineSegment;
+import com.ltmonitor.entity.PointLatLng;
+import com.ltmonitor.entity.StringUtil;
+import com.ltmonitor.service.IEnclosureService;
+import com.ltmonitor.util.ClassInstantiateException;
+import com.ltmonitor.web.action.GenericAction;
+import com.ltmonitor.web.action.PersistenceAction;
+
+/**
+ * 区域设置
+ * 
+ * @author DELL
+ * 
+ */
+public class RouteAction extends PersistenceAction {
+
+	private Enclosure enclosure;
+
+	private LineSegment lineSegment;
+
+	private List<LineSegment> lineSegments = new ArrayList();
+
+	private String strRoutePoints;
+
+	private IEnclosureService enclosureService;
+
+	private String SEGMENTS_KEY = "lineSegments";
+	private String BUFFER_POINTS_KEY = "buffer_points";
+	// 用户选择的围栏ID
+	private String enclosureIds;
+
+	private int pointId = 0;
+
+	// 报警类型
+	private String[] alarmTypes;
+
+	private String enclosureType;
+	// 圆形的半径
+	private double radius;
+
+	private String bufferPoints;
+	
+	private int keyPoint;
+	/**
+	 * 围栏的地图类型
+	 */
+	private String mapType;
+
+	/**
+	 * 查看线路信息
+	 * 
+	 * @return
+	 */
+	public String viewEnclosure() {
+		this.entity = populateEntity();
+		enclosure = (Enclosure) entity;
+		if (StringUtil.isNullOrEmpty(enclosureType) == false) {
+			String ecType = "";
+			if ("circle".equals(enclosureType))
+				ecType = Enclosure.CIRCLE;
+			else if ("rect".equals(enclosureType))
+				ecType = Enclosure.RECT;
+			else if ("polygon".endsWith(enclosureType))
+				ecType = Enclosure.POLYGON;
+			enclosure.setEnclosureType(ecType);
+		} else
+			enclosureType = enclosure.getEnclosureType();
+		if (enclosure.getEntityId() == 0) {
+			enclosure.setRadius(radius);
+			enclosure.setPoints(strRoutePoints);
+			
+		}
+
+		return "success";
+
+	}
+	
+	/**
+	 * 查看关键点信息
+	 * 
+	 * @return
+	 */
+	public String viewKeyPoint() {
+		this.entity = populateEntity();
+		enclosure = (Enclosure) entity;
+		if (StringUtil.isNullOrEmpty(enclosureType) == false) {
+			String ecType = "";
+			if ("circle".equals(enclosureType))
+				ecType = Enclosure.CIRCLE;
+			else if ("rect".equals(enclosureType))
+				ecType = Enclosure.RECT;
+			else if ("polygon".endsWith(enclosureType))
+				ecType = Enclosure.POLYGON;
+			enclosure.setEnclosureType(ecType);
+		} else
+			enclosureType = enclosure.getEnclosureType();
+		if (enclosure.getEntityId() == 0) {
+			enclosure.setRadius(radius);
+			enclosure.setPoints(strRoutePoints);
+		}
+
+		return "success";
+
+	}
+	/**
+	 * 查看marker页面
+	 * @return
+	 */
+	public String viewMarker() {
+		this.entity = populateEntity();
+		enclosure = (Enclosure) entity;
+		if (StringUtil.isNullOrEmpty(enclosureType) == false) {
+			enclosure.setEnclosureType(enclosureType);
+		} else
+			enclosureType = enclosure.getEnclosureType();
+		if (enclosure.getEntityId() == 0) {
+			enclosure.setRadius(radius);
+			enclosure.setPoints(strRoutePoints);
+		}
+
+		return "success";
+
+	}
+	
+	
+	
+	
+
+	public String saveEnclosure() {
+		try {
+			if (alarmTypes == null || alarmTypes.length == 0) {
+				setMessage("报警类型至少要选择一种");
+				return json(false, this.getMessage());
+			}
+
+			this.entity = populateEntity();
+			enclosure = (Enclosure) entity;
+			enclosure.setKeyPoint(keyPoint);
+			// enclosure.setEnclosureType(Enclo); // 设置围栏类型为线路
+			enclosure.setRadius(radius);
+
+			if (enclosure.getEntityId() == 0) {
+				PointLatLng pt = this.getPolygonCenter(enclosure.getPoints());
+				enclosure.setCenterLat(pt.getLat());
+				enclosure.setCenterLng(pt.getLng());
+			}
+
+			StringBuilder sb = new StringBuilder();
+			for (String alarm : alarmTypes) {
+				sb.append(alarm).append(",");
+			}
+			enclosure.setByTime(isChecked("byTime"));
+			enclosure.setLimitSpeed(isChecked("limitSpeed"));
+
+			enclosure.setAlarmType(sb.toString());
+			enclosureService.saveOrUpdate(enclosure);
+			entity = enclosure;
+			setMessage("保存成功！");
+
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			setMessage("保存失败:" + ex.getMessage());
+			return json(false, this.getMessage());
+		}
+		return json(true, enclosure);
+	}
+	
+
+	public String saveKeyPoint() {
+		try {
+
+			this.entity = populateEntity();
+			enclosure = (Enclosure) entity;
+			enclosure.setKeyPoint(keyPoint);
+			// enclosure.setEnclosureType(Enclo); // 设置围栏类型为线路
+			enclosure.setRadius(radius);
+
+			if (enclosure.getEntityId() == 0) {
+				PointLatLng pt = this.getPolygonCenter(enclosure.getPoints());
+				enclosure.setCenterLat(pt.getLat());
+				enclosure.setCenterLng(pt.getLng());
+			}
+
+			enclosure.setByTime(isChecked("byTime"));
+			enclosure.setLimitSpeed(isChecked("limitSpeed"));
+			
+			enclosure.setAlarmType("关键点报警");
+
+			enclosureService.saveOrUpdate(enclosure);
+			entity = enclosure;
+			setMessage("保存成功！");
+
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			setMessage("保存失败:" + ex.getMessage());
+			return json(false, this.getMessage());
+		}
+		return json(true, enclosure);
+	}
+
+	/**
+	 * 保存地标信息
+	 * @return
+	 */
+	public String saveMarker() {
+		try {
+
+			this.entity = populateEntity();
+			enclosure = (Enclosure) entity;
+			enclosure.setKeyPoint(keyPoint);
+			// enclosure.setEnclosureType(Enclo); // 设置围栏类型为线路
+			enclosure.setRadius(radius);
+
+			if (enclosure.getEntityId() == 0) {
+				PointLatLng pt = this.getPolygonCenter(enclosure.getPoints());
+				enclosure.setCenterLat(pt.getLat());
+				enclosure.setCenterLng(pt.getLng());
+			}
+
+			enclosureService.saveOrUpdate(enclosure);
+			entity = enclosure;
+			setMessage("保存成功！");
+
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			setMessage("保存失败:" + ex.getMessage());
+			return json(false, this.getMessage());
+		}
+		return json(true, enclosure);
+	}
+
+	
+
+	/**
+	 * 查看线路信息
+	 * 
+	 * @return
+	 */
+	public String viewRoute() {
+		this.entity = populateEntity();
+		enclosure = (Enclosure) entity;
+
+		if (enclosure.getEntityId() > 0) {
+			lineSegments = getEnclosureService().getLineSegments(
+					enclosure.getEntityId());
+		} else if (getStrRoutePoints() != null) {
+
+			PointLatLng ptCenter = this.getPolygonCenter(this.strRoutePoints);
+			enclosure.setCenterLat(ptCenter.getLat());
+			enclosure.setCenterLng(ptCenter.getLng());
+
+			String[] points = getStrRoutePoints().split(";");
+			int m = 1;
+			for (String strPt : points) {
+				if (StringUtil.isNullOrEmpty(strPt))
+					continue;
+				String[] pt = strPt.split(",");
+				Double lng = Double.parseDouble(pt[0]);
+				Double lat = Double.parseDouble(pt[1]);
+
+				LineSegment ls = new LineSegment();
+				ls.setPointId(m);
+				ls.setLatitude1(lat);
+				ls.setLongitude1(lng);
+				ls.setName("拐点" + m);
+				ls.setLineWidth(50);
+				lineSegments.add(ls);
+				m++;
+			}
+			int totalCount = lineSegments.size();
+			for (m = 0; m < totalCount; m++) {
+				LineSegment seg1 = lineSegments.get(m);
+
+				if (m < (totalCount - 1)) {
+					LineSegment seg2 = lineSegments.get(m + 1);
+					seg1.setLatitude2(seg2.getLatitude1());
+					seg1.setLongitude2(seg2.getLongitude1());
+				}
+			}
+			enclosure.setPoints(strRoutePoints);
+		}
+
+		getSession().put(SEGMENTS_KEY, lineSegments);
+		getSession().put(BUFFER_POINTS_KEY, bufferPoints);
+		return "success";
+	}
+
+	private List<LineBufferPoint> getBufferPointList() {
+		bufferPoints = ""+ getSession().get(BUFFER_POINTS_KEY);
+		List<LineBufferPoint> buffPoints = new ArrayList<LineBufferPoint>();
+		String[] buffers = this.bufferPoints.split("\\|");
+		int nodeNo = 0;
+		for (String buffer : buffers) {
+			String[] nodes = buffer.split(";");
+			int m = 0;
+			for (String strPt : nodes) {
+				if (StringUtil.isNullOrEmpty(strPt))
+					continue;
+				String[] pt = strPt.split(",");
+				Double lng = Double.parseDouble(pt[0]);
+				Double lat = Double.parseDouble(pt[1]);
+
+				LineBufferPoint ls = new LineBufferPoint(m, lng, lat);
+				ls.setNodeNo(nodeNo);
+				ls.setSortNo(m);
+				buffPoints.add(ls);
+				m++;
+			}
+			nodeNo++;
+		}
+		return buffPoints;
+	}
+
+	/**
+	 * 保存线路
+	 * 
+	 * @return
+	 */
+	public String saveRoute() {
+		try {
+			if (alarmTypes == null || alarmTypes.length == 0) {
+				setMessage("报警类型至少要选择一种");
+				return json(false, this.getMessage());
+			}
+
+			this.entity = populateEntity();
+			enclosure = (Enclosure) entity;
+			enclosure.setEnclosureType(Enclosure.ROUTE); // 设置围栏类型为线路
+
+			StringBuilder sb = new StringBuilder();
+			for (String alarm : alarmTypes) {
+				sb.append(alarm).append(",");
+			}
+			enclosure.setByTime(isChecked("byTime"));
+			enclosure.setLimitSpeed(isChecked("limitSpeed"));
+			
+			if (enclosure.getEntityId() == 0) {
+				PointLatLng ptCenter = this.getPolygonCenter(enclosure
+						.getPoints());
+				enclosure.setCenterLat(ptCenter.getLat());
+				enclosure.setCenterLng(ptCenter.getLng());
+				
+			}
+
+			enclosure.setAlarmType(sb.toString());
+			lineSegments = (List<LineSegment>) getSession().get(SEGMENTS_KEY);
+			enclosureService.saveRoute(enclosure, lineSegments);
+			setMessage("保存成功！");
+
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			setMessage("保存失败:" + ex.getMessage());
+			return json(false, this.getMessage());
+		}
+		return json(true, enclosure);
+	}
+
+	/**
+	 * 保存线路中的某一个拐点信息
+	 * 
+	 * @return
+	 */
+	public String saveLineSegment() {
+		lineSegment = getSegment(pointId);
+		if (input != null)
+			return "input";
+
+		if (lineSegment == null) {
+			this.setMessage("没有此线段拐点信息");
+			return "input";
+		}
+
+		if (lineSegment != null) {
+			try {
+				BeanUtils.copyProperties(lineSegment, super.getParams());
+
+				lineSegment.setByTime(isChecked("byTime"));
+				lineSegment.setLimitSpeed(isChecked("limitSpeed"));
+				lineSegment.setStation(isChecked("station"));
+
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+				this.setMessage("保存失败" + e.getMessage());
+				// throw new ClassInstantiateException(e);
+
+			}
+		}
+		this.setMessage("保存成功");
+		return "success";
+	}
+
+	public String deleteEnclosures() {
+		try {
+			List result = new ArrayList();
+			if (StringUtil.isNullOrEmpty(enclosureIds) == false) {
+				String[] idarray = enclosureIds.split(",");
+				for (String strEnclosureId : idarray) {
+					int enclosureId = Integer.parseInt(strEnclosureId);
+					Enclosure ec = (Enclosure) this.getBaseService().load(
+							Enclosure.class, enclosureId);
+					ec.setDeleted(true);
+					result.add(ec);
+				}
+
+			}
+			if (result.size() > 0) {
+				this.getBaseService().saveOrUpdateAll(result);
+			}
+			return json(true, "");
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			return json(false, ex.getMessage());
+		}
+	}
+
+	public String queryVehicleInArea() {
+
+		return "success";
+	}
+
+	private List<PointLatLng> getPoints(String strPoints) {
+		List<PointLatLng> result = new ArrayList<PointLatLng>();
+
+		String[] points = strPoints.split(";");
+		for (String strPt : points) {
+			if (StringUtil.isNullOrEmpty(strPt))
+				continue;
+			String[] pt = strPt.split(",");
+			Double lng = Double.parseDouble(pt[0]);
+			Double lat = Double.parseDouble(pt[1]);
+			result.add(new PointLatLng(lng, lat));
+		}
+		return result;
+	}
+
+	// 得到多边形的中心
+	private PointLatLng getPolygonCenter(String strPoints) {
+		List<PointLatLng> ls = getPoints(strPoints);
+		if (ls.size() == 1)
+			return ls.get(0);
+		double maxLat = 0, maxLng = 0, minLat = 200, minLng = 200;
+
+		for (PointLatLng pl : ls) {
+			if (pl.getLat() > maxLat)
+				maxLat = pl.getLat();
+
+			if (pl.getLng() > maxLng)
+				maxLng = pl.getLng();
+
+			if (pl.getLat() < minLat)
+				minLat = pl.getLat();
+
+			if (pl.getLng() < minLng)
+				minLng = pl.getLng();
+		}
+
+		double lat1 = minLat + (maxLat - minLat) / 2;
+		double lng1 = minLng + (maxLng - minLng) / 2;
+
+		return new PointLatLng(lng1, lat1);
+	}
+
+	private LineSegment getSegment(int segId) {
+		List<LineSegment> result = (List<LineSegment>) getSession().get(
+				SEGMENTS_KEY);
+		for (LineSegment ls : result) {
+			if (ls.getPointId() == segId)
+				return ls;
+		}
+		return null;
+	}
+
+	protected Class getEntityClass() {
+		entityClass = Enclosure.class;
+		return entityClass;
+	}
+
+	public LineSegment getLineSegment() {
+		return lineSegment;
+	}
+
+	public void setLineSegment(LineSegment lineSegment) {
+		this.lineSegment = lineSegment;
+	}
+
+	private List<LineSegment> getLineSegments() {
+		return lineSegments;
+	}
+
+	private void setLineSegments(List<LineSegment> lineSegments) {
+		this.lineSegments = lineSegments;
+	}
+
+	public String getStrRoutePoints() {
+		return strRoutePoints;
+	}
+
+	public void setStrRoutePoints(String strRoutePoints) {
+		this.strRoutePoints = strRoutePoints;
+	}
+
+	public IEnclosureService getEnclosureService() {
+		return enclosureService;
+	}
+
+	public void setEnclosureService(IEnclosureService enclosureService) {
+		this.enclosureService = enclosureService;
+	}
+
+	public String[] getAlarmTypes() {
+		return alarmTypes;
+	}
+
+	public void setAlarmTypes(String[] alarmTypes) {
+		this.alarmTypes = alarmTypes;
+	}
+
+	public int getPointId() {
+		return pointId;
+	}
+
+	public void setPointId(int pointId) {
+		this.pointId = pointId;
+	}
+
+	public String getEnclosureType() {
+		return enclosureType;
+	}
+
+	public void setEnclosureType(String enclosureType) {
+		this.enclosureType = enclosureType;
+	}
+
+	public double getRadius() {
+		return radius;
+	}
+
+	public void setRadius(double radius) {
+		this.radius = radius;
+	}
+
+	public String getEnclosureIds() {
+		return enclosureIds;
+	}
+
+	public void setEnclosureIds(String enclosureIds) {
+		this.enclosureIds = enclosureIds;
+	}
+
+	public String getBufferPoints() {
+		return bufferPoints;
+	}
+
+	public void setBufferPoints(String bufferPoints) {
+		this.bufferPoints = bufferPoints;
+	}
+
+	public int getKeyPoint() {
+		return keyPoint;
+	}
+
+	public void setKeyPoint(int keyPoint) {
+		this.keyPoint = keyPoint;
+	}
+
+}

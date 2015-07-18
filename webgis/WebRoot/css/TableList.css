@@ -1,0 +1,153 @@
+﻿
+body{ 
+	/** BACKGROUND: #F5FAFE; */
+}
+table.t1
+{
+    font-size:12px;
+    table-layout:fixed;
+    empty-cells:show; 
+    border-collapse: collapse;
+    margin:0 auto;
+	width:100%;
+}
+table.t1 td{
+    height:25px;
+	text-align:center;
+}
+
+/*这个是借鉴一个论坛的样式*/
+table.t1{
+    border:1px solid #cad9ea;
+    color: #181818;
+}
+table.t1 thead td, table.t1 thead th {
+    height:30px;
+    background-color:#e0e0e0;
+	font-weight:bold;
+}
+table.t1 td,table.t1 th{
+    border:1px solid #4374A9;
+    padding:0 0 0;
+}
+table.t1 a
+{
+	color: #03515d;
+	text-decoration:none;
+}
+table.t1 a:hover
+{
+	color:red;
+	text-decoration:underline;
+}
+
+table.t1 tbody td
+{
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis;
+	 -o-text-overflow:ellipsis; 
+}
+
+tr.odd { background-color: #F5F5F5; }
+tr.even { background-color: white; }
+
+/*
+ * Row highlighting example
+ */
+.t1 tbody tr.even:hover, .t1 tbody tr.even td.highlighted {
+	background-color: #ECFFB3;
+}
+
+.t1 tbody tr.odd:hover, .t1 tbody tr.odd td.highlighted {
+	background-color: #E6FF99;
+}
+
+.t1 tr.odd:hover {
+	background-color: #E6FF99;
+}
+
+.t1 tr.even.row_selected td {
+	background-color: #E6FF99;
+}
+
+.t1 tr.odd.row_selected td {
+	background-color: #E6FF99;
+}
+
+.dataTables_info {
+	width: 28%;
+	float: left;
+	padding-top:5px;
+}
+
+.dataTables_length {
+	width: 30%;
+	float: left;
+}
+.dataTables_paginate {
+	float: right;
+	text-align: right;
+}
+
+/*
+ * Pagination
+ */
+.dataTables_paginate {
+	/** float: center; */
+	text-align:center;
+}
+
+/*分页设置*/
+.paging_full_numbers {
+	height: 22px;
+	line-height: 22px;
+}
+.paging_full_numbers a:active {
+	outline: none
+}
+.paging_full_numbers a:hover {
+	text-decoration: none;
+}
+
+.paging_full_numbers a.paginate_button,
+.paging_full_numbers a.paginate_active {
+	border: 1px solid #9aafe5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	padding: 2px 5px;
+	margin: 0 3px;
+	cursor: pointer;
+	color: #2e6ab1 !important;
+}
+
+.paging_full_numbers a.paginate_button {
+	background-color: white;
+}
+
+.paging_full_numbers a.paginate_button:hover {
+	background-color: #FFFF80;
+	border: 1px solid #2b66a5;
+	color: #000;
+	text-decoration: none !important;
+}
+
+.paging_full_numbers a.paginate_active {
+	background-color: #2e6ab1;
+	color: #FFF !important;
+	border-color: #2b66a5;
+	font-weight: bold;
+	cursor: default;
+}
+.dataTables_info
+{
+	color: #2e6ab1 !important;
+}
+.paginate_button_disabled
+{
+	background-color: white;
+	cursor: default;
+	color: #929292;
+	border-color: #929292;
+	font-weight: normal !important;
+}

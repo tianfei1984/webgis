@@ -1,0 +1,61 @@
+
+				<div id="hisRouteLayout" class="easyui-layout" data-options="fit:true">				    
+		            <div data-options="region:'north'" style="height:80px">
+					    <form id="routeForm" method="post">
+							<table cellpadding="5">
+								<tr>
+									<td>车牌号:</td>
+									<td><input class="easyui-textbox" type="text" name="plateNo" id="routePlateNo" data-options="required:true" 
+									style="width:80px;" value=""></input></td>
+									<td>回放时间:</td>
+									<td>
+									  <input class="easyui-datetimebox" name="startTime" id="routeStartTime" required date  style="width:160px" value="2014-09-28 11:22:13" ></input>
+									至
+									  <input class="easyui-datetimebox" name="endTime" id="routeEndTime" required date style="width:160px" value="2014-09-29 23:22:13" ></input>
+									</td>
+									<td>最低速度:</td>
+									<td>
+									  <input id="minSpeed" name="minSpeed" class="easyui-numberspinner" style="width:40px;" value="1" ></input>
+									</td>
+									
+								</tr>
+								<tr>
+								<td>播放速度:</td>
+									<td colspan=2> 
+									  <div id="playSpeedSlider" style="width:100px"></div> 
+									  
+									</td>
+									<td colspan=4>
+									  <a id="btnQueryHisData" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" >查询</a>
+		                              <a id="btnPlayRoute" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-play',disabled:true" >播放</a>
+		                              <a id="btnPauseRoute" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',disabled:true">暂停</a>
+		                              <a id="btnStopPlayRoute" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-no',disabled:true">停止</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		                              <a id="btnExportHisData" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-excel'">导出</a>
+									  <input type="checkbox" id="cbDisplayHisData" /> 显示GPS数据栏
+									  <span style="color:red">(数据量大，只能查询最多两天的数据)</span>
+									</td>	
+									<td>
+									  <div id="routeProgressbar" class="easyui-progressbar" style="width:100px;"></div>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+		            <div data-options="region:'south',split:true" style="height:220px;">
+					   
+	                   <div id="hisDataTab" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
+			               <div title="历史GPS数据" style="padding:0px">
+					          <div id="hisDataGrid"></div>
+						   </div>
+						   <!--
+						   <div title="历史停车记录" style="padding:0px">
+					          <div id="parkingGrid"></div>
+						   </div>
+						   -->
+					   </div>
+					    
+                    </div>
+					<div data-options="region:'center',border:true">
+					   <iframe id="routeMapFrame" scrolling="no" frameborder="0"  src="" style="width:100%;height:100%;"></iframe>
+					</div>
+				</div>

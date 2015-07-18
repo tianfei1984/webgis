@@ -1,0 +1,31 @@
+
+/**报警类型，不同的报警类型，显示的字体颜色可以不一样*/
+.alarm_GpsOffline
+{
+	color:red;
+	font-weight:bold;
+}
+.alarm_GpsOnline
+{
+	color:green;
+	font-weight:bold;
+}
+
+/**报警提示框的风格*/
+.alarm_box {
+    width: 310px; 
+    min-height: 200px; 
+    max-height: 200px;
+    _height: 120px; 
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 3px; 
+    outline: 0; 
+    border: 1px solid #a0b3d6; 
+    font-size: 12px; 
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
+    _overflow-y: visible;
+}
+	

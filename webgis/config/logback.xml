@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-8level %logger{100} [row:%line] | %msg%n
+			</pattern>
+		</layout>
+		
+	</appender>
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>../logs/webgis.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				../logs/webgis-%d{yyyy-MM-dd-HH}.log.zip
+			</FileNamePattern>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-8level %logger{100} [row:%line] | %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<logger name="net.sf.ehcache">
+		<level value="ERROR" />
+	</logger>
+	
+	
+	<logger name="org">
+		<level value="ERROR" />
+	</logger>
+	
+	
+	<logger name="com.opensymphony">
+		<level value="ERROR" />
+	</logger>
+	
+
+	<!-- Suppress success logging from InteractiveAuthenticationSuccessEvent -->
+	<logger name="org.displaytag">
+		<level value="ERROR" />
+	</logger>
+
+
+	<logger name="org.apache.struts2">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="com.opensymphony.xwork2">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="org.acegisecurity">
+		<level value="ERROR" />
+	</logger>
+
+	<!-- Suppress invalid warning messages from JSF -->
+	<logger name="org.apache.myfaces.shared_impl.renderkit.html">
+		<level value="ERROR" />
+	</logger>
+	<logger name="com.opensymphony.xwork2.ognl.OgnlValueStack">
+		<level value="ERROR" />
+	</logger>
+
+
+	<logger name="org.directwebremoting">
+		<level value="WARN" />
+	</logger>
+	
+	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate">
+		<level value="DEBUG" />
+	</logger>
+	
+	<root>
+		<level value="WARN" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="INFO" />
+	</root>
+
+</configuration>

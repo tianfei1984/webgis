@@ -1,0 +1,481 @@
+@charset "utf-8";
+
+.row-style-#FFFFB5 {
+	background-color : #FFFFB5
+}
+
+.row-style-#D7FFD7 {
+	background-color : #D7FFD7
+}
+
+.row-style-yellow {
+	background-color : yellow
+}
+
+/** top toolbar **/
+.save-map {
+  background-image:url(../../myscripts/srims/resources/images/top-toolbar/save.gif) !important;
+}
+
+.use-map {
+  background-image:url(../../myscripts/srims/resources/images/top-toolbar/use-map.gif) !important;
+}
+
+/* navigation */
+.logo{
+	background-image: url(../../myscripts/srims/resources/images/top-toolbar/logo.png) !important;
+	
+}
+
+
+.add{
+	background-image: url(../../myscripts/ext-2.2.1/resources/images/shared/add.gif) !important;
+	
+}
+
+.delete{
+	background-image: url(../../myscripts/ext-2.2.1/resources/images/shared/delete.gif) !important;
+	
+}
+
+.navigation {
+	margin:2px;
+	width:100%;
+	height:100%;
+	background-image: url(../../myscripts/srims/resources/images/top-toolbar/background3.jpg) !important;
+}
+
+.logout, .account{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin-left: 5px;
+	margin-right: 7px;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.logout-img, .account-img{
+	top: 4px;
+	position: relative;
+}
+
+/** user **/
+.user {
+  /** background: url(../../myscripts/srims/resources/images/report/report.gif) left top no-repeat !important; **/
+  background-image:url(../../myscripts/srims/resources/images/user/user.gif) !important;
+}
+
+
+/** vehicle **/
+.vehicle {
+  /** background: url(../../myscripts/srims/resources/images/report/report.gif) left top no-repeat !important; **/
+  background-image:url(../../myscripts/srims/resources/images/vehicle/vehicle.gif) !important;
+}
+
+
+/** channel **/
+.channel {
+  /** background: url(../../myscripts/srims/resources/images/report/report.gif) left top no-repeat !important; **/
+  background-image:url(../../myscripts/srims/resources/images/channel/channel.gif) !important;
+}
+
+
+/** report **/
+.report {
+  /** background: url(../../myscripts/srims/resources/images/report/report.gif) left top no-repeat !important; **/
+  background-image:url(../../myscripts/srims/resources/images/report/report.gif) !important;
+}
+
+.system {
+  background-image:url(../../myscripts/srims/resources/images/report/system.gif) !important;
+  
+}
+
+.overspeed {
+  background-image:url(../../myscripts/srims/resources/images/report/overspeed.gif) !important;
+}
+
+.event {
+  background-image:url(../../myscripts/srims/resources/images/report/event.gif) !important;
+}
+
+.alarm {
+  background-image:url(../../myscripts/srims/resources/images/report/alarm.gif) !important;
+}
+
+.mileage {
+  background-image:url(../../myscripts/srims/resources/images/report/mileage.gif) !important;
+}
+
+.pichis{
+	background-image:url(../../myscripts/srims/resources/images/report/pichis.gif) !important;
+}
+
+.pichis-zoomin{
+	background-image:url(../../myscripts/srims/resources/images/report/zoomin.gif) !important;
+}
+
+.pichis-zoomout{
+	background-image:url(../../myscripts/srims/resources/images/report/zoomout.gif) !important;
+}
+
+.pichis-piclist{
+	background-image:url(../../myscripts/srims/resources/images/report/piclist.gif) !important;
+}
+
+.refresh{
+	background-image: url(../../myscripts/srims/resources/images/public/refresh.gif) !important;
+}
+
+.current_image, .common_image {
+	width   : 170px;
+	height  : 113px;
+	cursor  : pointer;
+	margin  : 1px 1px; 
+	padding : 1px; 	
+}
+
+.common_div, .current_div{
+	text-align : center;
+	margin     : 15px 15px 5px 15px;
+}
+
+.common_div{
+	border  : #C0C0C0 2px solid;
+	
+}
+
+.current_div{
+	border  : #9DBBE8 3px solid;
+}
+
+.font_div{
+	text-align : center;
+	font-size:13px;
+}
+
+.font_current_div{
+	text-align : center;
+	font-size:13px;
+	font-weight : bold;
+	color : #bbbbbb;
+}
+
+/** command **/
+
+.config-group{
+	background-image: url(../../myscripts/srims/resources/images/command/config-group.gif) !important;
+}
+
+.text-info{
+	background: url(../../myscripts/srims/resources/images/command/text-info.gif) left top no-repeat  !important;
+}
+
+.latest-pos{
+  background: url(../../myscripts/srims/resources/images/command/latest-pos.gif) left top no-repeat !important;
+}
+
+.curr-pos {
+  background: url(../../myscripts/srims/resources/images/command/curr-pos.gif) left top no-repeat !important;
+}
+
+.photo {
+  background: url(../../myscripts/srims/resources/images/command/photo.gif) left top no-repeat !important;
+}
+
+.tracking {
+  background: url(../../myscripts/srims/resources/images/command/tracking.gif) left top no-repeat !important;
+}
+
+.listen{
+  background: url(../../myscripts/srims/resources/images/command/listen.gif) left top no-repeat !important;
+}
+
+
+
+.polygon-hide{
+	background: url(../../myscripts/srims/resources/images/area/unchecked.gif) left top no-repeat !important;
+}
+
+.polygon-show{
+	background: url(../../myscripts/srims/resources/images/area/checked.gif) left top no-repeat !important;
+}
+
+.rect {
+  background: url(../../myscripts/srims/resources/images/area/rect.gif) left top no-repeat !important;
+}
+
+.rect-select {
+  	background: url(../../myscripts/srims/resources/images/area/rect-select.gif) left top no-repeat !important;
+}
+
+.real-query {
+	background-image: url(../../myscripts/srims/resources/images/area/real-query.gif) !important;
+}
+
+.polygon-edit {
+  background: url(../../myscripts/srims/resources/images/area/edit.gif) left top no-repeat !important;
+}
+
+.area-query-nothing{
+	background-image: url(../../myscripts/srims/resources/images/area/nothing.gif) !important;
+}
+
+.area-query-loaded{
+	background-image: url(../../myscripts/srims/resources/images/area/loaded.gif) !important;
+}
+
+.area-query-loading{
+	background-image: url(../../myscripts/srims/resources/images/area/loading.gif) !important;
+}
+
+.area-time-query{
+	background-image: url(../../myscripts/srims/resources/images/area/area-time-query.gif) !important;
+}
+
+
+
+.polyline {
+  background: url(../../myscripts/srims/resources/images/polyline/polyline.gif) left top no-repeat !important;
+}
+
+.polyline-select {
+  background: url(../../myscripts/srims/resources/images/polyline/polyline-select.gif) left top no-repeat !important;
+}
+
+.polygon {
+  background: url(../../myscripts/srims/resources/images/polygon/cols.gif) left top no-repeat !important;
+}
+
+.polygon-select {
+  background: url(../../myscripts/srims/resources/images/polygon/draw.gif) left top no-repeat !important;
+}
+
+/** public **/
+.del-car {
+  background-image: url(../../myscripts/srims/resources/images/public/del-car.gif) !important;
+}
+
+.del {
+  background-image: url(../../myscripts/srims/resources/images/public/del.gif) !important;
+}
+
+
+.clear {
+  background: url(../../myscripts/srims/resources/images/public/clear.gif) left top no-repeat !important;
+}
+
+.query {
+  background-image: url(../../myscripts/srims/resources/images/public/query.gif) !important;
+} 
+
+.excel{
+  background-image: url(../../myscripts/srims/resources/images/public/excel.gif) !important;
+}
+
+.icon-grid{
+	background-image: url(../../myscripts/srims/resources/images/public/icon-grid.gif) !important;
+}
+
+.preview{
+	background-image: url(../../myscripts/srims/resources/images/public/preview.gif) !important;
+}
+
+.tips{
+	background-image: url(../../myscripts/srims/resources/images/bottom-bar/tips.gif) !important;
+}
+
+.alarm{
+	background-image: url(../../myscripts/srims/resources/images/bottom-bar/alarm.gif) !important;
+}
+
+.platform{
+	background-image: url(../../myscripts/srims/resources/images/bottom-bar/platform.gif) !important;
+}
+
+
+
+
+.platform-on{
+	background-image: url(../../myscripts/srims/resources/images/bottom-bar/platform-on.gif) !important;
+}
+
+.loading{
+	background-image: url(../../myscripts/srims/resources/images/public/loading.gif) !important;
+}
+
+/** config **/
+
+.config{
+	background: url(../../myscripts/srims/resources/images/config/config.gif) left top  no-repeat  !important;
+}
+
+.basic-config{
+	background-image: url(../../myscripts/srims/resources/images/config/basic-config.gif) !important;
+}
+
+.basic-config-sleep{
+	background-image: url(../../myscripts/srims/resources/images/config/basic-config-sleep.gif) !important;
+}
+
+.alarm-config{
+	background-image: url(../../myscripts/srims/resources/images/config/alarm-config.gif) !important;
+}
+
+.alarm-config-tired{
+	background-image: url(../../myscripts/srims/resources/images/config/alarm-config-tired.gif) !important;
+}
+
+.alarm-config-overspeed{
+	background-image: url(../../myscripts/srims/resources/images/config/alarm-config-overspeed.gif) !important;
+}
+
+.alarm-config-sound{
+	background-image: url(../../myscripts/srims/resources/images/config/alarm-config-sound.gif) !important;
+}
+
+.phone-config{
+	background-image: url(../../myscripts/srims/resources/images/config/phone-config.gif) !important;
+}
+
+.phone-config-get{
+	background-image: url(../../myscripts/srims/resources/images/config/phone-config-get.gif) !important;
+}
+
+.phone-config-during{
+	background: url(../../myscripts/srims/resources/images/config/phone-config-during.gif) !important;
+}
+
+.alarm-disposed{
+	background-image: url(../../myscripts/srims/resources/images/alarm/alarm-disposed.gif) !important;
+}
+
+.alarm-execute{
+	background-image: url(../../myscripts/srims/resources/images/alarm/alarm-execute.gif) !important;
+}
+
+.alarm-duban{
+	background-image: url(../../myscripts/srims/resources/images/alarm/alarm-duban.gif) !important;
+}
+
+.vehicle-recorder{
+	background: url(../../myscripts/srims/resources/images/vehicle-recorder/vehicle-recorder.gif) left top  no-repeat  !important;
+}
+
+.chang-gang-res{
+	background-image: url(../../myscripts/srims/resources/images/public/chang-gang-res.gif) !important;
+}
+
+.advance{
+	background-image: url(../../myscripts/srims/resources/images/public/advance.gif) !important;
+}
+
+.alarm-im-on{
+	background-image: url(../../myscripts/srims/resources/images/bottom-bar/alarm-im-on.gif) !important;
+}
+
+.vehicle-info{
+	background: url(../../myscripts/srims/resources/images/vehicle/vehicle-info.gif) left top  no-repeat !important;
+}
+
+.t-area{
+	background: url(../../myscripts/srims/resources/images/area/t-area.gif) left top  no-repeat !important;
+}
+	
+.s-area{
+	background: url(../../myscripts/srims/resources/images/area/s-area.gif) left top  no-repeat !important;
+}	
+
+.t-line{
+	background: url(../../myscripts/srims/resources/images/area/t-line.gif) left top  no-repeat !important;
+}
+	
+.s-line{
+	background: url(../../myscripts/srims/resources/images/area/s-line.gif) left top  no-repeat !important;
+}
+
+.overspeed-config{
+	background: url(../../myscripts/srims/resources/images/overspeed-config.gif) left top  no-repeat !important;
+}	
+	
+.tired-config{
+	background: url(../../myscripts/srims/resources/images/tired-config.gif) left top  no-repeat !important;
+}
+	
+.tracking-platform{
+	background: url(../../myscripts/srims/resources/images/tracking-platform.gif) left top  no-repeat !important;
+}
+
+.xtracking-open{
+	background: url(../../myscripts/srims/tracking/tree/MzTree/eye_open.gif) left top  no-repeat !important;
+}
+	
+.xtracking-close{
+	background: url(../../myscripts/srims/tracking/tree/MzTree/eye_close.gif) left top  no-repeat !important;
+}
+
+
+.camera-show{
+	background: url(../../myscripts/srims/resources/images/camera-show.gif) left top  no-repeat !important;
+}
+
+.advertisement{
+	background: url(../../myscripts/srims/resources/images/advertisement.gif) left top  no-repeat !important;
+}
+
+.live-tai{
+	background: url(../../myscripts/srims/resources/images/live-tai.gif) left top  no-repeat !important;
+}
+
+.history{
+	background: url(../../myscripts/srims/resources/images/history.gif) left top  no-repeat !important;
+}
+
+.config-driver{
+	background: url(../../myscripts/srims/resources/images/config-driver.gif) left top  no-repeat !important;
+}
+
+.stop-fix{
+	background: url(../../myscripts/srims/resources/images/stop-fix.gif) left top  no-repeat !important;
+}
+
+.get-back{
+	background: url(../../myscripts/srims/resources/images/get-back.gif) left top  no-repeat !important;
+}	
+
+.texi-query{
+	background: url(../../myscripts/srims/resources/images/texi-query.gif) !important;
+}
+
+.tracking {
+  	background: url(../../myscripts/srims/resources/images/command/tracking.gif) left top no-repeat !important;
+}
+
+
+.acc-true, .acc-false, .validate-true, .validate-false{
+    font-size: 16px;
+    margin-left: 2px;
+}
+
+.acc-true{
+    background: url(images/status/run-true.png) left top  no-repeat !important;
+}
+
+.acc-false{
+    background: url(images/status/run-false.png) left top  no-repeat !important;
+}
+
+.validate-true{
+    background: url(images/status/validate-true.png) left top  no-repeat !important;
+}
+
+.validate-false{
+    background: url(images/status/validate-false.png) left top  no-repeat !important;
+}
+
+.combo-ext {
+	color: gray;
+	cursor: default;
+	opacity: .6;
+	-moz-opacity: .6;
+	filter: alpha(opacity = 60);
+}

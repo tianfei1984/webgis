@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- Actions in this package will be prefixed with /user/ -->
+	<package name="vehicle" extends="default" namespace="/vehicle">
+	    <!-- 生成车辆树-->
+		<action name="getVechecileTree" class="vehicleTreeAction" method="getVehicleTree">
+			<result name="input">/WEB-INF/pages/user/genVechecileTree.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">resultMap</param>
+			</result>
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+		</action>
+		
+		<!-- 终端信息管理 -->
+		<action name="viewTerminal" class="terminalInfoAction" method="view">
+		   <result name="view">/WEB-INF/pages/vehicle/editTerminal.jsp
+			</result>
+		</action>
+		
+		<action name="saveTerminal" class="terminalInfoAction" method="save">
+		   <result name="save">/WEB-INF/pages/vehicle/editTerminal.jsp
+			</result>
+		</action>
+		<action name="deleteTerminal" class="terminalInfoAction" method="delete">
+		   <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="getTerminalInfo" class="vehicleAction" method="getTerminalInfo">
+		   <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 增加、修改驾驶员 -->
+		<action name="saveDriver" class="driverInfoAction" method="save">
+		   <result name="save">/WEB-INF/pages/vehicle/editDriverInfo.jsp
+			</result>
+		</action>
+		
+		<action name="deleteMember" class="memberInfoAction" method="delete">
+		   <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="saveMember" class="memberInfoAction" method="save">
+		   <result name="save">/WEB-INF/pages/vehicle/editMember.jsp
+			</result>
+		</action>
+		<action name="viewMember" class="memberInfoAction" method="view">
+		   <result name="view">/WEB-INF/pages/vehicle/editMember.jsp
+			</result>
+		</action>
+		<!-- 业户管理 -->
+		<action name="memberInfoList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/vehicle/memberList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		
+		<action name="gpsInfoList" class="historyGpsInfoAction" method="query">
+			<result name="input">/WEB-INF/pages/vehicle/terminalList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+		
+		<!-- 终端信息管理 -->
+		<action name="terminalList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/vehicle/terminalList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<action name="selectVehicle" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/vehicle/selectVehicle.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<action name="selectDep" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/vehicle/selectDepartment.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		
+		
+		
+		
+		<!-- 编辑驾驶员信息 -->
+		<action name="editDriverInfo" class="driverInfoAction" method="view">
+		   <result name="view">/WEB-INF/pages/vehicle/editDriverInfo.jsp
+			</result>
+		</action>
+		
+		<!-- 查看驾驶员信息 -->
+		<action name="viewDriverInfo" class="vehicleAction" method="viewDriverInfo">
+		   <result name="view">/WEB-INF/pages/vehicle/viewDriverInfo.jsp
+			</result>
+		</action>
+		<!-- 驾驶员管理 -->
+		<action name="driverList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/vehicle/driverList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<action name="enclosureList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/vehicle/enclosureList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 车辆信息管理 -->
+		<action name="vehicleList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/vehicle/vehicleList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 地图区域查车 -->
+		<action name="viewVehicleInArea" class="vehicleInAreaAction" method="view">
+			<result name="input">/WEB-INF/pages/vehicle/vehicleInArea.jsp
+			</result>
+		</action>
+		<action name="vehicleInArea" class="vehicleInAreaAction" method="execute">
+			<result name="input">/WEB-INF/pages/vehicle/vehicleInArea.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 车辆信息管理 -->
+		<action name="viewVehicle" class="vehicleAction" method="view">
+		   <result name="view">/WEB-INF/pages/vehicle/editVehicle.jsp
+			</result>
+		   <result name="input">/WEB-INF/pages/vehicle/viewVehicle.jsp
+			</result>
+		</action>
+		<action name="viewVehicleInfo" class="vehicleAction" method="viewVehicleInfo">
+		   <result name="view">/WEB-INF/pages/vehicle/viewVehicle.jsp
+			</result>
+		</action>
+		
+		<action name="deleteVehicle" class="vehicleAction" method="fakeDelete">
+		   <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+				
+		<action name="saveVehicle" class="vehicleAction" method="save">
+		   <result name="save">/WEB-INF/pages/vehicle/editVehicle.jsp
+			</result>
+		</action>
+		<!-- 车辆分组管理 -->
+		<action name="depList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/vehicle/depList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<action name="registerVehicles" class="realDataAction" method="registerVehicles">		     
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+		</action>
+		
+		<action name="refreshRealData" class="realDataAction" method="refreshRealData">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+			<result name="success" type="json">
+				<param name="root">dataOutPut</param>
+			</result>
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+		</action>
+		
+		<action name="getAllRealData" class="realDataAction" method="getAllRealData">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<!-- 车辆分组管理 -->
+		<action name="viewDep" class="depAction" method="view">
+		   <result name="view">/WEB-INF/pages/vehicle/editDep.jsp
+			</result>
+		</action>
+		<action name="deleteDep" class="depAction" method="fakeDelete">
+		   <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="saveDep" class="depAction" method="save">
+		   <result name="save">/WEB-INF/pages/vehicle/editDep.jsp
+			</result>
+		</action>
+		
+		<action name="depMenu" class="depAction" method="getDepMenu">
+			<result name="success" type="json">
+				<param name="root">nodeList</param>
+			</result>
+		</action>
+		
+		
+
+		<action name="driverInfoList" class="driverInfoAction" method="driverInfoList">
+			<result name="input">/WEB-INF/pages/vehicle/driverInfoList.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/vehicle/driverInfoList.jsp
+			</result>
+		</action>
+		<action name="deleteDriver" class="driverInfoAction" method="delete">
+		   <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+	</package>
+</struts>

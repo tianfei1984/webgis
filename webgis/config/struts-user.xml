@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="user" extends="default" namespace="/user">
+		
+
+
+		<action name="updatePassword" class="userAction" method="updatePassword">
+			<result name="input">/WEB-INF/pages/user/updatePassword.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/user/updatePassword.jsp
+			</result>
+		</action>
+		
+		<action name="setMapType" class="userAction" method="setMyMapType">
+		    <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+
+		<action name="userList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/user/userList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<action name="setMapCenter" class="userAction" method="setMapCenter">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="saveUser" class="userAction" method="save">
+			<result name="input">/WEB-INF/pages/user/editUser.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/user/editUser.jsp
+			</result>
+		</action>
+		<action name="viewUser" class="userAction" method="view">
+		   <result name="view">/WEB-INF/pages/user/editUser.jsp
+			</result>
+		</action>
+		<action name="deleteUser" class="userAction" method="fakeDelete">
+		   <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<action name="viewTakePicture" class="takePictureAction" method="view">
+			<result name="view">/WEB-INF/pages/command/takePicture.jsp</result>
+		</action>	
+		
+		<action name="viewTerminalMenu" class="terminalMenuAction" method="view">
+			<result name="view">/WEB-INF/pages/command/terminalMenu.jsp</result>
+		</action>	
+		
+
+	</package>
+</struts>

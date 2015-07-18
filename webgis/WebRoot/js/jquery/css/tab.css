@@ -1,0 +1,68 @@
+.wrapper {
+	padding: 20px;
+	margin: 20px 200px;
+}
+
+
+h2 {
+	max-width: 300px;
+	padding: 5px;
+	text-indent: 15px;
+	color: #FFFFFF;
+	background-color: #084A5E;
+
+	border-radius: 12px; 
+}
+
+div[class^="demo"] {
+	display: block;	
+	margin: 20px auto 30px;
+	padding: 20px;
+	border-top: 1px solid #EDEDED;
+	background-color: #FFFFFF;
+	border-radius: 6px;
+	box-shadow: 0 1px 3px #999999;
+}
+
+.panes0,
+.panes1,
+.panes2,
+.panes3,
+.panes4,
+.panes5,
+.panes6, 
+.panes7 {
+	padding: 15px;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #252525;
+	border-radius: 0 0 6px 6px;
+}
+
+.panes8, .panes9, .panes10, .panes11 {
+  width: 600px;
+  height: 200px;
+}
+
+[class*="page"] {
+  padding: 8px;
+}
+[class*="page"]:nth-child(1) {
+  background: #0ac2d2;
+}
+
+[class*="page"]:nth-child(2) {
+  background: #f68dbb;
+}
+
+[class*="page"]:nth-child(3) {
+  background: #60d7a9;
+}
+
+[class*="page"]:nth-child(4) {
+  background: #fdc162;
+}
+
+[class*="page"]:nth-child(5) {
+  background: #fd6a62;
+}

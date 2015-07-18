@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+	<Displayers>
+		<Displayer name="Velocity"
+			type="net.sf.navigator.displayer.VelocityMenuDisplayer" />
+	</Displayers>
+	<Menus>
+		<!-- menu.admin=系统管理 menu.admin.userManager=用户管理 menu.admin.operatePlatForm=运营商管理 
+			menu.admin.queryOperLogger=用户操作日志 menu.admin.queryClientOperLogger=网关操作日志 
+			menu.admin.mapAreaSetting=地图区域设置 menu.admin.carTypeManager=车辆型号管理 -->
+		<Menu name="AdminMenu" title="menu.admin" description="Admin Menu"
+			roles="ROLE_ADMIN" width="120" page="/admin/operatePlatFormList.action">
+			<Item name="AdminUserManager" title="menu.admin.userManager"
+				page="admin/userList.action" loction="admin/userList.action" roles="ROLE_ADMIN" />
+			<Item name="OperatePlatFormManager" title="menu.admin.operatePlatForm"
+				page="/admin/operatePlatFormList.action" roles="ROLE_ADMIN" />
+			<Item name="CorpInfoMnanager" title="menu.admin.corpmanager"
+				page="/admin/corpInfoMngList.action" roles="ROLE_ADMIN" />
+			<Item name="CarInfoMnanager" title="menu.carinfo.manager" page="/admin/carInfoList.action"
+				roles="ROLE_ADMIN" />
+
+			<Item name="TrafficPersonMnanager" title="menu.trafficPerson.manager"
+				page="/admin/trafficPersonList.action" roles="ROLE_ADMIN" />
+
+			<Item name="DriverInfoMnanager" title="button.people.manager"
+				page="/admin/driverInfoQuery.action" roles="ROLE_ADMIN" />
+
+			<Item name="AdminMenuAreaSetting" title="menu.admin.mapAreaSetting"
+				page="/admin/mapAreaList.action" roles="ROLE_ADMIN" />
+			<!-- Item name="FactoryInfo" title="menu.admin.FactoryInfo" page="/admin/factoryInfoList.action"/> -->
+			<Item name="QueryOperLogger" title="menu.admin.queryOperLogger"
+				page="/admin/queryOperLogger.action" roles="ROLE_ADMIN" />
+			<Item name="SystemConfigSetting" title="menu.admin.system.config"
+				page="/admin/editSystemConfig.action" roles="ROLE_ADMIN" />
+			<Item name="SystemMoniter" title="menu.system.moniter" page="/admin/systemMoniter.action"
+				roles="ROLE_ADMIN" />
+
+			<Item name="ServerMoniter" title="menu.server.moniter" page="/admin/serverMoniter.action"
+				roles="ROLE_ADMIN" />
+
+			<!--<Item name="RegionSetting" title="menu.region.setting" page="/admin/regionList.action" 
+				roles="ROLE_ADMIN" /> -->
+			<!-- Item name="QueryClientOperLogger" title="menu.admin.queryClientOperLogger" 
+				page="/admin/queryClientOperLogger.action"/ -->
+
+			<!-- <Item name="CarNumberSetting" title="menu.admin.CarNumberSetting" 
+				page="/admin/carTotalNumberList.action"/> -->
+		</Menu>
+
+
+		<!-- menu.tracking=监控平台 menu.tracking.view=车辆轨迹查看 menu.tracking.history=车辆轨迹回放 
+			menu.tracking.moniter=车辆实时监控 menu.tracking.areamoniter=车辆区域监控 -->
+		<Menu name="TrackingMenu" title="menu.tracking" description="BaseInfo Manager Menu"
+			roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" width="120" page="/info.jsp">
+			<Item name="CarCrossMainMap" title="menu.CarCrossMainMap.manager"
+				page="/statics/carCrossMainMap.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="TrackingView" title="menu.tracking.view" page="/track/queryLatestPos.action"
+				roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+			<Item name="TrackingMoniter" title="menu.tracking.moniter" page="/track/gpsInfoTrack.action"
+				roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="TrackingHistory" title="menu.tracking.history"
+				page="/track/gpsInfoHistory.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+			<Item name="TrackingAreamoniter" title="menu.tracking.areamoniter"
+				page="/track/gpsInfoArea.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<!-- Item name="CrossTrackingAreamoniter" title="menu.tracking.cross.moniter" 
+				page="/track/gpsInfoTrack.action" roles="ROLE_ADMIN,ROLE_OPR_USER"/> -->
+			<Item name="AreaCarQueryQuery" title="menu.violationquery.areacarquery"
+				page="/analyse/areaCarAnalysePrepare.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="MediaPlay" title="menu.tracking.mediaplay" page="/media/list.action"
+				roles="ROLE_ADMIN,ROLE_OPR_USER" />
+
+			<Item name="HistoryDriverInfoQuery" title="menu.history.driverinfo.query"
+				page="/history/driverInfoReqQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+
+			<Item name="HistoryRunningQuery" title="menu.history.running.query"
+				page="/history/takeTravelReqQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="HistoryTakePictureQuery" title="menu.history.takepicture.query"
+				page="/history/takePhotoReqQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="HistoryEwayBillQuery" title="menu.history.ewaybill.query"
+				page="/history/ewayBillInfoReqQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+
+			<Item name="CarAbnormalOprLogManager" title="menu.CarAbnormalOprLog.manager"
+				page="/history/carAbnormalOprLogList.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			
+			<!--<Item name="CarRegionalDistributionMap" title="menu.CarRegionalDistributionMap.manager"
+				page="/statics/carRegionalDistributionMap.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />-->
+				
+		</Menu>
+
+		<Menu name="BaseInfoMenuCorp" title="menu.baseInfo" description="BaseInfo Manager Menu"
+			roles="ROLE_CORP" width="120" page="/info.jsp">
+			<Item name="CarInfoMnanager" title="menu.carinfo.manager" page="/corp/corpCarList.action"
+				roles="ROLE_CORP" />
+			<Item name="DriverInfoMnanager" title="button.people.manager"
+				page="/corp/driverInfoQuery.action" roles="ROLE_CORP" />
+		</Menu>
+
+		<!-- menu.baseInfo=运营资料 menu.baseInfo.corpinput=运输企业资料录入 menu.baseInfo.carinput=车辆资料资料录入 
+			menu.baseInfo.corpcheck=运输企业资料审核 menu.baseInfo.carcheck=车辆资料资料审核 -->
+		<Menu name="BaseInfoMenu" title="menu.baseInfo" description="BaseInfo Manager Menu"
+			roles="ROLE_ADMIN,ROLE_CORP" width="120" page="/info.jsp">
+			<!--<Item name="CorpInput" title="menu.baseInfo.corpinput" page="/ent/corpList.action" 
+				roles="ROLE_ENTERPRISE"/> -->
+			<!--<Item name="CorpAlter" title="menu.baseInfo.corpalter" page="/ent/alter/corpList.action" 
+				roles="ROLE_ENTERPRISE"/> -->
+			<!--<Item name="CarInput" title="menu.baseInfo.carinput" page="/ent/carInfoList.action" 
+				roles="ROLE_ENTERPRISE"/> -->
+			<!--<Item name="CarAlter" title="menu.baseInfo.caralter" page="/ent/alter/carInfoList.action" 
+				roles="ROLE_ENTERPRISE"/> -->
+			<!--<Item name="CorpCheck" title="menu.baseInfo.corpcheck" page="/admin/corpCheckList.action" 
+				roles="ROLE_ADMIN"/> -->
+			<!--<Item name="CorpAlterCheck" title="menu.baseInfo.corpaltercheck" page="/admin/corpAlterCheckList.action" 
+				roles="ROLE_ADMIN"/> -->
+			<!--<Item name="CarCheck" title="menu.baseInfo.carcheck" page="/admin/carInfoCheckList.action" 
+				roles="ROLE_ADMIN"/> -->
+			<!--<Item name="CarAlterCheck" title="menu.baseInfo.caraltercheck" page="/admin/carInfoAlterCheckList.action" 
+				roles="ROLE_ADMIN"/> -->
+			<!--<Item name="CarInfoLogout" title="menu.baseInfo.carinfologout" page="/admin/carInfoLogoutPrepare.action" 
+				roles="ROLE_ADMIN"/> -->
+
+			<Item name="CarInfoQuery" title="menu.baseInfo.carinfoquery"
+				page="/admin/carInfoQueryList.action" roles="ROLE_ADMIN" />
+
+
+			<!-- Item name="LorryInfoManager" title="menu.baseInfo.carinfo.detail" 
+				page="/admin/carInfoList.action" roles="ROLE_ADMIN"/ -->
+		</Menu>
+		<!-- menu.basicquery=综合查询 menu.basicquery.car=重点车辆查询 menu.basicquery.enterprise=运营商接入情况 
+			menu.basicquery.corp=运输企业接入情况 menu.basicquery.corpmanager=企业平台监管情况 -->
+		<Menu name="BaseQueryMenu" title="menu.basicquery" description="BaseInfo Manager Menu"
+			roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" width="120" page="/info.jsp">
+			<Item name="CorpQuery" title="menu.baseInfo.corpquery" page="/query/corpQueryList.action"
+				roles="ROLE_ADMIN" />
+			<Item name="EnterpriseQuery" title="menu.baseInfo.enterprisequery"
+				page="/query/operatePlatFormQuery.action" roles="ROLE_ADMIN" />
+			<Item name="onLinePlatformStaticQuery" title="accessQuery.heading.onLinePlatformStaticQuery"
+				page="/access/onLinePlatformStaticQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="CarBasequery" title="menu.basicquery.car"
+				page="/query/stressCarInfoList.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="GovCarBasequery" title="menu.basicquery.car"
+				page="/query/govStressCarInfoQuery.action" roles="ROLE_GOVERNMENT" />
+			<Item name="enterpriseBaseQuery" title="menu.basicquery.enterprise"
+				page="/access/operatePlatFormAccessQueryList.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="HistoryAlarmDataQuery" title="menu.history.alarm.query"
+				page="/history/warnMsgInformQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+
+			<Item name="HistoryOnLineList" title="menu.history.online.query"
+				page="/query/historyOnLineList.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="HistoryOffLineList" title="menu.history.offline.query"
+				page="/query/historyOffLineList.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="ProvinceCrossDomainQuery" title="menu.province.crossdomain.query"
+				page="/query/provinceCrossDomainQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+			<Item name="ProvinceOutCrossDomainQuery" title="menu.province.out.crossdomain.query"
+				page="/query/provinceOutCrossDomainQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+
+
+			<!--<Item name="CorpAccess" title="menu.basicquery.corp" page="/access/corpAccessQueryList.action" 
+				roles="ROLE_ADMIN,ROLE_OPR_USER" /> -->
+		</Menu>
+		<!-- menu.platformMsgManager=平台管理 menu.sub.platformmsg.send=发送下级平台消息 menu.sub.platformmsg.query=查询下级平台消息 
+			menu.sub.platformpostquery.send=发送平台查岗消息 menu.sup.platformmsg.query=查询上级平台消息 -->
+
+		<Menu name="PlatFormMenu" title="menu.platformManager"
+			description="Platform Msg Menu" roles="ROLE_ADMIN,ROLE_OPR_USER"
+			width="120" page="/platform/sendDownPlatformMsg.action">
+			<Item name="SendPlatformMsg" title="menu.sub.platformmsg.send"
+				page="/platform/sendDownPlatformMsg.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="SubPlatformMsgQuery" title="menu.sub.platformmsg.query"
+				page="/platform/subPlatformMsgQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="SupPlatformMsgQuery" title="menu.sup.platformmsg.query"
+				page="/platform/supPlatformMsgQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="SendPlatformPostQueryMsg" title="menu.sub.platformpostquery.send"
+				page="/platform/sendPlatformPostQueryMsg.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="SupPostQueryAck" title="menu.sup.platform.postquery.ack"
+				page="/platform/supPostQueryAck.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="SubPostQueryAck" title="menu.sub.platform.postquery.ack"
+				page="/platform/subPostQueryAck.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="PlatformPostQueryCmd" title="menu.sub.platform.postquery.cmd"
+				page="/platform/sendDownPlatformPostMsg.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="SupPlatFormLinkManager" title="menu.sup.platform.linkmanager"
+				page="/platform/supPlatformLinkManager.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="SubPlatFormLinkManager" title="menu.sub.platform.linkmanager"
+				page="/platform/subPlatformLinkManager.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="SubPlatFormPollingQuery" title="menu.sub.platform.pollingquery"
+				page="/platform/platFormPollingQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="PlatformOperateLogQuery" title="menu.platformOperateLog"
+				page="/admin/platformOperateLogQuery.action" roles="ROLE_ADMIN" />
+
+			<Item name="PlatformCarDataDownQuery" title="menu.sub.platform.cardatadown.query"
+				page="/platform/carDataDownQuery.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+
+			<Item name="PlatFormOnLineTimeStatic" title="menu.platform.online.statics"
+				page="/statics/platFormOnLineTimeStatic.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+
+		</Menu>
+
+		<!-- menu.violationquery=违规查询 menu.violationquery.speed=超速分析 menu.violationquery.overload=超载分析 
+			menu.violationquery.tired=疲劳驾驶 menu.violationquery.area=越线或区域 menu.violationquery.nightrunning=夜间行驶 
+			menu.violationquery.areacarquery=区域车辆查询 -->
+		<Menu name="ViolationQueryMenu" title="menu.violationquery"
+			description="menu.violationquery" roles="ROLE_ADMIN,ROLE_OPR_USER"
+			width="120" page="/info.jsp">
+			<Item name="SpeedQuery" title="menu.violationquery.speed"
+				page="/analyse/speedAnalysePrepare.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="DriverTiredQuery" title="menu.violationquery.tired"
+				page="/analyse/tireAlarmAnalysePrepare.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<!-- <Item name="AreaAlarmQuery" title="menu.violationquery.area" page="/analyse/areaAlarmAnalysePrepare.action" 
+				roles="ROLE_ADMIN,ROLE_OPR_USER" /> -->
+			<Item name="NightRunningQuery" title="menu.violationquery.nightrunning"
+				page="/analyse/nightRunningAnalysePrepare.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+		</Menu>
+
+		<!-- menu.report=统计报表 menu.report.carfix=车辆接入情况统计 menu.report.enterprisecaronline=运营商车辆在线率统计 
+			menu.report.corpcaronline=运输企业车辆在线率统计 menu.report.enterprisecarupload=运营商车辆上传频率统计 
+			menu.report.corpprisecarupload=运输企业车辆上传频率统计 menu.report.enterpriseviolation=运营商违规统计 
+			menu.report.corpviolation=运输企业违规统计 menu.report.enterprise.alarmExecute=运营平台报警信息处理统计 
+			menu.report.corpprise.alarmExecute=运输企业报警信息处理统计 -->
+		<Menu name="ReportQueryMenu" title="menu.report" description="menu.report"
+			roles="ROLE_ADMIN,ROLE_OPR_USER" width="120" page="/info.jsp">
+			<!-- <Item name="operateCarFixReportQuery" title="menu.report.carfix.operatePlatForm" 
+				page="/access/operatePlatFormAccessList.action" roles="ROLE_ADMIN,ROLE_OPR_USER" 
+				/> -->
+			<Item name="carInfoStatics" title="menu.report.car.statics"
+				page="/statics/carInfoStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+			<Item name="operateCarFixReportQueryExt" title="menu.report.carfix.operatePlatForm.ext"
+				page="/access/operatePlatFormAccessListExt.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<!-- <Item name="corpCarFixReportQuery" title="menu.report.carfix.corp" 
+				page="/access/corpAccessList.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" 
+				/> -->
+
+			<Item name="corpCarFixReportQueryExt" title="menu.report.carfix.corp.ext"
+				page="/access/corpAccessListExt.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+			<Item name="EnterpriceCarOnLineReport" title="menu.report.enterprisecaronline"
+				page="/statics/enterpriseOnLineRateStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="EnterpriceCarOnLineReport" title="menu.report.enterprisecaronline.trend"
+				page="/statics/enterpriseOnLineRateStaticsTrend.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="CorpCarOnLineReport" title="menu.report.corpcaronline"
+				page="/statics/corpOnLineRateStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+			<Item name="CorpCarOnLineReport" title="menu.report.corpcaronline.trend"
+				page="/statics/corpOnLineRateStaticsTrend.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+			<Item name="EnterpriseCarUpload" title="menu.report.enterprisecarupload"
+				page="/statics/enterpriseUploadRateStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="CorppriseCarUpload" title="menu.report.corpprisecarupload"
+				page="/statics/corpUploadRateStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+			<Item name="EnterpriseAlarmStatics" title="menu.report.enterprisealarm"
+				page="/statics/enterpriseAlarmStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="EnterpriseAlarmStaticsTrend" title="menu.report.enterprisealarmtrend"
+				page="/statics/enterpriseAlarmStaticsTrend.action" roles="ROLE_ADMIN,ROLE_OPR_USER" />
+			<Item name="CorpAlarmStatics" title="menu.report.corpalarm"
+				page="/statics/corpAlarmStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+			<Item name="CorpAlarmStaticsTrend" title="menu.report.corpalarmtrend"
+				page="/statics/corpAlarmStaticsTrend.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+			<Item name="enterpriseAlarmExecuteStatics" title="menu.report.enterprise.alarmExecute"
+				page="/statics/enterpriseAlarmExecuteStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+			<Item name="corpAlarmExecuteStatics" title="menu.report.corpprise.alarmExecute"
+				page="/statics/corpAlarmExecuteStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+
+			<Item name="carRegionalDistributionStatics" title="menu.report.cararea"
+				page="/statics/carRegionalDistributionStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+			<Item name="platformCheckStatics" title="menu.report.platform.check"
+				page="/statics/platformCheckStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+
+			<Item name="corpMonthCheckStatics" title="menu.report.corp.month.check"
+				page="/statics/corpMonthCheckStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+			<Item name="corpRegionStatics" title="menu.report.corp.region.statics"
+				page="/statics/corpRegionStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+
+			<Item name="enterpriseLinkRelativeStatic" title="menu.renterprise.link.relative.static"
+				page="/statics/enterpriseLinkRelativeStatic.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+			<Item name="enterpriseUpToYearStatic" title="menu.enterprise.uptoyear.static"
+				page="/statics/enterpriseUpToYearStatic.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+			<Item name="enterpriseCrossMainStatics" title="menu.enterprise.province.crossmain.static"
+				page="/statics/enterpriseCrossMainStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+
+
+			<Item name="enterpriseUpCrossMainStatics" title="menu.enterprise.province.out.crossmain.static"
+				page="/statics/enterpriseUpCrossMainStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+			
+			
+			<Item name="enterpriseGpsInfoStatics" title="menu.enterprise.upload.statics"
+				page="/statics/enterpriseGpsInfoStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT" />
+			
+			<!-- <Item name="EnterpriseViolation" title="menu.report.enterpriseviolation" 
+				page="/statics/enterpriseMessageStatics.action" roles="ROLE_ADMIN,ROLE_OPR_USER"/> 
+				<Item name="EnterpriseViolationTrend" title="menu.report.enterpriseviolationTrend" 
+				page="/statics/enterpriseMessageStaticsTrend.action" roles="ROLE_ADMIN,ROLE_OPR_USER"/> -->
+			<!-- <Item name="CorpViolation" title="menu.report.corpviolation" page="/statics/corpMessageStatics.action" 
+				roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT"/> -->
+			<!-- <Item name="CorpViolationTrend" title="menu.report.corpviolationTrend" 
+				page="/statics/corpMessageStaticsTrend.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT"/> -->
+		</Menu>
+
+
+
+		<!-- menu.message=警告信息 menu.message.send=警告信息下发 menu.message.deal=警告信息处理 
+			menu.message.check=警告信息审核 menu.message.history=警告消息历史 <Menu name="MessageMenu" 
+			title="menu.message" description="menu.message" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_ENTERPRISE,ROLE_CORP,ROLE_GOVERNMENT" 
+			width="120" page="/info.jsp"> <Item name="MessageSend" title="menu.message.send" 
+			page="/message/verifyMessageList.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT"/> 
+			<Item name="MessageDeal" title="menu.message.deal" page="/message/executeMessageList.action" 
+			roles="ROLE_ENTERPRISE,ROLE_CORP,ROLE_GOVERNMENT"/> <Item name="MessageCheck" 
+			title="menu.message.check" page="/message/verifyMessageList.action" roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT"/> 
+			<Item name="MessageHistory" title="menu.message.history" page="/message/messageHistoryList.action" 
+			roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_ENTERPRISE,ROLE_CORP,ROLE_GOVERNMENT"/> 
+			</Menu> -->
+		<!-- menu.userConfig=用户设置 menu.userConfig.changePassword=修改用户密码 menu.userConfig.carTree=车辆管理树设置 
+			menu.userConfig.enterprisceInfo=运营商信息 menu.userConfig.corpInfo=运输企业信息 menu.userConfig.carTrack=查看车辆轨迹 -->
+
+		<Menu name="UserConfigMenu" title="menu.userConfig" description="menu.userConfig"
+			roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT,ROLE_ENTERPRISE,ROLE_CORP"
+			width="120" page="/info.jsp">
+			<Item name="ChangePasswordUserConfig" title="menu.userConfig.changePassword"
+				page="/user/changePassword.action"
+				roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT,ROLE_ENTERPRISE,ROLE_CORP" />
+			<!-- Item name="CarTreeUserConfig" title="menu.userConfig.carTree" page="/user/carTree.action" 
+				roles="ROLE_ADMIN,ROLE_OPR_USER,ROLE_GOVERNMENT"/ -->
+			<!-- Item name="EnterprisceInfoView" title="menu.userConfig.enterprisceInfoview" 
+				page="/user/ownOperatePlatFormInfoView.action" roles="ROLE_ENTERPRISE" / -->
+			<!-- Item name="EnterprisceInfoUserConfig" title="menu.userConfig.enterprisceInfo" 
+				page="/user/editOwnOperatePlatFormInfo.action" roles="ROLE_ENTERPRISE" / -->
+			<!-- Item name="CorpInfoUserConfig" title="menu.userConfig.corpInfo" page="/user/editOwnCorpInfo.action" 
+				roles="ROLE_CORP" / -->
+			<!-- Item name="CarTrackUserConfig" title="menu.userConfig.carTrack" page="/query/gpsInfoQuery.action" 
+				roles="ROLE_ENTERPRISE,ROLE_CORP" / -->
+		</Menu>
+	</Menus>
+</MenuConfig>

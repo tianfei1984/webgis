@@ -1,0 +1,35 @@
+LOCALE = "en"
+COMMON_INFO = {
+  "1"      : "North",
+  "2"      : "Northeast",
+  "3"      : "East",
+  "4"      : "Southeast",
+  "5"      : "South",
+  "6"      : "Southeast",
+  "7"      : "West",
+  "8"      : "Northwest",
+  "unknow" : "Unknow",
+  "name"           : "Name",
+  "radius"         : "Radius",
+  "remark"         : "Remark",
+  "availability"   : "Availability",
+  "unavailability" : "Unavailability",
+  "ignition"       : "Ignition",
+  "flameout"       : "Flameout",
+  "target"         : "Target",
+  "lat_lng"        : "Latitude and Longitude",
+  "speed"          : "Speed",
+  "gps_time"       : "GPS Time",
+  "pos_time"       : "Pos Time",
+  "status"         : "Status",
+  "validate"       : "Validate",
+  "direction"      : "Direction",
+  "address"        : "Address",
+  "get_address_ing": "Getting Address,Please waite......",
+  "get_address"    : "Get Address",
+  "couldnt_get_address" : "Could not get address info",
+  "get_address_failed"  : "Failed to get address info",
+  "rectify_error"       : "Rectify Error"
+
+
+}

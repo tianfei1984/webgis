@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-autowire="byName"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-lazy-init="true">
+	<!-- 登录拦截器 -->
+	<bean id="loginInterceptor" class="com.ltmonitor.web.action.LoginInterceptor">
+	</bean>
+
+	<!-- 登录 -->
+	<bean id="loginAction" class="com.ltmonitor.web.action.LoginAction"
+		scope="prototype">
+	</bean>
+
+
+	<bean id="mainMapAction" class="com.ltmonitor.web.action.MainMapAction"
+		scope="prototype">
+	</bean>
+
+
+	<bean id="historyGpsInfoAction" class="com.ltmonitor.web.action.HistoryGpsInfoAction"
+		scope="prototype">
+	</bean>
+
+	<!-- 企业上线率统计图  -->
+	<bean id="depOnlineRateChartAction" class="com.ltmonitor.web.action.DepOnlineRateChartAction"
+		scope="prototype">
+	</bean>
+	
+
+	<bean id="queryAction" class="com.ltmonitor.web.action.QueryAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="realDataAction" class="com.ltmonitor.web.action.RealDataAction"
+		scope="prototype">
+		
+	</bean>
+
+	<!-- 车辆分组管理 -->
+	<bean id="depAction" class="com.ltmonitor.web.action.DepartmentAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="memberInfoAction" class="com.ltmonitor.web.action.MemberInfoAction"
+		scope="prototype">
+	</bean>
+	<!-- 权限菜单管理 -->
+	<bean id="funcAction" class="com.ltmonitor.web.action.FunctionInfoAction"
+		scope="prototype">
+	</bean>
+	
+	<!-- 车辆左树 -->
+	<bean id="vehicleTreeAction" class="com.ltmonitor.web.action.VehicleTreeAction"
+		scope="prototype">
+	</bean>
+	
+	<bean id="vehicleQueueAction" class="com.ltmonitor.web.action.VehicleQueueAction"
+		scope="prototype">
+	</bean>
+	
+	<!-- 用户管理 -->
+	<bean id="userAction" class="com.ltmonitor.web.action.UserAction"
+		scope="prototype">
+	</bean>
+	<!-- 角色管理 -->
+	<bean id="roleAction" class="com.ltmonitor.web.action.RoleAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="randomPictureAction" class="com.ltmonitor.web.action.RandomPictureAction"
+		scope="prototype">
+	</bean>
+	<!-- 系统配置 -->
+	<bean id="systemConfigAction" class="com.ltmonitor.web.action.SystemConfigAction"
+		scope="prototype">
+	</bean>
+	<!-- 报警配置 -->
+	<bean id="alarmConfigAction" class="com.ltmonitor.web.action.AlarmConfigAction"
+		scope="prototype">
+	</bean>
+
+	<!-- 报警督办 -->
+	<bean id="warnMsgTodoReqAction" class="com.ltmonitor.command.action.JT809AlarmTodoReqAction"
+		scope="prototype">
+	</bean>
+
+
+	<!-- 围栏车辆绑定 -->
+	<bean id="enclosureBindingAction" class="com.ltmonitor.web.action.EnclosureBindingAction"
+		scope="prototype">
+		<property name="queryConfigMap">
+			<map>
+				<entry key="selectEnclosures">
+					<map>
+						<entry key="enclosureType" value="EnclosureType"></entry>
+					</map>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- 拍照命令 -->
+	<bean id="takePictureAction" class="com.ltmonitor.command.action.TakePictureAction"
+		scope="prototype">
+	</bean>
+
+	<!-- 信息菜单设置命令 -->
+	<bean id="terminalMenuAction" class="com.ltmonitor.command.action.TerminalMenuAction"
+		scope="prototype">
+	</bean>
+
+	<!-- 信息菜单设置命令 -->
+	<bean id="platformPostQueryAction" class="com.ltmonitor.command.action.PlatformPostQueryAction"
+		scope="prototype">
+	</bean>
+
+	<!-- 终端控制 -->
+	<bean id="terminalControlAction" class="com.ltmonitor.command.action.TerminalControlAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="sendTextAction" class="com.ltmonitor.command.action.SendTextAction"
+		scope="prototype">
+	</bean>
+	<bean id="sendQuestionAction" class="com.ltmonitor.command.action.SendQuestionAction"
+		scope="prototype">
+	</bean>
+	<!-- 车门控制 -->
+	<bean id="doorControlAction" class="com.ltmonitor.command.action.DoorControlAction"
+		scope="prototype">
+	</bean>
+	<!-- 透明传输 -->
+	<bean id="transparentSendAction" class="com.ltmonitor.command.action.TransparentSendAction"
+		scope="prototype">
+	</bean>
+	<bean id="tempTrackAction" class="com.ltmonitor.command.action.TempTrackAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="mediaAction" class="com.ltmonitor.command.action.MediaAction"
+		scope="prototype">
+	</bean>
+	<bean id="phoneBookAction" class="com.ltmonitor.command.action.PhoneBookAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="audioRecorderAction" class="com.ltmonitor.command.action.AudioRecorderAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="alarmStaticAction" class="com.ltmonitor.web.action.AlarmStaticAction"
+		scope="prototype">
+		
+		<!-- 查询条件描述的映射，用于写入到Excel当中 -->
+		<property name="queryConditionMap">
+			<map><!-- 报警统计 -->
+				<entry key="selectAlarmStatic">
+				     <list>
+						<value>plateNo,车牌号</value>
+						<value>depName,车组</value>
+						<value>alarmTypeName,报警类型</value>
+						<value>startDate,开始日期</value>
+						<value>endDate,结束日期</value>
+					</list>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="driverInfoAction" class="com.ltmonitor.web.action.DriverInfoAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="listenTerminalAction" class="com.ltmonitor.command.action.ListenTerminalAction"
+		scope="prototype">
+	</bean>
+	<bean id="terminalCommandAction" class="com.ltmonitor.command.action.TerminalCommandAction"
+		scope="prototype">
+	</bean>
+	<bean id="terminalEventAction" class="com.ltmonitor.command.action.TerminalEventAction"
+		scope="prototype">
+	</bean>
+	<bean id="sendInformationAction" class="com.ltmonitor.command.action.SendInformationAction"
+		scope="prototype">
+	</bean>
+	<bean id="terminalParamAction" class="com.ltmonitor.command.action.TerminalParamAction"
+		scope="prototype">
+	</bean>
+
+
+
+	<!-- 区域设置 -->
+	<bean id="sendEnclosureAction" class="com.ltmonitor.command.action.SendEnclosureAction"
+		scope="prototype">
+	</bean>
+
+	<!-- 平台809命令 -->
+	<bean id="platformCommandAction" class="com.ltmonitor.command.action.PlatformCommandAction"
+		scope="prototype">
+	</bean>
+	<!-- 行车记录仪命令下发 -->
+	<bean id="vehicleRecorderAction" class="com.ltmonitor.command.action.VehicleRecorderAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="mapTreeAction" class="com.ltmonitor.map.action.MapTreeAction"></bean>
+
+	<bean id="vehicleInAreaAction" class="com.ltmonitor.map.action.VehicleInAreaAction"></bean>
+
+	<!-- 基础数据 -->
+	<bean id="basicDataAction" class="com.ltmonitor.web.action.BasicDataAction"
+		scope="prototype">
+	</bean>
+
+	<!-- 车辆管理 -->
+	<bean id="vehicleAction" class="com.ltmonitor.web.action.VehicleAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="terminalInfoAction" class="com.ltmonitor.web.action.TerminalInfoAction"
+		scope="prototype">
+	</bean>
+
+	<!-- 线路编辑 -->
+	<bean id="routeAction" class="com.ltmonitor.map.action.RouteAction"
+		scope="prototype">
+	</bean>
+	
+	<!-- 报警 -->
+	<bean id="alarmAction" class="com.ltmonitor.web.action.AlarmAction"
+		scope="prototype">
+	</bean>
+
+</beans>

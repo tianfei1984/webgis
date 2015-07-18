@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
+</style>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=GT3YSZNuqHkwbGyAY4maPaVw"></script>
+<!--测距-->
+<script type="text/javascript" src="http://api.map.baidu.com/library/DistanceTool/1.2/src/DistanceTool_min.js"></script>
+<!--拉框放大-->
+<script type="text/javascript" src="http://api.map.baidu.com/library/RectangleZoom/1.2/src/RectangleZoom_min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+    <script type="text/javascript" src="jquery1.8.min.js"></script>
+<title>百度地图</title>
+
+    <link rel="stylesheet" href="css/gh-buttons.css">
+
+<style>
+
+
+</style>
+
+</head>
+<body>
+
+<div style="position:absolute;right:1px;top:1px;z-index:10">
+<ul class="button-group">
+    <li><a href="#" class="button" id="rectZoomoutTool"><img src="image/zoomout.gif" /></a></li>
+    <li><a href="#" class="button" id="rectZoominTool"><img src="image/zoomin.gif" /></a></li>
+    <li><a href="#" class="button" id="panelTool"><img src="image/hand.gif" /></a></li>
+    <li><a href="#" class="button" id="measureTool"><img src="image/measure.png" /></a></li>
+    <li><a href="#" class="button" id="rectZoomTool"><img src="image/measure.png" /></a></li>
+    <li><a href="#" class="button" id="rectQueryTool"><img src="image/rectQuery.png" /></a></li>
+    <li><a href="#" class="button" id="markerTool"><img src="image/marker.png" /></a></li>
+    <li><a href="#" class="button" id="rectTool"><img src="image/rect.png" /></a></li>
+    <li><a href="#" class="button" id="circleTool"><img src="image/circle.png" /></a></li>
+    <li><a href="#" class="button" id="polygonTool"><img src="image/polygon.png" /></a></li>
+    <li><a href="#" class="button" id="polylineTool"><img src="image/polyline.png" /></a></li>
+    <li><a href="#" class="button" id="keypointTool"><img src="image/keypoint.png" /></a></li>
+</ul>
+</div>
+<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+
+// 百度地图API功能
+var map = new BMap.Map("allmap");
+map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+
+map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]}));     //2D图，卫星图
+
+map.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_LEFT}));    //左上角，默认地图控件
+map.setCurrentCity("北京");   
+
+map.addControl(new BMap.OverviewMapControl());              //添加默认缩略地图控件
+map.addControl(new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT}));                    // 左下
+map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用
+map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+
+var myDis = new BMapLib.DistanceTool(map);
+map.addEventListener("load",function(){
+    myDis.open();  //开启鼠标测距
+    //myDis.close();  //关闭鼠标测距大
+});
+
+var myZoomInDrag = new BMapLib.RectangleZoom(map, {
+    followText: "拖拽鼠标进行矩形放大操作",zoomType:0
+});
+var BMAP_ZOOM_OUT = 1;
+var myZoomoutDrag = new BMapLib.RectangleZoom(map, {
+    followText: "拖拽鼠标进行矩形缩小操作",
+	zoomType : BMAP_ZOOM_OUT
+});
+
+
+$("#measureTool").click(function(){
+    reset();
+    myDis.open();
+});
+
+
+$("#rectZoomoutTool").click(function(){
+myZoomInDrag.close();
+myZoomoutDrag.zoomType = 1;
+myZoomoutDrag.open();  //开启拉框放大
+});
+
+$("#rectZoominTool").click(function(){
+myZoomoutDrag.close();
+myZoomInDrag.zoomType =0;
+myZoomInDrag.open();  //开启拉框放大
+});
+
+function reset()
+{
+   myZoomoutDrag.close();
+   myZoomInDrag.close();
+}
+
+
+ var styleOptions = {
+        strokeColor:"red",    //边线颜色。
+        fillColor:"red",      //填充颜色。当参数为空时，圆形将没有填充效果。
+        strokeWeight: 3,       //边线的宽度，以像素为单位。
+        strokeOpacity: 0.8,	   //边线透明度，取值范围0 - 1。
+        fillOpacity: 0.6,      //填充的透明度，取值范围0 - 1。
+        strokeStyle: 'solid' //边线的样式，solid或dashed。
+    }
+    //实例化鼠标绘制工具
+    var drawingManager = new BMapLib.DrawingManager(map, {
+        isOpen: false, //是否开启绘制模式
+        enableDrawingTool: true, //是否显示工具栏
+        drawingToolOptions: {
+            anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+            offset: new BMap.Size(5, 5), //偏离值
+            scale: 0.8 //工具栏缩放比例
+        },
+        circleOptions: styleOptions, //圆的样式
+        polylineOptions: styleOptions, //线的样式
+        polygonOptions: styleOptions, //多边形的样式
+        rectangleOptions: styleOptions //矩形的样式
+    });
+//var overlays = [];
+    //回调获得覆盖物信息
+    var overlaycomplete = function(e){
+        //overlays.push(e.overlay);
+        var result = "";
+        result = "<p>";
+        result += e.drawingMode + ":";
+        if (e.drawingMode == BMAP_DRAWING_MARKER) {
+			createMarker(e.overlay.getPosition().lng, e.overlay.getPosition().lat);
+			map.removeOverlay(e.overlay);
+        }
+        if (e.drawingMode == BMAP_DRAWING_CIRCLE) {
+            result += ' 半径：' + e.overlay.getRadius();
+            result += ' 中心点：' + e.overlay.getCenter().lng + "," + e.overlay.getCenter().lat;
+        }
+        if (e.drawingMode == BMAP_DRAWING_POLYLINE || e.drawingMode == BMAP_DRAWING_POLYGON || e.drawingMode == BMAP_DRAWING_RECTANGLE) {
+            result += ' 所画的点个数：' + e.overlay.getPath().length;
+        }
+        result += "</p>";
+        //$("showOverlayInfo").style.display = "none";
+        //$("panel").innerHTML += result; //将绘制的覆盖物信息结果输出到结果面板
+    };
+	
+    //添加鼠标绘制工具监听事件，用于获取绘制结果
+    drawingManager.addEventListener('overlaycomplete', overlaycomplete);
+drawingManager.open();
+
+$("#rectTool").click(function(){
+    reset();
+    drawingManager.setDrawingMode(BMAP_DRAWING_RECTANGLE) //画矩形
+});
+
+$("#polylineTool").click(function(){
+    reset();
+    drawingManager.setDrawingMode(BMAP_DRAWING_POLYLINE) //画矩形
+});
+
+$("#polygonTool").click(function(){
+    reset();
+    drawingManager.setDrawingMode(BMAP_DRAWING_POLYGON) //画矩形
+});
+
+$("#circleTool").click(function(){
+    reset();
+    drawingManager.setDrawingMode(BMAP_DRAWING_CIRCLE) //画矩形
+});
+
+$("#markerTool").click(function(){
+    reset();
+    drawingManager.setDrawingMode(BMAP_DRAWING_MARKER) //画矩形
+});
+
+
+$("#panelTool").click(function(){
+    reset();
+	drawingManager.setDrawingMode("handler");
+    drawingManager.close(); //关闭画的模式
+});
+
+
+var markerId = 1;
+// var markerInfoWindow = new BMap.InfoWindow("<p style='font-size:14px;'>哈哈，你看见我啦！我可不常出现哦！</p><p style='font-size:14px;'>赶快查看源代码，看看我是如何添加上来的！</p>");
+function createMarker(lng, lat)
+{
+   alert(lng+","+lat);
+   markerId++;
+   var pt = new BMap.Point(lng, lat);
+   var myIcon = new BMap.Icon("image/home.gif", new BMap.Size(16,16));
+   var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+   map.addOverlay(marker2);              // 将标注添加到地图中
+   //创建信息窗口）
+   
+ var markerInfoWindow = new BMap.InfoWindow("你点击的MarkerId:"+ markerId);
+   marker2.addEventListener("click", function(){
+         //alert(3);
+         //markerInfoWindow.setCotent("你点击的MarkerId:"+ markerId);
+        this.openInfoWindow(markerInfoWindow);
+   });
+}
+/**
+ * 根据数据库的线路记录，创建线路，并绑定点击事件
+ * strPoints是后台传递过来的坐标数据字符长
+ * 格式101,34;102,35;103.36
+ * id是多边形围栏的id
+ */
+function createPolyline(strPoints, id)
+{
+	    if(!strPoints)
+		   return;
+		var points = stringToPoint(strPoints);
+		var polyline = new BMap.Polyline(points, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
+        map.addOverlay(polyline);
+		//绑定点击事件
+        polyline.addEventListener("click", function(){
+               var url = globalConfig.webPath + "/data/viewRoute.action?EntityID="+ id;
+			 //打开路线编辑窗口
+			 parent.openRouteWindow(url, 720,490,"路线编辑");
+        });
+}
+
+/**
+  * 创建围栏，并绑定点击事件
+  * @id 是数据库的围栏id
+  * @enclosureType, 类型：circle, rect,polygon三种
+  */
+	function createExtendEnclosure(strPoints, radius, id, enclosureType)
+	{
+	    if(!strPoints)
+		   return;
+		var points = stringToPoint(strPoints);
+		var overlay = null;
+	    if(enclosureType == "circle")
+		{
+		      var center = points[0];
+		      overlay = new BMap.Circle(center, radius);
+              map.addOverlay(overlay);
+		}else if(enclosureType == "rect")
+	    {
+		      overlay = new BMap.Polygon(points, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
+			  map.addOverlay(overlay);
+	     }else 	if(enclosureType == "polygon")
+		 {
+		      overlay = new BMap.Polygon(points, {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5});
+			  map.addOverlay(overlay);
+		 }
+		 if(overlay != null)
+		 {
+         	//绑定点击事件
+			overlay.addEventListener("click", function(){
+				  var url = globalConfig.webPath + "/data/viewEnclosure.action?EntityID="+ id;
+			      parent.openRouteWindow(url, 720,405,"区域设置");
+			});
+		}
+	}
+
+
+/**
+ * 将坐标字符串(格式:lng1,lat1;lng2;lat2....)，转换成百度坐标数组
+ */
+function stringToPoint(strPoints){
+	var points = new Array();
+	var splits = strPoints.split(";");
+	for (var i=0;i<splits.length;i++){
+		var lngLat = splits[i].split(",");
+		if (lngLat != ""){
+		    var bp = new BMap.Point(parseFloat(lngLat[1]), parseFloat(lngLat[0]);
+			points.push(this.createPoint(bp));
+		}
+	}
+	return points;
+}
+
+
+
+    //加载用户的围栏
+	function loadEnclosures()
+	{
+		var params = {};
+		 $.getJSON( "<%=ApplicationPath%>/data/enclosureList.action", params, 
+						function(result){		
+			                if(result.success)
+						 {
+								//逐一创建围栏
+								$.each(result.data, function(i, item){
+									if(item.enclosureType == "route" )
+									{									
+										createExtendPolyline(item.points, item.entityId);
+									}else if(item.keyPoint == 1)
+									{
+										createExtendKeyPoint(item.centerLat, item.centerLng, item.raidus,  item.entityId, item.name);
+									}else
+									{
+	                                    createExtendEnclosure(item.points, item.radius, item.entityId, item.enclosureType);
+									}									
+								});
+
+						 }
+		               }
+				);
+
+
+	}
+
+
+</script>

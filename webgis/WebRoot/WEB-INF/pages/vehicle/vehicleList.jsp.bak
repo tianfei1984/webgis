@@ -1,0 +1,144 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<!--分页查询共用的页面-->
+<%@ include file="/common/paginateUtil.jsp"%>
+</head>
+
+		<script type="text/javascript" charset="utf-8">
+		//弹窗选择部门
+function doSelectDep()
+{
+	InfoWindow.selectDep();
+}
+function onDepSelected(depId,depName)
+{
+	$("#depId").combotree("setValue", depId);
+}
+
+		 
+			//删除表格的某一行，删除后，会自动刷新表格			
+			function getDeleteActionColumn(alue, rowData, rowIndex)
+			{  
+				var entityId = rowData.vehicleId;
+				var html =  "<img style='cursor: pointer;' src='<%=imgPath%>/cross.gif' onclick=\"Utility.deleteEntity('deleteVehicle.action','" +entityId+"');\"/>";
+				return html;
+			}
+			//编辑列
+			function getEditActionColumn(value, rowData, rowIndex)
+			{
+				var entityId = rowData.vehicleId;
+				var html =  "<a href=\"javascript:InfoWindow.viewVehicle('" + entityId+ "');\">" +" 编辑</a>";
+				return html;
+			}
+						//查看驾驶员信息列
+			function getDriverActionColumn(value, rowData, rowIndex)
+			{
+				var driverId = rowData.driverId;
+				var driverName = rowData.driverName;
+				if(driverId)
+				{
+				var html =  "<a href=\"javascript:InfoWindow.viewDriverInfo('" + driverId+ "');\">" +driverName+"</a>";
+			    return html;
+				}
+				else
+					return "";
+			}
+
+			$(document).ready(function() {
+				  
+				$("#btnQuery").click(function(){
+				        Utility.loadGridWithParams();
+				});
+				Utility.loadGridWithParams();
+				//创建下拉部门树
+				Utility.createDepTree("depId");
+				  
+                  $("#runStatus").lookup({category:"runStatus"});
+				  
+                  $("#runStatus").change(function()
+				{
+				       var txt = $("#runStatus").find("option:selected").text(); 
+					   $("#runStatusText").val(txt);
+				});
+			} );
+		</script>
+
+		
+<body>
+<div id="toolbar">
+			<form id="queryForm" action="<%=ApplicationPath%>/vehicle/vehicleList.action" method="POST">
+			   <input type="hidden" name="queryId" value="selectVehicles" />		   
+			   <input type="hidden" name="fileName" value="车辆列表" />	  
+			   <input type="hidden" id="runStatusText" name="runStatusText" value="" />	 
+			   
+			  <table width="100%"  class="TableBlock">
+			   			   <tr>
+			   <td width="100" align="right"> 车牌号码: </td>
+			    <td width="150">			    <input type="text" name="plateNo" size="20"  id="plateNo">   </td>
+           
+            <td align="right">车辆组:</td>
+			    <td  width="170">			
+				<select id="depId" name="depId" style="width:200px;"></select>
+				<a id="btnSelectVehicle" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="doSelectDep();"></a>
+				</td>
+				  <td align="right">驾驶员名称:</td>
+			    <td><input type="text" name="driverName" size="20" >   </td>
+            </tr>
+ <tr>
+			   <td align="right"> 终端卡号: </td>
+			    <td>			    <input type="text" name="simNo" size="20" >   </td>
+          
+            <td align="right">运营状态</td>
+			    <td>			   <select id="runStatus" name="runStatus"></select>   
+				
+				</td>
+				<td align="right">排序:</td>
+				<td><select id="sortBy" name="sortBy">
+				     <option value="plateNo">按车牌号排序</option>
+				     <option value="createDate">按创建时间排序</option>				
+				</select> </td>
+			</tr>
+			<tr>						
+						<td align="right">到期时间段
+							:</td>
+						<td colspan=3>
+						
+			<input class="easyui-datetimebox" name="startDate" id="startDate"  style="width:160px" value=""></input>
+						至
+	<input class="easyui-datetimebox" name="endDate" id="endDate"  style="width:160px" value=""></input>
+						</td>
+           
+        <td  align="left" colspan=2>
+		 <a id="btnQuery" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" >查询</a>&nbsp;
+		   <a id="btnReset" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear'" >重置</a>&nbsp;
+		   <a id="btnNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="InfoWindow.viewVehicle(0);" >新增</a>&nbsp;
+		   <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-excel'" onclick="Utility.excelExport('<%=ApplicationPath%>/data/excelExport.action');">导出</a><!--调用utility.js-->
+        </td>
+    </tr>
+		</table>
+		</form>	 
+		
+  </div>
+			<table id="queryGrid" class="easyui-datagrid" title="" style="width:100%;"
+						data-options="pagination:true,pageSize:15,singleSelect:true,rownumbers:true,striped:true,fitColumns: true,
+						pageList: [15, 20, 50, 100, 150, 200],fit:true,toolbar:'#toolbar',
+						url:'<%=ApplicationPath%>/vehicle/vehicleList.action',method:'get'">
+					<thead>
+						<tr>
+							<th data-options="field:'plateNo'" width="10">车牌号</th>
+							<th data-options="field:'plateColor'" width="10">颜色</th>
+							<th data-options="field:'simNo'" width="15">终端卡号</th>
+							<th data-options="field:'driverName',formatter:getDriverActionColumn" width="10" >主驾驶</th>
+							<th data-options="field:'runStatus'" width="10">运营状态</th>
+							<th data-options="field:'depName1'" width="10">车组</th>
+							<th data-options="field:'vehicleTypeName'" width="10">车辆类型</th>
+							<th data-options="field:'industryTypeName'" width="10">行业</th>
+							<th data-options="field:'regionName'" >车籍地</th>
+							<th data-options="field:'endDate'" >到期日期</th>
+							<th data-options="field:'1',formatter:getEditActionColumn" >编辑</th>
+							<th data-options="field:'2',formatter:getDeleteActionColumn" >删除</th>
+						</tr>
+					</thead>
+				</table>
+
+</body>
+

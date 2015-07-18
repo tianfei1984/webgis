@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- Actions in this package will be prefixed with /user/ -->
+	<package name="data" extends="default" namespace="/data">
+
+		<global-results>
+			<result name="mainMenu" type="redirectAction">
+				mainMenu
+			</result>
+			<result name="dataAccessFailure">
+				/WEB-INF/pages/dataAccessFailure.jsp
+			</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="org.springframework.dao.DataAccessException"
+				result="dataAccessFailure" />
+		</global-exception-mappings>
+
+		<action name="basicData" class="basicDataAction" method="execute">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="comboTree" class="basicDataAction" method="tree">
+			<result name="success" type="json">
+				<param name="root">nodeList</param>
+			</result>
+		</action>
+
+		
+		<!-- 报警督办请求 -->
+		<action name="warnMsgTodo" class="warnMsgTodoReqAction"
+			method="view">
+			<result name="success">/WEB-INF/pages/command/warnMsgTodo.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!--报警督办请求命令查询结果 -->
+		<action name="msgTodoReqList" class="warnMsgTodoReqAction"
+			method="query">
+			<result name="jsonSuccess" type="json">
+				<param name="root">commandList</param>
+			</result>
+		</action>
+		
+
+		<action name="queryJT809Command" class="platformCommandAction"
+			method="query">
+			<result name="jsonSuccess" type="json">
+				<param name="root">commandList</param>
+			</result>
+		</action>
+
+		<action name="send809Request" class="platformCommandAction"
+			method="sendLinkRequest">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 连接主链路 -->
+		<action name="connectPlateformLink" class="platformCommandAction"
+			method="connectPlateformLink">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+
+
+		<action name="image" class="imageAction" method="generateMediaFile">
+			<result type="json">
+				<param name="root">httpJsonMessage</param>
+			</result>
+		</action>
+
+		<action name="imageFromFile" class="imageAction" method="imageFromFile">
+			<result type="json">
+				<param name="root">httpJsonMessage</param>
+			</result>
+		</action>
+		<!-- 查询报警信息 5秒刷新 -->
+		<action name="alarm" class="alarmAction" method="alarm">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<!--  查询报警详细信息 -->
+		<action name="viewAlarm" class="alarmAction" method="view">
+			<result name="input">/WEB-INF/pages/report/processAlarm.jsp</result>
+		</action>
+
+		<action name="processAlarm" class="alarmAction" method="process">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 通用报警导出 -->
+		<action name="excelExport" class="paginateAction" method="export">
+			<result name="success" type="stream">
+				<param name="contentType">application/vnd.ms-excel;charset=utf-8</param>
+				<param name="inputName">excelStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}.xls"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+			<result name="error">../report/DataEmpty.jsp</result>
+		</action>
+		<!-- 报警统计导出 -->
+		<action name="alarmStaticExport" class="alarmStaticAction" method="export">
+			<result name="success" type="stream">
+				<param name="contentType">application/vnd.ms-excel;charset=utf-8</param>
+				<param name="inputName">excelStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}.xls"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+			<result name="error">../report/DataEmpty.jsp</result>
+		</action>
+		
+
+	</package>
+
+</struts>

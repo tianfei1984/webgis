@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- Constants -->
+	<constant name="struts.action.excludePattern" value=".*.ws,/qc/.*" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.convention.action.packages" value="com.ltmonitor.web.action" />
+	<constant name="struts.convention.result.path" value="/WEB-INF/pages/" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.action.extension" value="action" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources,errors" />
+	<constant name="struts.multipart.maxSize" value="5242880" />
+	<!-- <constant name="struts.ui.theme" value="simple" /> -->
+	<constant name="struts.codebehind.pathPrefix" value="/WEB-INF/pages/" />
+	<constant name="struts.enable.SlashesInActionNames" value="true" />
+	<constant name="struts.convention.action.disableScanning"
+		value="false" />
+	<constant name="struts.url.https.port" value="8443" />
+	<constant name="struts2.sslplugin.httpsPort" value="8443" />
+	<!-- <constant name="struts2.sslplugin.httpPort" value="8080"/> <constant 
+		name="struts2.sslplugin.httpsPort" value="8443"/>,ssl-default -->
+
+
+
+	<!-- Configuration for the default package. -->
+	<package name="default" extends="struts-default,json-default">
+		<interceptors>
+			<!-- Interceptor to handle allowing only admins to certain actions -->
+			<!-- Copied from struts-default.xml and changed validation exclude methods -->
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="profiling" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">
+						cancel,execute,delete,edit,list,*prior,*Prior
+					</param>
+				</interceptor-ref>
+
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">
+						input,back,cancel,browse
+					</param>
+				</interceptor-ref>
+			</interceptor-stack>
+			<interceptor-stack name="fileUploadStack">
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+			<interceptor-stack name="adminCheck">
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+			<!-- 拦截非法访问用户 -->
+			<interceptor name="loginInterceptor" class="loginInterceptor"></interceptor>
+			<interceptor-stack name="loginDefaultStack">
+				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="loginDefaultStack"></default-interceptor-ref>  
+        <global-results>  
+            <result name="login" type="redirect">/login.jsp</result>  
+        </global-results>  
+
+		<action name="login" class="loginAction" method="login">
+			<result type="redirect" name="success">/main.action</result>
+			<result name="input" >/login.jsp</result>
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+		</action>	
+		<action name="logout" class="loginAction" method="logout">
+			<result type="redirect" name="success">/login.jsp</result>
+		</action>
+		
+		<action name="randomPicture" class="randomPictureAction">
+			<result type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+			</result>
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+		</action>
+
+		<action name="main" class="loginAction" method="main">
+			<result name="success">/main.jsp</result>
+			<result name="input">/login.jsp</result>
+		</action>
+
+	</package>
+
+	<include file="struts-data.xml" />
+	<include file="struts-vehicle.xml" />
+	<include file="struts-user.xml" />
+	<include file="struts-command.xml" />
+	<include file="struts-map.xml" />
+	<include file="struts-system.xml" />
+	<include file="struts-report.xml" />
+	<include file="struts-mobile.xml" />
+</struts>

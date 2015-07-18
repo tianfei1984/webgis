@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- Actions in this package will be prefixed with /user/ -->
+	<package name="report" extends="default" namespace="/report">
+
+		<global-results>
+			<result name="mainMenu" type="redirectAction">
+				mainMenu
+			</result>
+			<result name="dataAccessFailure">
+				/WEB-INF/pages/dataAccessFailure.jsp
+			</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="org.springframework.dao.DataAccessException"
+				result="dataAccessFailure" />
+		</global-exception-mappings>
+		
+		<!-- 车辆拍照 -->
+		<action name="vehiclePictureList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/vehiclePictureList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 报警查询 -->
+		<action name="alarmList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/alarmList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 车辆信息修改日志查询 -->
+		<action name="vehicleModifyRecordList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/vehicleModifyRecordList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<!-- 进出围栏报表查询 -->
+		<action name="inAreaList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/areaInOutList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 报警处理情况查询 -->
+		<action name="processedAlarmList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/processedAlarmList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 报警查询 -->
+		<action name="parkingList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/parkingList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<!-- 多媒体上传记录查询 -->
+		<action name="mediaList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/mediaList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		
+		
+		<!-- 报警统计查询 -->
+		<action name="alarmStatic" class="alarmStaticAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/alarmStatic.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<!-- 车辆上下线历史记录查询-->
+		<action name="onlineRecord" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/onlineRecord.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<!-- 司机插卡拔卡记录-->
+		<action name="driverCardList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/driverCardList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<!-- 车辆在线状态查询-->
+		<action name="onlineVehicleList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/onlineVehicleList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<!-- 历史轨迹查询-->
+		<action name="historyGpsList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/historyGps.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		
+		<!-- 调度日志查询 -->
+		<action name="depOnlineRateChart" class="depOnlineRateChartAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/depOnlineRateChart.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<!-- 车辆上线率统计 -->
+		<action name="vehicleOnlineRate" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/vehicleOnlineRate.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<!-- 部门上线率统计 -->
+		<action name="departmentOnlineRate" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/departmentOnlineRate.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		
+		<!-- 里程和油量 -->
+		<action name="mileageStatistic" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/mileageStatistic.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<!-- 调度日志查询 -->
+		<action name="dispatchLog" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/dispatchLog.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		
+		<action name="queueVehicle" class="vehicleQueueAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/vehicleQueue.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">dataOutPut</param>
+			</result>
+		</action>
+		
+		
+		<!-- 多时段多区域查询车辆 -->
+		<action name="queryVehicleInArea" class="vehicleInAreaAction"
+			method="queryVehicleInArea">
+			<result name="input">/WEB-INF/pages/report/vehicleInAreaList.jsp</result>
+			
+			 <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 行车记录仪查询-->
+		<action name="queryRecorder" class="paginateAction"
+			method="execute">
+			<result name="input">/WEB-INF/pages/report/vehicleRecorderList.jsp</result>
+			
+			 <result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 查岗巡查记录 -->
+		<action name="checkInfoList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/checkList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		
+		<!-- acc点火熄火统计 -->
+		<action name="accRecord" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/accRecord.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		
+	</package>
+
+</struts>

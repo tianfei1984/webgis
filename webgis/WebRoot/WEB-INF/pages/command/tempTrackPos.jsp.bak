@@ -1,0 +1,65 @@
+
+<%@ include file="/common/taglibs.jsp"%>
+<!--分页查询共用的页面-->
+<%@ include file="/common/common.jsp"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
+
+    <script type="text/javascript" src="<%=jsPath%>/calendar.js"></script><!--表单数据验证-->
+	<!--下拉树的配置-->
+	
+	<link rel="stylesheet" href="<%=ApplicationPath%>/css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="<%=jsPath%>/jquery/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript" src="<%=jsPath%>/ztreeutil.js"></script><!--关于ztree操作的公用函数-->
+	<script type="text/javascript" src="<%=jsPath%>/jquery/jquery.ztree.excheck-3.5.js"></script><!--显示checkbox-->
+
+<script>
+$().ready(function() {
+	 $("#entityForm").validate(); //初始化验证信息
+
+	 var defaultRoleId = "";//${roleId}; //取出当前车辆的车牌颜色，默认选中
+	//ajax填充下拉框数据 填充监听类型 选项
+	 $("#listenType").lookup({category:"ListenTerminal", selectedValue:defaultRoleId});
+	 $(".sendjson").click(function()
+			 {
+				   $("#entityForm").ajaxSubmit(function()
+						 {
+					         alert("命令已经下发,请等待处理!");
+						 }
+					 ); //提交表单
+			 });
+});
+</script>
+ <BODY>
+	<form id="entityForm" name="entityForm" 
+			action='<%=ApplicationPath%>/data/tempTrack.action' method="POST">
+				
+        <input type="hidden"  name="vehicleId"  id="vehicleId" value="${vehicleId}"/>
+  <table width="100%"  class="TableBlock">
+					<tbody><tr>
+						<td colspan="2" style="font-weight: bold; background: #EFEFEF;" height="25">位置跟踪信息
+						<span style="color:red;background:blue;">${message}</span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">位置上报时间间隔(秒)
+							:</td>
+						<td>
+						<input id="interval" name="interval" class="required digits"  
+						value="5" maxlength="16" size="20"  value="5">
+						</td>
+					</tr>
+					<tr>
+						<td align="right">跟踪有效期(秒):</td>
+						<td ><input id="timeSpan" name="timeSpan" class="required"  value="120" maxlength="16" size="20" >
+						</td>
+					</tr>
+
+						<td colspan=2 align="center"><button type="button" class="sendjson" >发送</button> </td>
+						
+					</tr>
+
+				
+					
+				</tbody></table>
+ </BODY>
+</HTML>

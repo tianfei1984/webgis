@@ -1,0 +1,554 @@
+package com.ltmonitor.web.action;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import com.ltmonitor.entity.Alarm;
+import com.ltmonitor.entity.AlarmConfig;
+import com.ltmonitor.entity.AlarmRecord;
+import com.ltmonitor.entity.BasicData;
+import com.ltmonitor.entity.JT809Command;
+import com.ltmonitor.entity.PlatformState;
+import com.ltmonitor.entity.StringUtil;
+import com.ltmonitor.entity.T809Constants;
+import com.ltmonitor.entity.TerminalCommand;
+import com.ltmonitor.entity.UserInfo;
+import com.ltmonitor.entity.VehicleData;
+import com.ltmonitor.service.ITerminalService;
+import com.ltmonitor.service.IVehicleService;
+import com.ltmonitor.service.JT808Constants;
+import com.ltmonitor.util.DateUtil;
+import com.ltmonitor.web.constant.FunctionConstant;
+
+public class AlarmAction extends QueryAction {
+
+	private static String KEY_ALARM_MAP = "key_alarm_map";
+
+	private int alarmId;
+
+	private String remark;
+
+	private Alarm alarm;
+	// 报警处理标志 0 未处理，1已处理 2已解除报警
+	private int processed;
+
+	private Map alarmData = new HashMap();
+
+	private IVehicleService vehicleService;
+	private ITerminalService terminalService;
+
+	public IVehicleService getVehicleService() {
+		return vehicleService;
+	}
+
+	public void setVehicleService(IVehicleService vehicleService) {
+		this.vehicleService = vehicleService;
+	}
+
+	// 将报警数据发给页面弹窗显示
+	public String alarm() {
+		if (this.getOnlineUser() == null)
+			return json(false, "网页已过期,请重新登录");
+		try {
+			if (super.isAuthorized(FunctionConstant.FUNC_AlarmNotify)) {
+				String queryId = "selectLatestAlarms";
+				Map params = new HashMap();
+				params.put("userId", super.getOnlineUser().getEntityId());
+				String tableName = "NewAlarm"
+						+ DateUtil.toStringByFormat(new Date(), "yyyyMM");
+				params.put("tableName", tableName);// 报警数据是一个月一张表
+				Date date = DateUtil.getDate(new Date(), Calendar.MINUTE, -2); // 当前一分钟内产生的报警
+				params.put("startTime", date);
+				// params.put("status", "New");
+				try {
+					result = this.getQueryDao().queryForList(queryId, params);
+					result = filterAlarmResult(result);
+					alarmData.put("alarm", result);
+				} catch (Exception ex) {
+					log.error(ex.getMessage(), ex);
+				}
+			}
+
+			// 上级平台下发的808指令
+			if (super.isAuthorized(FunctionConstant.FUNC_808Notify)) {
+				List jt808Commands = getJT808Command();
+				if (jt808Commands.size() > 0)
+					alarmData.put("jt808Notify", jt808Commands);
+			}
+
+			if (super.isAuthorized(FunctionConstant.FUNC_809Notify)) {
+				// 上级平台下发的809指令
+				List jt809Commands = getJT809Command();
+				if (jt809Commands.size() > 0)
+					alarmData.put("jt809Notify", jt809Commands);
+
+				// 上级平台下发的报警督办
+				List warnMsgTodoRegList = getWarnMsgTodoReq();
+				if (warnMsgTodoRegList.size() > 0)
+					alarmData.put("warnMsgTodoReq", warnMsgTodoRegList);
+
+				PlatformState ps = this.getBaseService().getPlatformState();
+				alarmData.put("platformState", ps); // 平台服务器状态
+			}
+
+			return json(true, alarmData);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return json(false, e.getMessage());
+		}
+	}
+
+	public List getJT809Command() {
+		Map params = new HashMap();
+		Date date = DateUtil.getDate(new Date(), Calendar.MINUTE, -10); // 当前10分钟内产生的报警
+		params.put("createDate", date);
+		params.put("source", JT809Command.DOWN_NOTIFY); // 来自平台的下发通知
+		List ls = new ArrayList();
+		try {
+			String queryId1 = "selectJT809Command";
+			ls = this.getQueryDao().queryForList(queryId1, params);
+			ls = filterJt809Result(ls);
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+		}
+		return ls;
+
+	}
+
+	/**
+	 * 查询终端上传的命令请求
+	 * 
+	 * @return
+	 */
+	public List getJT808Command() {
+		Map params = new HashMap();
+		Date date = DateUtil.getDate(new Date(), Calendar.MINUTE, -2); // 当前10分钟内产生的报警
+		params.put("startDate", date);
+		params.put("owner", TerminalCommand.FROM_TERMINAL); // 来自平台的下发通知
+		params.put("userId", super.getOnlineUser().getEntityId());
+		// params.put("depIdList", super.getAuthorizedDepIdList());//
+		// 只查询本部门的车辆的终端上报消息
+		List ls = new ArrayList();
+		try {
+			String queryId1 = "selectTerminalCommand";
+			ls = this.getQueryDao().queryForList(queryId1, params);
+			ls = filterJt808Result(ls);
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+		}
+		return ls;
+	}
+
+	/**
+	 * 得到报警督办信息
+	 * 
+	 * @return
+	 */
+	public List getWarnMsgTodoReq() {
+		Map params = new HashMap();
+		Date date = DateUtil.getDate(new Date(), Calendar.HOUR, -1); // 当前一个小时内产生的报警
+		params.put("createDate", date);
+		List ls = new ArrayList();
+		try {
+			String queryId1 = "selectMsgTodoReq";
+			ls = this.getQueryDao().queryForList(queryId1, params);
+			ls = filterMsgTodoResult(ls);
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+		}
+		return ls;
+
+	}
+	/**
+	 * 查询报警详细
+	 * @return
+	 */
+	public String view() {
+		try {
+			this.getAlarm(alarmId);
+			/**
+			 * alarm = (Alarm) this.getBaseService().load(Alarm.class, alarmId);
+			 * BasicData bd = getBasicDataService().getBasicDataByCode(
+			 * alarm.getAlarmType(), "AlarmType"); if (bd != null)
+			 * alarm.setAlarmType(bd.getName());
+			 */
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			alarm = new Alarm();
+		}
+
+		return "input";
+	}
+
+	private Alarm getAlarm(int alarmId) {
+		Map params = new HashMap();
+		String tableName = "NewAlarm"
+				+ DateUtil.toStringByFormat(new Date(), "yyyyMM");
+		params.put("tableName", tableName);// 报警数据是一个月一张表
+		params.put("alarmId", alarmId);
+		// Date date = DateUtil.getDate(new Date(), Calendar.MINUTE, -2); //
+		// 当前一分钟内产生的报警
+		// params.put("startTime", date);
+		String queryId = "selectNewAlarms";
+		result = this.getQueryDao().queryForList(queryId, params);
+		// result = filterAlarmResult(result);
+		alarm = new Alarm();
+		// alarmData.put("alarm", result);
+		if (result.size() > 0) {
+			Map a = (Map) result.get(0);
+
+			String alarmType = "" + a.get("alarmType");
+			String alarmSource = "" + a.get("alarmSource");
+			AlarmConfig ac = this.getBaseService().getAlarmConfig(alarmType,
+					alarmSource);
+			if (ac != null) {
+				String alarmTypeDescr = ac.getName();
+				alarm.setAlarmType(alarmTypeDescr);
+			}
+			
+			this.convert(a);
+			alarm.setEntityId((Integer) a.get("id"));
+			alarm.setVehicleId((Integer) a.get("vehicleId"));
+			if (a.containsKey("ackSn"))
+				alarm.setAckSn((Integer) a.get("ackSn"));
+			alarm.setPlateNo("" + a.get("plateNo"));
+			alarm.setLocation("" + a.get("location"));
+			if (a.get("remark") != null)
+				alarm.setRemark("" + a.get("remark"));
+			else
+				alarm.setRemark("已处理");
+			alarm.setAlarmTime((Date) a.get("alarmTime"));
+		}
+
+		return alarm;
+	}
+
+	/**
+	 * 报警处理
+	 * 
+	 * @return
+	 */
+	public String process() {
+		try {
+			alarm = this.getAlarm(alarmId);
+			alarm.setRemark(remark);
+			alarm.setProcessed(processed);
+			alarm.setProcessedTime(new Date());
+			UserInfo onlineUser = this.getOnlineUser();
+			if (onlineUser != null) {
+				alarm.setProcessedUserId(onlineUser.getEntityId());
+				alarm.setProcessedUserName(onlineUser.getName());
+			}
+			// this.getBaseService().saveOrUpdate(alarm);
+			String tableName = "NewAlarm"
+					+ DateUtil.toStringByFormat(new Date(), "yyyyMM");
+			alarm.setTableName(tableName);
+			String statementName = "updateAlarmProcessedState";
+			this.getQueryDao().update(statementName, alarm);
+
+			if (processed == AlarmRecord.PROCESS_CLEAR) {
+				// 报警解除，需要给终端发送通用应答
+				TerminalCommand tc = new TerminalCommand();
+				tc.setCmdType(JT808Constants.CMD_CLEAR_ALARM);
+				int msgId = 0x0200;
+				int ackResult = 4;// 报警处理确认
+				tc.setCmdData("" + alarm.getAckSn() + ";" + msgId + ";" + 4);
+				tc.setVehicleId(alarm.getVehicleId());
+				SendCommand(tc);
+			}
+
+			/**
+			 * 809命令，主动上报转发给上级平台的报警处理结果
+			 */
+			JT809Command jc = new JT809Command();
+			try {
+				int subCmd = 0x1403;
+				jc.setCmd(0x1400);
+				jc.setSubCmd(subCmd);
+				int result = 1;
+				jc.setCmdData(alarm.getEntityId() + ";" + result);
+				String hql = "from VehicleData where plateNo = ?";
+				VehicleData vd = (VehicleData) this.getBaseService().find(hql,
+						alarm.getPlateNo());
+				jc.setPlateNo(vd.getPlateNo());
+				jc.setPlateColor((byte) vd.getPlateColor());
+
+				SendCommand(jc);
+			} catch (Exception ex) {
+				log.error(ex.getMessage(), ex);
+			}
+
+			return json(true, "");
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			return json(false, ex.getMessage());
+		}
+
+	}
+
+	protected void SendCommand(TerminalCommand tc) {
+		VehicleData vd = vehicleService.getVehicleData(tc.getVehicleId());
+		if (vd != null) {
+			tc.setPlateNo(vd.getPlateNo());
+			tc.setSimNo(vd.getSimNo());
+		}
+		// tc.setVehicleId(vd.getEntityId());
+		UserInfo onlineUser = getOnlineUser();
+		if (onlineUser != null) {
+			tc.setUserId(onlineUser.getEntityId());
+			tc.setOwner(onlineUser.getName());
+		}
+		getTerminalService().SendCommand(tc);
+	}
+
+	protected void SendCommand(JT809Command tc) {
+
+		UserInfo onlineUser = getOnlineUser();
+		if (onlineUser != null) {
+			tc.setOwner(onlineUser.getName());
+			tc.setUserId(onlineUser.getEntityId());
+		}
+		this.getBaseService().save(tc);
+	}
+
+	private List filterMsgTodoResult(List alarmList) {
+		Map<String, Date> alarmMap = getAlarmMap();
+		List result = new ArrayList();
+		for (Object obj : alarmList) {
+			Map rowData = (Map) obj;
+			Integer alarmId = (Integer) rowData.get("id");
+			String key = "warnMsgTodo_" + alarmId;
+			if (alarmMap.containsKey(key)) {
+				continue;
+			} else {
+				result.add(rowData);
+				alarmMap.put(key, new Date());
+			}
+
+			String warnSrc = "" + rowData.get("warnSrc");
+			String warnType = "" + rowData.get("warnType");
+
+			String supervisionLevel = "" + rowData.get("supervisionLevel");
+
+			supervisionLevel = "0".equals(supervisionLevel) ? "紧急" : "一般";
+
+			rowData.put("supervisionLevel", supervisionLevel);
+
+			BasicData bd = getBasicDataService().getBasicDataByCode(warnSrc,
+					"GovAlarmSrc");
+			warnSrc = bd != null ? bd.getName() : "";
+			rowData.put("warnSrc", warnSrc);
+
+			bd = getBasicDataService().getBasicDataByCode(warnType,
+					"GovAlarmType");
+			warnType = bd != null ? bd.getName() : "";
+			rowData.put("warnType", warnType);
+
+			String plateColor = "" + rowData.get("plateColor");
+			bd = getBasicDataService().getBasicDataByCode(plateColor,
+					"plateColor");
+			plateColor = bd != null ? bd.getName() : "";
+			rowData.put("plateColor", plateColor);
+
+			Date warnTime = (Date) rowData.get("warnTime");
+			rowData.put("warnTime",
+					DateUtil.toStringByFormat(warnTime, "MM-dd HH:mm:ss"));
+
+			Date supervisionEndTime = (Date) rowData.get("supervisionEndTime");
+			rowData.put("supervisionEndtime", DateUtil.toStringByFormat(
+					supervisionEndTime, "MM-dd HH:mm:ss"));
+		}
+		return result;
+	}
+
+	private List filterJt808Result(List alarmList) {
+		Map<String, Date> alarmMap = getAlarmMap();
+		List result = new ArrayList();
+		for (Object obj : alarmList) {
+			Map rowData = (Map) obj;
+			Integer alarmId = (Integer) rowData.get("cmdId");
+			String key = "808_" + alarmId;
+			if (alarmMap.containsKey(key) == false) {
+				result.add(rowData);
+				alarmMap.put(key, new Date());
+				// convert(rowData);
+			} else
+				continue;
+
+			Date createDate = (Date) rowData.get("createDate");
+			rowData.put("createDate",
+					DateUtil.toStringByFormat(createDate, "MM-dd HH:mm:ss"));
+			Integer cmdType = (Integer) rowData.get("cmdType");
+			String strCmd = Integer.toHexString(cmdType);
+			if (strCmd.length() < 4)
+				strCmd = "0" + strCmd;
+			strCmd = "0x" + strCmd;
+			String descr = JT808Constants.GetDescr(strCmd);
+			// descr +=","+rowData.get("cmdData");
+			rowData.put("cmdType", strCmd);
+			rowData.put("subDescr", descr);
+		}
+		return result;
+	}
+
+	/**
+	 * 已经报警的，将不再重复弹出
+	 * 
+	 * @param alarmList
+	 * @return
+	 */
+	private List filterJt809Result(List alarmList) {
+		Map<String, Date> alarmMap = getAlarmMap();
+		List result = new ArrayList();
+		for (Object obj : alarmList) {
+			Map rowData = (Map) obj;
+			Integer alarmId = (Integer) rowData.get("cmdId");
+			String key = "809_" + alarmId;
+			if (alarmMap.containsKey(key) == false) {
+				result.add(rowData);
+				alarmMap.put(key, new Date());
+				// convert(rowData);
+			} else
+				continue;
+
+			String cmdData = "" + rowData.get("cmdData");
+			if (StringUtil.isNullOrEmpty(cmdData)) {
+				String plateNo = "" + rowData.get("plateNo");
+				if (StringUtil.isNullOrEmpty(plateNo) == false) {
+					rowData.put("cmdData", plateNo);
+				} else
+					rowData.put("cmdData", "");
+			}
+
+			Date createDate = (Date) rowData.get("createDate");
+			if (createDate != null)
+				rowData.put("createDate", DateUtil.toStringByFormat(createDate,
+						"yyyy-MM-dd HH:mm:ss"));
+
+			Integer cmdType = (Integer) rowData.get("cmd");
+			Integer subType = (Integer) rowData.get("subCmd");
+			subType = subType == 0 ? cmdType : subType;
+			String subDescr = T809Constants.getMsgDescr(subType);
+
+			String strCmd = "0x" + Integer.toHexString(cmdType);
+			rowData.put("cmdType", strCmd);
+			rowData.put("subType", "0x" + Integer.toHexString(subType));
+			rowData.put("subDescr", subDescr);
+		}
+		return result;
+	}
+
+	/**
+	 * 已经报警的，将不再重复弹出
+	 * 
+	 * @param alarmList
+	 * @return
+	 */
+	private List filterAlarmResult(List alarmList) {
+		Map<String, Date> alarmMap = getAlarmMap();
+		List result = new ArrayList();
+		for (Object obj : alarmList) {
+			Map rowData = (Map) obj;
+			Integer alarmId = (Integer) rowData.get("id");
+			Integer depId = (Integer) rowData.get("depId");
+			// 车辆不是用户所管辖的部门
+			if (super.isAuthorizedDep(depId) == false)
+				continue;
+
+			String key = "_" + alarmId;
+			// 只推送未推送的报警，已经推送到前台的，不再推送。
+			if (alarmMap.containsKey(key) == false) {
+				alarmMap.put(key, new Date());
+				// 查看该类型的报警，数据库中是否配置
+				String alarmType = "" + rowData.get("alarmType");
+				String alarmSource = "" + rowData.get("alarmSource");
+				AlarmConfig ac = this.getBaseService().getAlarmConfig(
+						alarmType, alarmSource);
+				if (ac != null && ac.isEnabled()) {
+					// 报警声音的开关配置在meta属性中.
+					rowData.put("soundEnabled", (Boolean) ac.isSoundEnabled());
+					rowData.put("popupEnabled", (Boolean) ac.isPopupEnabled());
+					result.add(rowData);
+
+					String alarmTypeDescr = ac.getName();
+					rowData.put("alarmTypeDescr", alarmTypeDescr);
+					convert(rowData);
+				}
+			}
+		}
+		return result;
+	}
+
+	private void convert(Map rowData) {
+
+		// 报警来源
+		
+		this.convert(rowData, "alarmSource", "AlarmSource");
+		this.convert(rowData, "plateColor", "PlateColor");
+		this.convert(rowData, "processed", "ProcessType");
+
+		Date alarmDate = (Date) rowData.get("startTime");
+		rowData.put("startTime",
+				DateUtil.toStringByFormat(alarmDate, "MM-dd HH:mm:ss"));
+
+	}
+
+	/**
+	 * 已经报警的记录，保存在Session中，避免重复报警
+	 * 
+	 * @return
+	 */
+	public Map<String, Date> getAlarmMap() {
+		Map<String, Date> alarmMap = (Map<String, Date>) getSession().get(
+				KEY_ALARM_MAP);
+		if (alarmMap == null) {
+			alarmMap = new HashMap<String, Date>();
+			getSession().put(KEY_ALARM_MAP, alarmMap);
+		}
+		return alarmMap;
+	}
+
+	public int getAlarmId() {
+		return alarmId;
+	}
+
+	public void setAlarmId(int alarmId) {
+		this.alarmId = alarmId;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public int getProcessed() {
+		return processed;
+	}
+
+	public void setProcessed(int processed) {
+		this.processed = processed;
+	}
+
+	public ITerminalService getTerminalService() {
+		return terminalService;
+	}
+
+	public void setTerminalService(ITerminalService terminalService) {
+		this.terminalService = terminalService;
+	}
+
+	public Alarm getAlarm() {
+		return alarm;
+	}
+
+	public void setAlarm(Alarm alarm) {
+		this.alarm = alarm;
+	}
+
+}

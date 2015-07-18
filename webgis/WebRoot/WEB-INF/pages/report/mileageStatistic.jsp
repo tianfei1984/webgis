@@ -1,0 +1,102 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<!--分页查询共用的页面-->
+<%@ include file="/common/paginateUtil.jsp"%>
+<!--日期控件-->
+<%@ include file="/common/dateUtil.jsp"%>
+  
+    <script type="text/javascript" src="<%=jsPath%>/jquery/jquery.validate.js"></script><!--表单数据验证-->
+    <script type="text/javascript" src="<%=jsPath%>/jquery/jquery.metadata.js"  charset="UTF-8"></script><!--表单数据验证-->
+</head>
+
+		<script type="text/javascript" charset="utf-8">
+			
+
+			
+
+			$(document).ready(function() {
+			     
+				  $(".datepicker").today(); //设置为当前日期
+				 
+					  $("#intervalType").lookup({category:"ReportType",selectedValue:"3"}); //统计类型下拉框
+					  //下拉框点击事件 
+					  $("#intervalType").change(function()
+						{
+						      intervalType = $(this).val();
+							  //alert(intervalType);
+							  if(intervalType == "3") //0按小时，1按天，2按月，3按时间段，不同的统计类型，查询sql不一样
+								{
+								  //按时间段进行统计时，要切换到另一个sql查询.
+								      $("#queryId").val("selectMileageStaticByTimeSpan");
+								}else
+								{ 
+									$("#queryId").val("selectMileageStatic");
+								}
+						});
+				  
+				//创建下拉部门树
+				Utility.createDepTree("depId");
+				$("#btnQuery").click(function(){
+				        Utility.loadGridWithParams();
+				});
+				  
+				$("#intervalType").change(function()
+				{
+				       var txt = $("#intervalType").find("option:selected").text(); 
+					   $("#intervalTypeName").val(txt);
+				});
+			} );
+		</script>
+<body>
+		<div id="toolbar">		
+			
+			<form id="queryForm" action="<%=ApplicationPath%>/report/mileageStatistic.action">
+			   <input type="hidden" id="queryId" name="queryId" value="selectMileageStaticByTimeSpan" />	   
+			   <input type="hidden" name="fileName" value="里程统计信息" />	    
+			   <input type="hidden" name="intervalTypeName" id="intervalTypeName" value="" />	     	    	   
+			  <table width="100%"  class="TableBlock">
+			   			   <tr>
+			   <td> 车牌号码: </td>
+			    <td>			    <input type="text" name="plateNo" size="10"  id="plateNo">   </td>
+            <td>车辆组:</td>
+			    <td>		
+				<select id="depId" name="depId" style="width:200px;"></select>
+				</td>
+            <td>统计类型:</td>
+			    <td>	<select id="intervalType"  name="intervalType"></select>   </td>
+            </tr>
+ <tr>
+			   <td> 统计日期: </td>
+			    <td colspan="2">			    <input type="text" name="startDate" size="15"  class="datepicker required date">
+              至<input type="text" name="endDate" size="15"   class="datepicker required date">   </td>
+             
+        <td  align="left" colspan=3>
+	      <a id="btnQuery" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" >查询</a>&nbsp;
+		   <a id="btnReset" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear'" >重置</a>&nbsp;
+		   <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-excel'" onclick="Utility.excelExport('<%=ApplicationPath%>/data/excelExport.action');">导出</a><!--调用utility.js-->
+        </td>
+    </tr>
+		</table>
+		</form>	 
+		
+  </div>
+				<table id="queryGrid" class="easyui-datagrid" title="" style="width:100%;height:480px"
+						data-options="pagination:true,pageSize:15,singleSelect:true,rownumbers:true,striped:true,fitColumns: true,
+						pageList: [15, 20, 50, 100, 150, 200],fit:true,toolbar:'#toolbar',
+						url:'<%=ApplicationPath%>/report/mileageStatistic.action',method:'post'">
+					<thead>
+						<tr>
+							<th data-options="field:'plateNo'"  width="15%">车牌号</th>
+							<th data-options="field:'plateColor'"  width="7%">车牌颜色</th>
+							<th data-options="field:'depName'"  width="15%">车组</th>
+							<th data-options="field:'mileage'"  width="15%">里程(km)</th>
+							<th data-options="field:'gas'"  width="15%">油量(L)</th>
+							<th data-options="field:'staticDate'"  width="15%">统计日期</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>					
+				</table>
+
+</body>
+

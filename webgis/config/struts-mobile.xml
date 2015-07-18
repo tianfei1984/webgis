@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- Actions in this package will be prefixed with /user/ -->
+	<package name="mobile" extends="default" namespace="/mobile">
+	
+	<action name="depList" class="mobileDepartmentAction" method="depList">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>	
+		
+		<action name="saveDep" class="mobileDepartmentAction" method="save">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<action name="delDep" class="mobileDepartmentAction" method="fakeDelete">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="viewDep" class="mobileDepartmentAction" method="view">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<action name="viewDepOnline" class="mobileDepOnlineAction" method="view">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+		<action name="vehicleList" class="vehicleListAction" method="list">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="registerVehicle" class="vehicleListAction" method="register">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="myVehicle" class="vehicleListAction" method="myVehicle">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="login" class="mobileLoginAction" method="login">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="setMapCenter" class="mobileUserAction" method="setMapCenter">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<action name="onlineUserList" class="mobileUserAction" method="onlineUserList">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<action name="updatePassword" class="mobileUserAction" method="updatePassword">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="saveVehicle" class="mobileVehicleAction" method="save">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="deleteVehicle" class="mobileVehicleAction" method="fakeDelete">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="newAlarm" class="mobileAlarmAction" method="alarm">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="reportLocation" class="userLocationAction" method="execute">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<action name="userRealData" class="userLocationAction" method="getRealData">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="subscribeAlarm" class="mobileAlarmAction" method="subscribe">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<action name="viewVehicle" class="mobileVehicleAction" method="viewVehicleInfo">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="viewAlarmConfig" class="mobileAlarmConfigAction" method="view">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<action name="queryByPage" class="mobilePaginateAction" method="execute">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<!-- 拍照命令 -->
+		<action name="takePhoto" class="mobileCommandAction" method="takePhoto">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 查询拍照命令结果 -->
+		<action name="queryPhotoCommandResult" class="mobileCommandAction" method="queryPhotoCommandResult">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<action name="hisRoute" class="mobileHisGpsInfoAction" method="execute">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="userHisRoute" class="mobilePaginateAction" method="execute">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="realData" class="mobileRealDataAction" method="refreshRealData">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="basicData" class="basicDataAction" method="execute">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+		
+
+	</package>
+
+</struts>

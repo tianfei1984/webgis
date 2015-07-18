@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- Actions in this package will be prefixed with /user/ -->
+	<package name="command" extends="default" namespace="/command">
+
+
+		<action name="queryTerminalCommand" class="terminalCommandAction"
+			method="query">
+			<result name="jsonSuccess" type="json">
+				<param name="root">commandList</param>
+			</result>
+		</action>
+		<action name="terminalParamTemplate" class="terminalParamAction"
+			method="getTemplate">
+			<result name="success">/WEB-INF/pages/command/terminalParam.jsp</result>
+		</action>
+
+		<action name="terminalParam" class="terminalParamAction"
+			method="execute">
+			<result name="success">/WEB-INF/pages/command/terminalParam.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="overSpeedConfig" class="terminalParamAction"
+			method="overSpeedConfig">
+			<result name="input">/WEB-INF/pages/command/overSpeedConfig.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="tiredConfig" class="terminalParamAction"
+			method="tiredConfig">
+			<result name="input">/WEB-INF/pages/command/tiredConfig.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="queryTerminalParam" class="terminalParamAction"
+			method="queryTerminalParam">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+		<action name="getCommandResult" class="terminalCommandAction"
+			method="getCommandResult">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 上级平台查岗 -->
+		<action name="postQuery" class="platformPostQueryAction"
+			method="postQuery">
+			<result name="success">/WEB-INF/pages/command/postQuery.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<!-- 上级平台查岗应答 -->
+		<action name="postQueryAck" class="platformPostQueryAction"
+			method="postQueryAck">
+			<result name="success">/WEB-INF/pages/command/postQuery.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 报警督办请求 -->
+		<action name="warnMsgTodo" class="warnMsgTodoReqAction"
+			method="view">
+			<result name="success">/WEB-INF/pages/command/warnMsgTodo.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!--报警督办请求命令查询结果 -->
+		<action name="msgTodoReqList" class="warnMsgTodoReqAction"
+			method="query">
+			<result name="jsonSuccess" type="json">
+				<param name="root">commandList</param>
+			</result>
+		</action>
+
+		<action name="callTerminal" class="terminalCommandAction"
+			method="callNow">
+			<result name="input">/WEB-INF/pages/command/callTerminal.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="doorControl" class="doorControlAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/doorControl.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="wirelessUpdate" class="terminalControlAction"
+			method="execute">
+			<result name="input">/WEB-INF/pages/command/wirelessUpdate.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="controlTerminal" class="terminalControlAction"
+			method="execute">
+			<result name="input">/WEB-INF/pages/command/controlTerminal.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="transparentSend" class="transparentSendAction"
+			method="execute">
+			<result name="input">/WEB-INF/pages/command/transparentSend.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="eventConfig" class="terminalEventAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/terminalEventConfig.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="takePicture" class="takePictureAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/takePicture.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="getPictureResult" class="takePictureAction" method="queryResult">
+			<result name="input">/WEB-INF/pages/command/takePicture.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="tempTrack" class="tempTrackAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/tempTrack.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="sendQuestion" class="sendQuestionAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/sendQuestion.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="sendInformation" class="sendInformationAction"
+			method="execute">
+			<result name="input">/WEB-INF/pages/command/sendInformation.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="mediaUpload" class="mediaAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/mediaUpload.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="mediaSingleUpload" class="mediaAction" method="singleUpload">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<action name="mediaSearch" class="mediaAction" method="search">
+			<result name="input">/WEB-INF/pages/command/mediaList.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="queryMediaInfo" class="mediaAction" method="queryMediaInfo">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+		<action name="phoneBook" class="phoneBookAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/setPhoneBook.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="audioRecorder" class="audioRecorderAction"
+			method="execute">
+			<result name="input">/WEB-INF/pages/command/audioRecorder.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="vehicleRecorder" class="vehicleRecorderAction"
+			method="execute">
+			<result name="input">/WEB-INF/pages/command/vehicleRecorder.jsp
+			</result>
+			
+			<result name="input2012">/WEB-INF/pages/command/vehicleRecorder2012.jsp
+			</result>
+			
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="queryRecorder" class="vehicleRecorderAction"
+			method="queryResult">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 监听 -->
+		<action name="listenTerminal" class="listenTerminalAction"
+			method="execute">
+			<result name="input">/WEB-INF/pages/command/listenTerminal.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+		<action name="sendText" class="sendTextAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/sendText.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+
+		<action name="sendPlatformCmd" class="platformCommandAction"
+			method="execute">
+			<result name="input">/WEB-INF/pages/command/platformCommand.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+
+		<action name="queryJT809Command" class="platformCommandAction"
+			method="query">
+			<result name="jsonSuccess" type="json">
+				<param name="root">commandList</param>
+			</result>
+		</action>
+
+		<action name="send809Request" class="platformCommandAction"
+			method="sendLinkRequest">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 连接主链路 -->
+		<action name="connectPlateformLink" class="platformCommandAction"
+			method="connectPlateformLink">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+		<action name="terminalMenu" class="terminalMenuAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/terminalMenu.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<!-- 围栏设置 -->
+		<action name="sendEnclosure" class="sendEnclosureAction"
+			method="execute">
+			<result name="input">/WEB-INF/pages/command/enclosureList.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 删除指定围栏类型的所有围栏 -->
+		<action name="deleteAllEnclosure" class="sendEnclosureAction"
+			method="deleteAll">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 终端线路设置 -->
+		<action name="sendRoute" class="sendEnclosureAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/routeList.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 删除终端中的所有路线 -->
+		<action name="deleteAllRoute" class="sendEnclosureAction" method="deleteAll">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<!-- 批量设置发送频率 -->
+		<action name="setSendFreq" class="setSendFreqAction" method="execute">
+			<result name="input">/WEB-INF/pages/command/setSendFreq.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+
+	</package>
+
+</struts>

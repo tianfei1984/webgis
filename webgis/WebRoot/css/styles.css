@@ -1,0 +1,74 @@
+BODY {
+	BACKGROUND: #e6eae9;
+	FONT: 12px auto "Trebuchet MS", sans-serif;
+	COLOR: #4f6b72;;
+	text-align: center;
+}
+
+.mytable .childtable A {
+	COLOR: #c75f3e
+}
+
+.mytable {
+	PADDING-RIGHT: 0px;
+	PADDING-LEFT: 0px;
+	PADDING-BOTTOM: 0px;
+	MARGIN: 0px;
+	PADDING-TOP: 0px;
+	border: 1px #52A6C6 solid;;
+	border-collapse: collapse;
+	width: 750px;
+	BACKGROUND: #fff;
+}
+
+.childtable {
+	PADDING-RIGHT: 0px;
+	PADDING-LEFT: 0px;
+	PADDING-BOTTOM: 0px;
+	MARGIN: 0px;
+	PADDING-TOP: 0px;
+	border: 1px #52A6C6 solid;;
+	border-collapse: collapse;
+	BACKGROUND: #fff;
+}
+
+.mytable TH ,.childtable TH{
+	border: 1px #FFFFFF solid;
+	BACKGROUND: #5DABC1 no-repeat;
+	ADDING-BOTTOM: 18px;
+	PADDING-TOP: 3px;;
+	PADDING-BOTTOM: 3px;
+	font-weight: bold;
+	FONT: 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	TEXT-TRANSFORM: uppercase;
+	COLOR: #FFFFFF;
+	BORDER-BOTTOM: #c1dad7 1px solid;
+	LETTER-SPACING: 2px;
+	TEXT-ALIGN: center
+}
+
+.mytable  .childtable TH.nobg {
+	BORDER-TOP-WIDTH: 0px;
+	BORDER-RIGHT: #c1dad7 1px solid;
+	BORDER-LEFT-WIDTH: 0px;
+	BACKGROUND: none transparent scroll repeat 0% 0%
+}
+
+.mytable TD, .childtable TD {
+	border: 1px #52A6C6 solid;
+	PADDING-LEFT: 12px;
+	FONT-SIZE: 11px;
+	PADDING-BOTTOM: 6px;
+	COLOR: #4f6b72;
+	PADDING-TOP: 1px;
+}
+
+
+
+.mytable  .childtable img {
+	border: 0;
+}
+
+.mytable  .childtable tr.row_background {
+	background-color: #DFF8FF;
+}

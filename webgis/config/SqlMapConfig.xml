@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+	<settings errorTracingEnabled="true" />
+
+<!-- 
+	<sqlMap resource="ibatis/VehicleInfo.xml" />
+	 -->
+	
+	<sqlMap resource="ibatis/VehicleInfo_mysql.xml" />
+	<sqlMap resource="ibatis/MobileQuery.xml" />
+	
+
+
+</sqlMapConfig>

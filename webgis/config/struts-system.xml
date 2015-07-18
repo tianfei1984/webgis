@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- Actions in this package will be prefixed with /user/ -->
+	<package name="system" extends="default" namespace="/system">
+		
+		<action name="mainMap" class="mainMapAction" method="execute">
+			<result name="success">/map/mainMap.jsp
+			</result>
+		</action>
+		<!--权限菜单管理 -->
+		<action name="functionInfoList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/system/functionInfoList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<action name="viewFunc" class="funcAction" method="view">
+			<result name="view">/WEB-INF/pages/system/editFuncModel.jsp
+			</result>
+		</action>
+		<action name="saveFunc" class="funcAction" method="save">
+			<result name="save">/WEB-INF/pages/system/editFuncModel.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/system/editFuncModel.jsp
+			</result>
+		</action>
+		<action name="deleteFunc" class="funcAction" method="fakeDelete">
+		   <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<!-- 角色管理 -->
+		<action name="roleList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/system/roleList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<action name="viewRole" class="roleAction" method="view">
+			<result name="view">/WEB-INF/pages/system/editRole.jsp
+			</result>
+		</action>
+		<action name="saveRole" class="roleAction" method="save">
+			<result name="save">/WEB-INF/pages/system/editRole.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/system/editRole.jsp
+			</result>
+		</action>
+		<action name="deleteRole" class="roleAction" method="fakeDelete">
+		   <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+        <action name="getFuncMenu" class="roleAction" method="getFuncMenu">
+		   <result name="success" type="json">
+				<param name="root">nodeList</param>
+			</result>
+		</action>
+		
+		<action name="saveConfig" class="systemConfigAction" method="save">
+			<result name="save">/WEB-INF/pages/system/editConfig.jsp
+			</result>
+			<result name="input">/WEB-INF/pages/system/editConfig.jsp
+			</result>
+		</action>
+		<!-- 平台参数配置 -->
+		<action name="viewConfig" class="systemConfigAction" method="view">
+			<result name="view">/WEB-INF/pages/system/editConfig.jsp
+			</result>
+		</action>
+		<!-- 报警设置 -->
+		<action name="viewAlarmConfig" class="alarmConfigAction" method="view">
+			<result name="success">/WEB-INF/pages/system/alarmConfig.jsp
+			</result>
+		</action>
+		<action name="configAlarm" class="alarmConfigAction" method="config">
+			<result name="success">/WEB-INF/pages/system/alarmConfig.jsp
+			</result>
+		</action>
+		
+		<!-- 终端命令日志查询 -->
+		<action name="terminalLog" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/terminalCommandList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<!-- 操作日志查询 -->
+		<action name="operationLog" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/report/operationLog.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<action name="infoMenuList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/system/infoMenuConfig.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 信息发布 -->
+		<action name="informationList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/system/informationList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 数据字典管理 -->
+		<action name="basicDataList" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/system/basicDataList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<action name="deleteBasicData" class="basicDataAction" method="fakeDelete">
+		   <result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="viewBasicData" class="basicDataAction" method="view">
+			<result name="view">/WEB-INF/pages/system/editBasicData.jsp
+			</result>
+		</action>
+		<action name="saveBasicData" class="basicDataAction" method="save">
+			<result name="save">/WEB-INF/pages/system/editBasicData.jsp
+			</result>
+		</action>
+		
+		
+		<action name="viewInfoMenu" class="basicDataAction" method="view">
+			<result name="view">/WEB-INF/pages/system/editInfoMenu.jsp
+			</result>
+		</action>
+		<action name="saveInfoMenu" class="basicDataAction" method="save">
+			<result name="save">/WEB-INF/pages/system/editInfoMenu.jsp
+			</result>
+		</action>
+		
+		<action name="viewInformation" class="basicDataAction" method="view">
+			<result name="view">/WEB-INF/pages/system/editInformation.jsp
+			</result>
+		</action>
+		<action name="saveInformation" class="basicDataAction" method="save">
+			<result name="save">/WEB-INF/pages/system/editInformation.jsp
+			</result>
+		</action>
+		
+
+
+	</package>
+</struts>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-autowire="byName"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-lazy-init="true">
+	<!-- 登录拦截器 -->
+	
+	<!-- 车辆列表查询-->
+	<bean id="vehicleListAction" class="com.ltmonitor.mobile.action.VehicleListAction"
+		scope="prototype">
+	</bean>
+	
+	<!-- 车辆列表查询-->
+	<bean id="mobileVehicleAction" class="com.ltmonitor.mobile.action.VehicleAction"
+		scope="prototype">
+	</bean>
+<!--报警配置 -->
+	<bean id="mobileAlarmConfigAction" class="com.ltmonitor.mobile.action.MobileAlarmConfigAction"
+		scope="prototype">
+	</bean>
+	<!--查询分页配置 -->
+	<bean id="mobilePaginateAction" class="com.ltmonitor.mobile.action.MobilePaginateAction"
+		scope="prototype">
+	</bean>
+	
+	<!-- 历史轨迹查询 -->
+	<bean id="mobileHisGpsInfoAction" class="com.ltmonitor.mobile.action.MobileHisGpsInfoAction"
+		scope="prototype">
+	</bean>
+	
+	
+	<!-- 登录 -->
+	<bean id="mobileLoginAction" class="com.ltmonitor.mobile.action.MobileLoginAction"
+		scope="prototype">
+	</bean>
+	
+	<bean id="userLocationAction" class="com.ltmonitor.mobile.action.UserLocationAction"
+		scope="prototype">
+	</bean>
+	
+	<!-- 用户设置-->
+	<bean id="mobileUserAction" class="com.ltmonitor.mobile.action.MobileUserAction"
+		scope="prototype">
+	</bean>
+	
+	
+	<bean id="mobileCommandAction" class="com.ltmonitor.mobile.action.MobileCommandAction"
+		scope="prototype">
+	</bean>
+	<!-- 部门管理-->
+	<bean id="mobileDepartmentAction" class="com.ltmonitor.mobile.action.DepartmentAction"
+		scope="prototype">
+	</bean>
+	<!-- 部门上线率管理-->
+	<bean id="mobileDepOnlineAction" class="com.ltmonitor.mobile.action.MobileDepOnlineAction"
+		scope="prototype">
+	</bean>
+	
+	 <!--实时数据配置 -->
+	<bean id="mobileRealDataAction" class="com.ltmonitor.mobile.action.MobileRealDataAction"
+		scope="prototype">
+	</bean>
+	
+	 <!--实时报警轮询 -->
+	<bean id="mobileAlarmAction" class="com.ltmonitor.mobile.action.AlarmAction"
+		scope="prototype">
+	</bean>
+	
+
+
+</beans>

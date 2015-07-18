@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="mobile">
+
+	<select id="selectGpsData" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		select row_number() over(
+		order by 
+		<isEqual prepend=" " property="status" compareValue="offline">
+			g.sendTime  
+		</isEqual>
+		<isNotEqual prepend=" " property="status" compareValue="offline"> 
+		v.plateNo
+		</isNotEqual>
+		) as RowNum, v.*, d.name as
+		depName1,g.sendTime, g.velocity,g.location,
+		(case when g.online = 1
+		then '在线' else '离线' end)
+		as online,
+		(case when
+		g.online = 1 then 0 when
+		g.sendTime is null then 0 else
+		(datediff(second, sendTime, getdate())
+		* 0.1 / 6) end )
+		as
+		offlineTimeSpan 
+		from vehicle v
+		left join gpsRealData g on
+		v.vehicleId = g.vehicleId 
+		left join department
+		d on v.depId = d.depId
+		 where v.deleted = 0
+		<dynamic prepend=" AND ">
+			<isNotEmpty prepend="AND" property="plateNo">
+				(v.plateNo like
+				'%$plateNo$%')
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="depId">
+				(v.depId = #depId#)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="simNo">
+				(v.simNo like
+				'%$simNo$%')
+			</isNotEmpty>
+
+			<isEqual prepend="AND" property="status" compareValue="online">
+				(g.online = 1)
+			</isEqual>
+			<isEqual prepend="AND" property="status" compareValue="offline">
+				<![CDATA[(g.online <> 1)]]>
+				<isNotEmpty prepend=" AND" property="offlineTimeSpan">
+				<![CDATA[g.sendTime < dateadd(day, convert(int, #offlineTimeSpan#), getDate()) ]]>
+			</isNotEmpty>
+			</isEqual>
+			<isNotEmpty prepend="AND" property="depIdList">
+				v.depId in (
+				<!-- 只能查询授权部门下面的车辆 -->
+				<iterate property="depIdList" conjunction=",">
+					#depIdList[]#
+				</iterate>
+				)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="userId">
+			    (Exists (select 1 from userDepartment u where userId = #userId# and depId = v.depId ))
+			</isNotEmpty>
+			
+		</dynamic>
+
+	</select>
+	
+	
+	<select id="statisticVehicleNum" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		
+		select count(1) as vehicleNum, sum((case when
+		g.online = 1 then 1 else 0 end))  as onlineNum, v.depId 
+		from vehicle v left join gpsrealdata g on v.vehicleId = g.vehicleId 
+		where v.depId > 0
+		 <isNotEmpty prepend="AND" property="depIdList">
+				v.depId in (
+				<!-- 只能查询授权部门下面的车辆 -->
+				<iterate property="depIdList" conjunction=",">
+					#depIdList[]#
+				</iterate>
+				)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="userId">
+			    (Exists (select 1 from userDepartment u where userId = #userId# and depId = v.depId ))
+			</isNotEmpty>
+		 group by v.depid 
+	</select>
+
+	<select id="selectUserGpsRealData" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		select u.name, u.phoneNo,u.userId, latitude,longitude,location,sendTime
+		  from userInfo u left join userGpsRealData g on  g.userId = u.userId 
+		<dynamic prepend=" Where ">
+		   <isNotEmpty prepend="AND" property="userIdList">
+				u.userId in (
+				<iterate property="userIdList" conjunction=",">
+					#userIdList[]#
+				</iterate>
+				)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="depIdList">
+				u.regionId in (
+				<iterate property="depIdList" conjunction=",">
+					#depIdList[]#
+				</iterate>
+				)
+			</isNotEmpty>
+			 <isNotNull prepend="AND" property="sendTime">
+				<![CDATA[g.sendTime >=
+				#sendTime#]]>
+			</isNotNull>
+			
+		</dynamic>
+	</select>
+	
+	
+    <!--用于历史轨迹回放,同一个表内 -->
+	<select id="selectUserGpsInfosForMobile" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		select row_number() over(order by createDate) as RowNum,a.* from userGPsInfo 
+		a
+		<dynamic prepend="WHERE ">
+			<isNotEmpty prepend="AND" property="userId">
+				a.userId = #userId#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="startTime">
+				<![CDATA[
+				(sendTime >= #startTime#)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="endTime">
+				<![CDATA[
+				(sendTime <= #endTime#)
+				]]>
+			</isNotEmpty>
+			
+		</dynamic>
+	</select>
+	
+
+</sqlMap>

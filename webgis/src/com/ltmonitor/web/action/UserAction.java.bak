@@ -1,0 +1,542 @@
+package com.ltmonitor.web.action;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.ltmonitor.dao.impl.DaoIbatisImpl;
+import com.ltmonitor.entity.Department;
+import com.ltmonitor.entity.GPSRealData;
+import com.ltmonitor.entity.Role;
+import com.ltmonitor.entity.StringUtil;
+import com.ltmonitor.entity.SystemConfig;
+import com.ltmonitor.entity.UserInfo;
+import com.ltmonitor.service.IDepartmentService;
+import com.ltmonitor.service.IRealDataService;
+import com.ltmonitor.service.IVehicleService;
+import com.ltmonitor.util.DateUtil;
+
+public class UserAction extends PersistenceAction {
+
+	private IVehicleService vehicleService;
+	private IDepartmentService departmentService;
+	private List<TreeNode> treeNodes = new ArrayList<TreeNode>();
+
+	private DaoIbatisImpl queryDao;
+
+	// 用户选择的多个部门车组ID，用逗号隔开,如1，21，34的形式
+	private String strDepId;
+	// 用户分配的角色Id
+	private int roleId;
+
+	private String oldPsd;
+
+	private String newPsd;
+
+	private double lat;
+
+	private double lng;
+
+	private int zoom;
+
+	private int onlineNum;
+
+	private int totalNum;
+	/**
+	 * 前台刷新车辆数的标志，表示是更新节点的状态，而不是创建
+	 */
+	private boolean updateNode;
+
+	Map<Integer, Department> depMap = new HashMap<Integer, Department>();
+
+	private Map<String, String> treeData = new LinkedHashMap<String, String>();
+	private Map<String, Map> treeDataIndex = new HashMap<String, Map>();
+
+	private Map<String, Map> resultMap = new HashMap<String, Map>();
+
+	public String updatePassword() {
+		if (input != null)
+			return "input";
+
+		UserInfo user = getOnlineUser();
+		if (user != null) {
+			if (user.getPassword().equals(oldPsd)) {
+				user.setPassword(newPsd);
+				getBaseService().update(user);
+				setMessage("修改成功");
+			} else {
+				setMessage("旧密码不正确");
+
+			}
+		}
+		return "success";
+	}
+
+	public String view() {
+		super.view();
+		UserInfo user = (UserInfo) this.getEntity();
+		if (user.getEntityId() > 0) {
+			Role r = user.getRole();
+			if (r != null)
+				roleId = r.getEntityId(); // 用于页面显示用户已经分配的角色
+		}
+		return "view";
+	}
+
+	public String save() {
+		try {
+			UserInfo user = (UserInfo) populateEntity();
+			this.setEntity(user);
+			String hql = "from UserInfo where loginName = ? and deleted = ? and entityId <> ?";
+			UserInfo otherUser = (UserInfo) this.getBaseService().find(
+					hql,
+					new Object[] { user.getLoginName(), false,
+							user.getEntityId() });
+			if (otherUser != null) {
+				this.setMessage("用户登录名已经存在，请重选输入");
+				return "success";
+			}
+			if (strDepId != null && strDepId.length() > 0) {
+				user.getDepartments().clear();
+				String[] depIdArray = strDepId.split(",");
+				for (String str : depIdArray) {
+					int depId = Integer.parseInt(str);
+					Department dep = (Department) this.getBaseService().load(
+							Department.class, depId);
+					user.getDepartments().add(dep);
+				}
+			}
+			if (roleId > 0) {
+				// 分配角色
+				Role r = user.getRole();
+				if (r == null || r.getEntityId() != roleId) {
+					user.getRoles().clear();
+					r = (Role) this.getBaseService().load(Role.class, roleId);
+					user.getRoles().add(r);
+				}
+			}
+			this.getBaseService().saveOrUpdate(user);
+			setMessage("保存成功!");
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			this.setMessage("保存失败:" + ex.getMessage());
+		}
+		return "success";
+	}
+
+	/**
+	 * 设置地图中心
+	 * 
+	 * @return
+	 */
+	public String setMapCenter() {
+		try {
+			UserInfo user = this.getOnlineUser();
+			if (user != null) {
+				user = (UserInfo) this.getBaseService().load(UserInfo.class,
+						user.getEntityId());
+				user.setMapCenterLng(lng);
+				user.setMapCenterLat(lat);
+				user.setMapLevel(zoom);
+				this.getBaseService().saveOrUpdate(user);// 保存到用户信息中
+				this.setOnlineUser(user);
+
+				SystemConfig sc = (SystemConfig) getSession().get(
+						"systemConfig");
+				if (sc != null) {
+					sc.setInitLat(lat);
+					sc.setInitLng(lng);
+					sc.setInitZoomLevel(zoom);
+				}
+				return json(true, "已设置为当前默认地图中心！");
+			}
+			return json(false, "网页过期，请重新登录!");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return json(false, e.getMessage());
+		}
+
+	}
+
+	// 生成车辆树菜单
+	public String getVehicleTree() {
+		// 生成车辆树
+		try {
+			UserInfo user = getOnlineUser();
+			if (user == null)
+				return "error";
+			// 用户分配的车队
+			Set<Department> depSet = user.getDepartments();
+			List<Department> depList = new ArrayList<Department>();
+			List<Integer> depIdList = super.getAuthorizedDepIdList();
+			Map<Integer, Integer> nodeMap = new HashMap<Integer, Integer>();
+			for (Department dep : depSet) {
+				depList.add(dep);
+			}
+
+			String hql = "from Department where deleted = ? order by name";
+			List allDepList = departmentService.query(hql, false);
+			for (Object obj : allDepList) {
+				Department dep = (Department) obj;
+				depMap.put(dep.getEntityId(), dep);
+			}
+			createVehicleTreeNode(depIdList);// 创建车辆树节点
+			// 生成部门树
+			Collections.sort(depList, new Comparator<Department>() {
+				@Override
+				public int compare(Department o1, Department o2) {
+					if (o1.getName() == null)
+						return -1;
+
+					return o1.getName().compareTo(o2.getName());
+				}
+
+			});
+			for (Department dep : depList) {
+				dep = depMap.get(dep.getEntityId());
+				if (dep == null || dep.getTotalNum() == 0)
+					continue;
+				setTreeData(dep);
+				// log.info(dep.getName());
+				nodeMap.put(dep.getEntityId(), dep.getEntityId());
+				Department parent = depMap.get(dep.getParentId());
+				while (parent != null) {
+					if (nodeMap.containsKey(parent.getEntityId()) == false) {
+						log.info(dep.getName());
+						setTreeData(parent);
+						nodeMap.put(parent.getEntityId(), parent.getEntityId());
+					}
+					parent = depMap.get(parent.getParentId());
+				}
+			}
+
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+		}
+
+		resultMap.put("TreeData", treeData);
+		resultMap.put("TreeDataIndex", treeDataIndex);
+		// 统计上线车辆数和上线率,显示在前台
+		Map onlineInfo = new HashMap();
+		onlineInfo.put("onlineNum", onlineNum);
+		onlineInfo.put("totalNum", totalNum);
+		int offlineNum = totalNum - onlineNum;
+		onlineInfo.put("offlineNum", offlineNum);
+		double onlineRate = 0;
+		if (totalNum > 0 && onlineNum > 0)
+			onlineRate = 100.00 * onlineNum / totalNum;
+		if (onlineRate > 0) {
+			DecimalFormat df = new DecimalFormat("######0.00");
+			String rate = df.format(onlineRate);
+			onlineInfo.put("onlineRate", rate);
+		} else
+			onlineInfo.put("onlineRate", "0");
+
+		resultMap.put("onlineInfo", onlineInfo);
+
+		return "success";
+	}
+
+	/**
+	 * 创建车辆树节点
+	 */
+	private void createVehicleTreeNode(List<Integer> depIdList) {
+		Date start = new Date();
+		String queryId = "selectVehicleTree";
+		HashMap params = new HashMap();
+		params.put("depIdList", depIdList);
+		IRealDataService realService = this.getRealDataService();
+		List result = null;
+		if (depIdList.size() == 0)
+			result = new ArrayList();
+		else
+			result = queryDao.queryForList(queryId, params);
+		
+		if(result == null)
+			result = new ArrayList();
+
+		this.totalNum = result.size();
+		Map<String, GPSRealData> realMap = new HashMap<String, GPSRealData>();
+		if (realService != null) {
+			try {
+				List<GPSRealData> onlineRealDataList = realService
+						.getOnlineRealDataList();
+				for (GPSRealData rd : onlineRealDataList) {
+					realMap.put(rd.getSimNo(), rd);
+				}
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+		}
+
+		for (Object obj : result) {
+			Map rowData = (Map) obj;
+			String plateNo = "" + rowData.get("plateNo");
+			String simNo = "" + rowData.get("simNo");
+			String driverName = "" + rowData.get("driverName");
+			int vehicleId = (Integer) rowData.get("vehicleId");
+			int depId = (Integer) rowData.get("depId");
+			double velocity = 0;
+			String strVelocity = "" + rowData.get("velocity");
+			try {
+				if (rowData.get("velocity") != null
+						&& StringUtil.isNullOrEmpty(strVelocity) == false)
+					velocity = Double.parseDouble(strVelocity);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+			}
+			String onlineStatus = "" + rowData.get("online");
+			boolean online = false;// "true".equals(onlineStatus);
+
+			if (realService != null) {
+				GPSRealData rd = realMap.get(simNo);
+				if (rd != null)
+					online = rd.getOnline();
+				else
+					online = false;
+			}
+
+			String icon = "offline"; // 离线图标
+			if (online) {
+				this.onlineNum++;
+				if (velocity > 1)
+					icon = "online"; // 运行图标
+				else
+					icon = "parking";// 停车图标
+			}
+			String tid = "v" + vehicleId;
+			String parentNode = "dep" + depId;
+			MzTreeNode mzTn = new MzTreeNode(plateNo, tid, simNo, icon, online,
+					parentNode);
+			mzTn.setDriverinfos(driverName);
+			mzTn.setRecordId(vehicleId);
+			boolean isRefresh = needRefresh(mzTn);
+			if (this.updateNode) {
+				if (isRefresh)
+					treeDataIndex.put(tid, mzTn.getUpdateNode());
+			} else {
+				treeData.put(parentNode + "_" + tid, mzTn.getNodeStr());
+				treeDataIndex.put(tid, mzTn.getVehicleSource());
+			}
+
+			Department dep = depMap.get(depId);
+			while (dep != null) {
+				dep.setTotalNum(dep.getTotalNum() + 1);
+				if (online)
+					dep.setOnlineNum(dep.getOnlineNum() + 1);
+				dep = depMap.get(dep.getParentId());
+			}
+
+		}
+		Date end = new Date();
+
+		double seconds = DateUtil.getSeconds(start, end);
+		log.error("实时数据刷新耗时:" + seconds + ",条数：" + result.size());
+	}
+
+	private boolean needRefresh(MzTreeNode tn) {
+		String SESSION_FOR_TREE_NODE_MAP = "VehicleTreeNodeMap";
+		Map<String, MzTreeNode> nodeMap = (Map<String, MzTreeNode>) this
+				.getSession().get(SESSION_FOR_TREE_NODE_MAP);
+		if (nodeMap == null) {
+			nodeMap = new HashMap<String, MzTreeNode>();
+			nodeMap.put(tn.getNodeId(), tn);
+			this.getSession().put(SESSION_FOR_TREE_NODE_MAP, nodeMap);
+
+			return true;
+		}
+		MzTreeNode oldTn = nodeMap.get(tn.getNodeId());
+		if (oldTn == null) {
+			nodeMap.put(tn.getNodeId(), tn);
+			return true;
+		}
+
+		if (oldTn.getIcon().equals(tn.getIcon())
+				&& oldTn.getText().equals(tn.getText())) {
+			// 节点没有变化不需要刷新
+			nodeMap.put(tn.getNodeId(), tn);
+			return false;
+		}
+		nodeMap.put(tn.getNodeId(), tn);
+		return true;
+	}
+
+	private void setTreeData(Department dep) {
+		try {
+			String depNodeId = "dep" + dep.getEntityId();
+			int parentId = dep.getParentId();
+			// parentId = parentId > 0 ? ("dep_"+parentId) : 1;
+			String strParentNodeId = "dep" + parentId;
+			if (parentId == 0) {
+				strParentNodeId = "1";
+			}
+			MzTreeNode mzTn = new MzTreeNode(dep.getName(), depNodeId,
+					strParentNodeId, dep.getTotalNum(), dep.getOnlineNum());
+
+			boolean isRefresh = needRefresh(mzTn);
+			if (this.updateNode) {
+				// 如果前后节点没有变化，就更新节点的状态
+				if (isRefresh)
+					treeDataIndex.put(depNodeId, mzTn.getUpdateNode());
+			} else {
+				treeData.put(strParentNodeId + "_" + depNodeId,
+						mzTn.getGropuStr());
+				treeDataIndex.put(depNodeId, mzTn.getGroupSource());
+			}
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+		}
+	}
+
+	private IRealDataService getRealDataService() {
+		try {
+			ApplicationContext ctx = WebApplicationContextUtils
+					.getRequiredWebApplicationContext(this.getRequest()
+							.getSession().getServletContext());
+			if (ctx != null) {
+				IRealDataService rd = (IRealDataService) ctx
+						.getBean("realDataService");
+				return rd;
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return null;
+	}
+
+	public List<TreeNode> getTreeNodes() {
+		return treeNodes;
+	}
+
+	public void setTreeNodes(List<TreeNode> treeNodes) {
+		this.treeNodes = treeNodes;
+	}
+
+	public IVehicleService getVehicleService() {
+		return vehicleService;
+	}
+
+	public void setVehicleService(IVehicleService vehicleService) {
+		this.vehicleService = vehicleService;
+	}
+
+	public IDepartmentService getDepartmentService() {
+		return departmentService;
+	}
+
+	public void setDepartmentService(IDepartmentService departmentService) {
+		this.departmentService = departmentService;
+	}
+
+	protected Class getEntityClass() {
+		entityClass = UserInfo.class;
+		return entityClass;
+	}
+
+	public String getStrDepId() {
+		return strDepId;
+	}
+
+	public void setStrDepId(String strDepId) {
+		this.strDepId = strDepId;
+	}
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getOldPsd() {
+		return oldPsd;
+	}
+
+	public void setOldPsd(String oldPsd) {
+		this.oldPsd = oldPsd;
+	}
+
+	public String getNewPsd() {
+		return newPsd;
+	}
+
+	public void setNewPsd(String newPsd) {
+		this.newPsd = newPsd;
+	}
+
+	public Map<String, String> getTreeData() {
+		return treeData;
+	}
+
+	public void setTreeData(Map<String, String> treeData) {
+		this.treeData = treeData;
+	}
+
+	public Map<String, Map> getResultMap() {
+		return resultMap;
+	}
+
+	public void setResultMap(Map<String, Map> resultMap) {
+		this.resultMap = resultMap;
+	}
+
+	public Map<String, Map> getTreeDataIndex() {
+		return treeDataIndex;
+	}
+
+	public void setTreeDataIndex(Map<String, Map> treeDataIndex) {
+		this.treeDataIndex = treeDataIndex;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+
+	public int getZoom() {
+		return zoom;
+	}
+
+	public void setZoom(int zoom) {
+		this.zoom = zoom;
+	}
+
+	public DaoIbatisImpl getQueryDao() {
+		return queryDao;
+	}
+
+	public void setQueryDao(DaoIbatisImpl queryDao) {
+		this.queryDao = queryDao;
+	}
+
+	public boolean isUpdateNode() {
+		return updateNode;
+	}
+
+	public void setUpdateNode(boolean updateNode) {
+		this.updateNode = updateNode;
+	}
+
+}

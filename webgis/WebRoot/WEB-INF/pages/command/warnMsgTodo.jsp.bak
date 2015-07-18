@@ -1,0 +1,100 @@
+
+<%@ include file="/common/taglibs.jsp"%>
+<!--分页查询共用的页面-->
+<%@ include file="/common/common.jsp"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
+	<!--下拉树的配置-->
+	
+<script>
+$().ready(function() {
+	 $("#entityForm").validate(); //初始化验证信息
+	  Utility.ajaxSubmitForm("entityForm", {
+		  success:function(result)
+		  {
+			    if(result.success)
+			  {
+					alert("对上级平台应答成功!");
+			  }else
+			  {
+				  alert("应答失败:"+result.message);
+			  }
+		}});
+
+});
+</script>
+ <BODY>
+
+
+	<form id="entityForm" name="entityForm" 
+			action='<%=ApplicationPath%>/data/postQueryAck.action' method="POST">
+				<input type="hidden" name="entityId"
+					value="${entity.entityId}"/>
+  <table width="100%"  class="TableBlock">
+					<tbody><tr>
+						<td colspan="4" style="font-weight: bold; background: #EFEFEF;" height="25">报警督办信息
+						<span class="MessageFromServer">${message}</span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">车牌号:</td>
+						<td align="left">${entity.plateNo}</td>
+					</tr>
+					<tr>
+						<td align="right">车牌颜色:</td>
+						<td align="left">${entity.plateColor}</td>
+					</tr>
+					<tr>
+						<td align="right">报警督办ID:</td>
+						<td align="left">${entity.supervicsionId}</td>
+					</tr>
+					<tr>
+						<td align="right">报警来源:</td>
+						<td align="left">
+							${entity.warnSrc}
+                         </td>
+					</tr>
+					<tr>
+						<td align="right">报警时间:</td>
+						<td align="left">
+							${entity.warnTime}
+                         </td>
+					</tr>
+					<tr>
+						<td align="right">报警截至时间:</td>
+						<td align="left">
+							${entity.supervisionEndtime}
+                         </td>
+					</tr>
+					<tr>
+						<td align="right">督办级别:</td>
+						<td align="left">
+							${entity.supervisionLevel}
+                         </td>
+					</tr>
+					<tr>
+						<td align="right">督办人:</td>
+						<td align="left">
+							${entity.supervisor}
+                         </td>
+					</tr>
+				<tr>
+						<td align="right">督办电话:</td>
+						<td align="left">
+							${entity.supervisorTel}
+                         </td>
+					</tr>
+					<tr>
+						<td align="right">督办人电子邮箱:</td>
+						<td align="left">
+						${entity.supervisorEmail}
+                         </td>
+					</tr>
+					<tr>
+					<tr>
+						<td colspan=4 align=center>						
+						   <button type="submit" class="sendjson" >确定</button> 
+						</td>
+					</tr>
+				</tbody></table>
+ </BODY>
+</HTML>

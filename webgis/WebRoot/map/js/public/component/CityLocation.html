@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!-- <link rel="stylesheet" type="text/css" href="css/google/overlay.css" />
+    <script src='http://${systemConfig.googleUrl}/maps?file=api&amp;v=${systemConfig.googleVersion}&amp;key=${googleKey}&hl=zh_cn' type='text/javascript'></script>   -->
+    <script language="javascript" src=http://api.51ditu.com/js/maps.js></script>
+    <script type="text/javascript" src="js/public/util.js"></script>
+    <script type="text/javascript" src="js/public/locale_zh_cn.js"></script>
+    <script type="text/javascript" src="js/public/placeList.js"></script>
+    <script type="text/javascript" src="js/public/component/CityLocation.js"></script>
+    <script type="text/javascript" src="js/adapter/51ditu-adapter.js"></script>
+    <script type="text/javascript" src="js/base.js"></script>
+    <title></title>
+  <style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	overflow:hidden;
+}
+
+-->
+</style></head>
+
+<body onload="load()">    
+    <script type="text/javascript" src="../util.js"></script>
+    <script type="text/javascript" src="../placeList.js"></script>
+    <script type="text/javascript" src="CityLocation.js"></script>
+    <div id="location-show"></div>
+    <script>
+    	function load(){
+    		var cityLocation = new CityLocation("city-location", window.placeData);
+    		cityLocation.setHandler(window.parent.map);
+    		cityLocation.setSearchHandler(window.parent.map.createSearchControl(cityLocation));
+    		cityLocation.initExt();
+    		cityLocation.btnClick(document.getElementById("location-show"), 0, 0);
+    	}
+    </script>
+</body>
+</html>

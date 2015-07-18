@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- Actions in this package will be prefixed with /user/ -->
+	<package name="map" extends="default" namespace="/map">
+
+		<!-- 加载围栏列表 -->
+		<action name="enclosureList" class="sendEnclosureAction"
+			method="getEnclosureList">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+        <!-- 围栏绑定 -->
+		<action name="enclosureBinding" class="enclosureBindingAction"
+			method="view">			
+			<result name="input">/WEB-INF/pages/map/enclosureBindingList.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 未绑定车辆列表查询 -->
+		<action name="getUnbindVehicle" class="enclosureBindingAction" method="execute">
+			<result name="input">/WEB-INF/pages/map/unbindVehicleList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		<!-- 绑定车辆列表查询 -->
+		<action name="getBindVehicle" class="paginateAction" method="execute">
+			<result name="input">/WEB-INF/pages/map/enclosureBindingList.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+		
+		<!-- 绑定车辆 -->
+		<action name="bindEnclosure" class="enclosureBindingAction" method="bindEnclosure">
+			<result name="input">/WEB-INF/pages/map/ecnlosureBindingList.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 解除绑定车辆-->
+		<action name="unbindEnclosure" class="enclosureBindingAction" method="unbindEnclosure">
+			<result name="input">/WEB-INF/pages/map/ecnlosureBindingList.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 未绑定车辆列表查询 -->
+		<action name="getBindEnclosure" class="enclosureBindingAction" method="execute">
+			<result name="input">/WEB-INF/pages/map/vehicleBinding.jsp
+			</result>
+			<result name="success" type="json">
+				<param name="root">paginateResult</param>
+			</result>
+		</action>
+
+		<action name="viewRoute" class="routeAction" method="viewRoute">
+			<result name="success">/WEB-INF/pages/map/editRoute.jsp</result>
+
+		</action>
+
+		<action name="viewArea" class="routeAction" method="viewArea">
+			<result name="success">/WEB-INF/pages/map/editEnclosure.jsp</result>
+		</action>
+		
+		<action name="viewKeyPoint" class="routeAction" method="viewKeyPoint">
+			<result name="success">/WEB-INF/pages/map/editKeyPoint.jsp</result>
+		</action>
+		<!-- 查看地标 -->
+		<action name="viewMarker" class="routeAction" method="viewMarker">
+			<result name="success">/WEB-INF/pages/map/editMarker.jsp</result>
+		</action>
+		<!-- 删除围栏 -->
+		<action name="deleteAreas" class="routeAction" method="deleteAreas">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<!-- 保存关键点 -->
+		<action name="saveKeyPoint" class="routeAction" method="saveKeyPoint">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+		<!-- 保存地标 -->
+		<action name="saveMarker" class="routeAction" method="saveMarker">
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+
+		<action name="saveArea" class="routeAction" method="saveArea">
+			<result name="success">/WEB-INF/pages/map/editEnclosure.jsp</result>
+
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		<action name="saveRoute" class="routeAction" method="saveRoute">
+			<result name="success">/WEB-INF/pages/map/editRoute.jsp</result>
+
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+
+		<action name="saveLineSegment" class="routeAction" method="saveLineSegment">
+			<result name="input">/WEB-INF/pages/map/editLineSegment.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/map/editLineSegment.jsp
+			</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		
+		<!-- 地图图元树 -->
+		<action name="getMapTree" class="mapTreeAction" method="getMapTree">
+			<result name="success" type="json">
+				<param name="root">treeNodes</param>
+			</result>
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+		</action>
+		
+
+	</package>
+
+</struts>
