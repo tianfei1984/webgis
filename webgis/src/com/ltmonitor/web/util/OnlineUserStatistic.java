@@ -30,8 +30,12 @@ public class OnlineUserStatistic {
 			if(d != null)
 			{
 				double seconds = com.ltmonitor.util.DateUtil.getSeconds(d, today);
-				if(seconds < 60)
+				if(seconds < 60){
 					onlineNum++;
+				} else {
+					//如果用户已经不在线则删除记录
+					onlineMap.remove(key);
+				}
 			}
 		}
 		return onlineNum;
