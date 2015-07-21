@@ -26,6 +26,18 @@ RealDataGrid.setPlateNo = function(plateNo, vehicleId)
 	this.selectedPlateNo = plateNo;
 	this.selectedVehicleId = vehicleId;
 }
+//清空数据
+RealDataGrid.clearData = function(){
+	var me = this.realDataGrid;
+	var item = me.datagrid('getRows');
+    if (item) {
+        for (var i = item.length - 1; i >= 0; i--) {
+            var index = me.datagrid('getRowIndex', item[i]);
+            me.datagrid('deleteRow', index);
+        }
+    }
+    me.datagrid('loadData', { total: 0, rows: [] });
+}
 
 /**
 * 定时发送ajax请求，更新表格,
@@ -34,9 +46,11 @@ RealDataGrid.setPlateNo = function(plateNo, vehicleId)
 */
 RealDataGrid.refresh = function(update)
 {
-	if(!this.selectVehicleIds || this.selectVehicleIds.length == 0)
-		return;
 	var me = this;
+	if(!this.selectVehicleIds || this.selectVehicleIds.length == 0){
+		me.clearData();
+		return;
+	}
 	var url = globalConfig.webPath+"/vehicle/refreshRealData.action";
 	var params = {update:update};	 
      $.ajax({
@@ -112,8 +126,8 @@ RealDataGrid.refresh = function(update)
 					alert("操作发生错误! 错误原因:"  + data.Message);
 
 				}*/
-                var end = new Date();
-	            var interval = 0.001 * (end - start) ;
+                //var end = new Date();
+	           // var interval = 0.001 * (end - start) ;
 
 	            //if(console)
 	              //  console.log("载入"+records.length+"条数,耗时:"+ interval+"秒");
@@ -211,7 +225,7 @@ RealDataGrid.create = function()
 				pagination: true,
 				loadFilter:pagerFilter, //内存分页，必须要指定过滤器
 				nowrap: true,
-				pageSize: 50,
+				pageSize: 10,
 				pageList: [10, 20, 50, 100, 150, 200],
 				showFooter: true,
 				onClickRow:function(rowIndex, rowData)
