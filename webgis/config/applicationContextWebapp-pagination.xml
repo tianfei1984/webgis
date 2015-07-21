@@ -19,6 +19,7 @@
 				<value>startTime</value>
 				<value>endTime</value>
 				<value>staticDate</value>
+				<value>sendTime</value>
 			</list>
 		</property>
 		<!-- 数据列转换，将引用列的Id显示成可读的名称 -->

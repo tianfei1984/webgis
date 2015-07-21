@@ -396,7 +396,7 @@ body {
 	 */
 	function createExtendMarker(lat, lng, radius, id, name,iconName)
 	{
-		var icon = "mapIcon/"+iconName;
+		var icon = "MapIcon/"+iconName;
 		var enclosure = OperatorObj.createKeyPointMarkerById(id,  lat, lng, name, icon, function(id)
 		{
 			//点击地图标注后，弹出编辑窗口

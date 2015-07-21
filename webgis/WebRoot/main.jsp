@@ -93,7 +93,7 @@ body {
 	     </div>
 	</div><!--end of north-->
 	<div data-options="region:'west',split:true" style="width:230px">
-		<!-- 左树 -->
+		<!-- 车辆左树 -->
 	    <div id="treeTab" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
 			<div title="车辆列表" style="padding:3px">
 			   <div id="p"   style="margin-bottom:5px">	      
@@ -120,6 +120,7 @@ body {
 				  <!--
 				  <a id="btnDeleteArea" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >绑定车辆</a>
 				  -->
+				   <a id="loadMapTree" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" >加载围栏</a>
 			   </div>
 		       <!--地图区域对象组成的树菜单-->
 			   <ul id="mapTree"></ul>
@@ -133,7 +134,7 @@ body {
 		  <a><img src="<%=imgPath %>/offline.png"  style="vertical-align:middle" width="13" height="13" alt="离线图标"/>离线:<span id="spanGpsOffline">0</span></a>
 		  <a><img src="<%=imgPath %>/parking.png"  style="vertical-align:middle" width="13" height="13" alt="停车图标"/>停车:<span id="spanParking">0</span></a>
 		  <a><img src="<%=imgPath %>/chart.png"  style="vertical-align:middle" width="13" height="13" alt="上线率图标"/>上线率:<span id="spanOnlineRate">0</span>%</a>
-		  <a style="margin-left:50px">地图车标:<img src="<%=imgPath %>/VehicleGreen.png" width="11" height="17" align="absmiddle"/>行驶 <img src="<%=imgPath %>/VehicleYellow.png" width="11" height="17" align="absmiddle"/>停车 <img src="<%=imgPath %>/VehicleRed.png" width="11" height="17" align="absmiddle"/>报警</a>
+		  <a style="margin-left:50px">地图车标:<img src="<%=imgPath %>/VehicleGreen.png" width="11" height="17" align="absmiddle"/>行驶 <img src="<%=imgPath %>/VehicleParking.png" width="21" height="19" align="absmiddle"/>停车 <img src="<%=imgPath %>/VehicleRed.png" width="11" height="17" align="absmiddle"/>报警</a>
           登录时间：<span id="spanLoginTime"></span><span style="margin-left:10px; margin-right:10px;">|</span><img src="<%=imgPath %>/user_add.png"  style="vertical-align:middle" width="13" height="13" alt="在线人数图标"/>当前在线人数:<span id="spanOnlineUserNum">0</span><span style="margin-left:10px; margin-right:10px;">|</span>软件版本：V1.0.0<span style="margin-left:10px; margin-right:10px;">|</span> <img src="<%=imgPath %>/alarm.png"  style="vertical-align:middle;cursor:pointer;" id="imgShowAlarmWindow" width="13" height="13" alt="点击报警窗口" onclick="AlarmGrid.popNotifyWindow();"/>
 	</div>
 	<!-- 操作区域 -->
@@ -143,6 +144,7 @@ body {
 			<div title="综合监控" style="padding:0px" data-options="iconCls:'icon-main'">
 				<div id="centerLayout" class="easyui-layout" data-options="fit:true">
 					<div data-options="region:'center',border:true">
+						<!-- 地图  -->
 					   <iframe id="mapFrame" scrolling="no" frameborder="0"  src="" style="width:100%;height:99%;"></iframe>
 					</div>
 					<div data-options="region:'south',split:true,border:true" style="height:240px">
@@ -151,7 +153,7 @@ body {
 			               <div title="实时数据" style="padding:0px" data-options="">
 						      <div id="commandToolbar" style=" margin :0px; padding :5px;">     
 									车牌号：
-									<input id="realDataPlateNo" type="realDataPlateNo" style="width:100px;"/>&nbsp;| 
+									<input id="realDataPlateNo" type="realDataPlateNo" style="width:100px;" readonly="readonly" />&nbsp;| 
 								</div>
 
 					          <div id="realDataGrid"></div>

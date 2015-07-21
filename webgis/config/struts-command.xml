@@ -128,6 +128,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 视频/拍照 -->
 		<action name="takePicture" class="takePictureAction" method="execute">
 			<result name="input">/WEB-INF/pages/command/takePicture.jsp</result>
 			<result name="jsonSuccess" type="json">
@@ -272,7 +273,6 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
-		
 		
 		<!-- 围栏设置 -->
 		<action name="sendEnclosure" class="sendEnclosureAction"

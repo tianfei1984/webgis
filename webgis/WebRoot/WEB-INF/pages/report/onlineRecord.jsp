@@ -23,7 +23,7 @@
 				var endTime = rowData.endTime;
 				var status = rowData.status;
 				if(status == 'New')
-				   return '<span style="color:red;font-weight:bold;">报警中..</span>';
+				   return '<span style="color:red;font-weight:bold;">在线中..</span>';
 				return endTime;
 			}
 			

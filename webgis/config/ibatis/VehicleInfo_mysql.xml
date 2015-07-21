@@ -1188,7 +1188,7 @@
 	
 
 
-	<!-- 查询报警记录 -->
+	<!-- 查询车辆上下线记录 -->
 	<select id="selectOnlineRecord" parameterClass="java.util.HashMap"
 		resultClass="java.util.HashMap">
 		<![CDATA[

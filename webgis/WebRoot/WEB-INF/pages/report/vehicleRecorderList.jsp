@@ -37,6 +37,8 @@
 			}
 
 			$(document).ready(function() {
+				//创建下拉部门树
+				Utility.createDepTree("depId");
 			      //对应数据库SQL查询的字段名
 			      var columns = [
 						{ "mData": "plateNo" },
@@ -82,13 +84,8 @@
 					<input type="text" id="plateNo" name="plateNo" > 
 					</td>
 				   <td> 车组名称 </td>
-					<td>			   
-					<input type="text" id="depName" name="depName" > 
-							<input type="hidden" id="depId" name="depId" value="" />
-							<!--车组下拉框-->
-						<div id="menuContent" class="menuContent" style="display:none; position: absolute;height:100px;">
-							<ul id="treeMenu" class="ztree" style="margin-top:0; width:170px;height:200px;"></ul>
-						</div>
+					<td>		
+					<select id="depId" name="depId" style="width:200px;"></select>	   
                </td>
 				<td>命令类型</td>
 			   <td> <select id="cmdWord" name="cmdWord" width="10"></select></td>
@@ -98,38 +95,39 @@
 						
 						<td align="right">上传时间
 							:</td>
-						<td colspan=5>
-      <input type="text" name="startTime"  class="datetimepicker" />至
-      <input type="text" name="endTime"  class="datetimepicker" />
-       
-	       <input type="button" value="查询"  title="查询" id="btnQuery" class="button gray medium"/>&nbsp;&nbsp;
-           <input type="reset" value="重置" title="重置" class="button gray medium"/>&nbsp;&nbsp;
-		    <button class="button gray medium"  value="l" title="导出" onclick="Utility.excelExport('<%=ApplicationPath%>/data/excelExport.action');"/> 导出Excel</button> <!--调用utility.js-->
+						<td colspan=3>
+	      <input type="text" name="startTime"  class="datetimepicker" />至
+	      <input type="text" name="endTime"  class="datetimepicker" />
+        </td>
+         <td  align="left">
+	      <a id="btnQuery" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" >查询</a>&nbsp;
+		   <a id="btnReset" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear'" >重置</a>&nbsp;
+		   <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-excel'" onclick="Utility.excelExport('<%=ApplicationPath%>/data/excelExport.action');">导出</a><!--调用utility.js-->
+          
         </td>
     </tr>
+		</table>
 		</form>	 
+		</div>
 		
-
-			<div id="dynamic">
-				<table class="t1" id="dataTable" width="100%">
+			<table id="queryGrid" class="easyui-datagrid" title="" style="width:100%;height:480px"
+						data-options="pagination:true,pageSize:15,singleSelect:true,rownumbers:true,striped:true,fitColumns: true,
+						pageList: [15, 20, 50, 100, 150, 200],fit:true,toolbar:'#toolbar',
+						url:'<%=ApplicationPath%>/report/queryRecorder.action',method:'post'">
 					<thead>
 						<tr>
-							<th width="4%">车牌号</th>
-							<th width="4%">车牌颜色</th>
-							<th width="7%">车组</th>
-							<th width="5%">Sim卡号</th>
-							<th width="19%">命令类型</th>
-							<th width="19%">内容</th>
-							<th width="11%">上传时间</th>
+							<th data-options="field:'plateNo'" width="6%">车牌号</th>
+							<th data-options="field:'plateColor'" width="4%">车牌颜色</th>
+							<th data-options="field:'depName'" width="7%">车组</th>
+							<th data-options="field:'simNo'" width="5%">Sim卡号</th>
+							<th data-options="field:'cmd'" width="19%">命令类型</th>
+							<th data-options="field:'cmdData'" width="19%">命令</th>
+							<th data-options="field:'createDate'" width="11%">上传时间</th>
 						</tr>
 					</thead>
-					<tbody>
-						
-					</tbody>					
-				</table>
-			</div>
-			<div class="spacer"></div>
-			</div>
+			</table>
+				
+				
 
 </body>
 

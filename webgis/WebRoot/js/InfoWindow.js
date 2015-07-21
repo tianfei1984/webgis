@@ -196,7 +196,7 @@ InfoWindow.openCommandWindow = function(command, vehicleId,title,icon)
 		InfoWindow.open(url, 820, 400, title);
 	}else if(command == "TAKE_PICTURE")
 	{
-		//拍照
+		// 视频/拍照
 		var url = commandPath + "/command/takePicture.action";
         url += "?input=true&vehicleId="+vehicleId;
 		InfoWindow.open(url, 600, 520, title);
@@ -214,7 +214,7 @@ InfoWindow.openCommandWindow = function(command, vehicleId,title,icon)
 		InfoWindow.open(url, 520, 250, title);
 	}else if(command == "TERMINAL_ENCLOSURE")
 	{
-		//围栏下发窗口
+		//配置终端区域
 		var url = commandPath + "/command/sendEnclosure.action";
         url += "?input=true&vehicleId="+vehicleId;
 		InfoWindow.open(url, 820, 550, title);
@@ -278,8 +278,9 @@ InfoWindow.openCommandWindow = function(command, vehicleId,title,icon)
 		     url+= "?vehicleId=" + vehicleId;
 	     addTab(title,url,icon);
 	}else if(command == "VEHICLE_INFO")
-	{
-		  var url = commandPath + "/vehicle/viewVehicleInfo.action";
+	{		
+		//车辆信息
+		var url = commandPath + "/vehicle/viewVehicleInfo.action";
         url += "?input=true&vehicleId="+vehicleId;
 		  InfoWindow.open(url, 720, 450, title);
 	}else if(command == "HISTORY_ROUTE")

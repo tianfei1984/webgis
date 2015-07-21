@@ -16,6 +16,7 @@ VehicleTree.createTree = function(id, treeHeight,treeRightMenu)
 	 this.refreshInterval = 10;
 	 var strInterval = this.refreshInterval + 's';
 	 var me = this;
+	 //定时刷新车辆状态
 	 $('body').everyTime(strInterval, this.timerName,function(){
 		//do something...
 		me.load(true);//更新模式

@@ -54,7 +54,7 @@ public class VehicleTreeAction extends PersistenceAction {
 	Map<Integer,Integer> depOnlineVehicleNum = new HashMap<Integer, Integer>();
 	Map<Integer,Integer> depTotalVehicleNum = new HashMap<Integer, Integer>();
 	
-
+	//车辆树结点集合
 	private Map<String, TreeNode> treeNodeMap = new HashMap<String, TreeNode>();
 
 	private ArrayList<TreeNode> treeData = new ArrayList<TreeNode>();
@@ -158,7 +158,6 @@ public class VehicleTreeAction extends PersistenceAction {
 			onlineInfo.put("onlineRate", rate);
 		} else
 			onlineInfo.put("onlineRate", "0");
-		//TODO:当前在线人数算法？？？
 		// 更新用户的在线时间
 		OnlineUserStatistic.UpdateOnlineTime(this.getOnlineUser().getEntityId());
 		// 得到在线用户数
@@ -296,7 +295,7 @@ public class VehicleTreeAction extends PersistenceAction {
 			}
 
 		}
-		Date end = new Date();
+		//Date end = new Date();
 		//double seconds = DateUtil.getSeconds(start, end);
 		// log.error("实时数据刷新耗时:" + seconds + ",条数：" + result.size());
 	}

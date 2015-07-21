@@ -31,6 +31,17 @@ MapTree.createTree = function()
 		me.refresh();
 	});
 	
+	$("#loadMapTree").click(function(){
+		var iframeWindow = $("#mapFrame")[0];  
+		if(iframeWindow){
+			var mapHandler = iframeWindow.contentWindow.OperatorObj;
+			if(mapHandler == null)
+				return;
+			mapHandler.clearAllElement();
+			iframeWindow.contentWindow.loadEnclosures(); //得到地图页面上的javascript 地图对象，便于主界面调用
+		}
+	});
+	
 	$("#btnDeleteArea").click(function()
 	{
 		var idArray = [];

@@ -81,6 +81,9 @@ public class AlarmStaticAction extends PaginateAction {
 		try {
 			Map params = this.getParams();
 			String startTime = "" + params.get("startDate");
+			if(startTime == null || startTime.isEmpty()){
+				return json(false, "统计时间不能为空");
+			}
 			startTime = startTime.substring(0, 7).replace("-", "");
 			String tableName1 = "NewAlarm" + startTime;
 

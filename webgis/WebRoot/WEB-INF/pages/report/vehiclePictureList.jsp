@@ -17,16 +17,17 @@
 </head>
 
 		<script type="text/javascript" charset="utf-8">
-				 var picturePath = "<%=ApplicationPath%>/vehiclePicture/";
+			 var picturePath = "<%=ApplicationPath%>/vehiclePicture/";
 			//格式化输出图片列			
 			function getPicColumn(value, rowData, rowIndex)
 			{  		
-					       var fileName = rowData.fileName;
-						   var filePath = picturePath + fileName;
-						   //alert(entityId);
-							var html =  "<img class=vpic src='" +filePath+"';\"/>";
-							//alert(html);
-						   return html;
+		       var fileName = rowData.fileName;
+			   var filePath = picturePath + fileName;
+			   //alert(entityId);
+				//var html =  "<img class=vpic src='" +filePath+"';\"/>";
+				//alert(html);
+			 	var html =  "<a href=# onclick=\"javascript:window.open('" + filePath+ "');\">" +" 下载</a>";
+			   return html;
 			}
 
 
@@ -72,7 +73,7 @@
 						<td align="right">开始时间
 							:</td>
 						<td>
-      <input type="text" name="startDate" id="startDate" class="datetimepicker"></input>
+      		<input type="text" name="startDate" id="startDate" class="datetimepicker"></input>
 						</td>
 						<td>结束时间:</td>
 						<td align="left">
@@ -100,7 +101,7 @@
 								<th data-options="field:'location'"   width="30%">地点</th>
 								<th data-options="field:'speed'"   width="5%">速度(km/h)</th>
 								<th data-options="field:'depName'"   width="10%">车组</th>
-								<th data-options="field:'fileName',formatter:getPicColumn"   width="20%">图片</th>
+								<th data-options="field:'fileName',formatter:getPicColumn"   width="20%">图片下载</th>
 						</tr>
 					</thead>				
 				</table>

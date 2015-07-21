@@ -26,9 +26,9 @@
 			  <table width="100%"  class="TableBlock">
 			   			   <tr>
 			   <td> 车牌号: </td>
-			    <td>			    <input type="text" name="plateNo" size="10"  id="name">   </td>
-            <td>卡号:</td>
-			    <td>			    <input type="text" name="simNo" size="10" >   </td>
+			    <td>			    <input type="text" name="plateNo" size="15"  id="name">   </td>
+            <td>SIM卡号:</td>
+			    <td>			    <input type="text" name="simNo" size="15" >   </td>
              <td>操作时间:</td>
 			    <td>			    <input type="text" name="startDate" size="10" class="datepicker">  
 				至    <input type="text" name="endDate" size="10" class="datepicker">

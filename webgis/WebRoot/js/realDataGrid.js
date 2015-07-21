@@ -233,10 +233,10 @@ RealDataGrid.create = function()
 					me.onClickRow(rowIndex, rowData);
 				}
             });
+    var me = this;
 	 this.refreshInterval = 10;
 	 this.timerName = "realdataTimer";
 	 var strInterval = this.refreshInterval + 's';
-	 var me = this;
 	 $('body').everyTime(strInterval, this.timerName,function(){
 		//do something...
 		me.refresh(true);//更新模式
