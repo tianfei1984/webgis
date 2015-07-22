@@ -10,12 +10,12 @@ AlarmToDoGrid.create = function()
                 columns: [[
                     { title: '车牌号', field: 'plateNo', width: 80,minWidth:80 },
                     { title: '颜色', field: 'plateColor', width: 60,minWidth:60 },
-                    { title: '车组', field: 'depName', width: 100,minWidth:40 },
+                    //{ title: '车组', field: 'depName', width: 100,minWidth:40 },
                     { title: '报警来源', field: 'warnSrc', width: 100,minWidth:100 },
                     { title: '报警类型', field: 'warnType', width: 100,minWidth:100 },
                     { title: '报警时间', field: 'warnTime', width: 120,minWidth:120 },
-                    { title: '处理', field: 'status', width: 90,minWidth:80 },
-                    { title: '督办截至时间', field: 'supervisionEndTime', width: 120,minWidth:40 },
+                    { title: '处理', field: 'ackFlag', width: 90,minWidth:80 ,formatter:getTodoStatus},
+                    { title: '督办截至时间', field: 'supervisionEndtime', width: 120,minWidth:40 },
                     { title: '督办级别', field: 'supervisionLevel', width: 60,minWidth:40 },
                     { title: '督办人', field: 'supervisor', width: 90,minWidth:40 },
                     { title: '电子邮件', field: 'supervisorEmail', width: 90,minWidth:40 },
@@ -27,6 +27,7 @@ AlarmToDoGrid.create = function()
 			    toolbar:"#alarmToDoGridToolbar",
 				method: 'POST',
 				queryParams: { 'id': 2 },
+				onDblClickRow:this.onDblClickRow,
 				idField: 'plateNo',
 				striped: true,
 				fitColumns: false,
@@ -49,7 +50,21 @@ AlarmToDoGrid.create = function()
      return this.alarmToDoGrid;
 	
 }
+//督办处理状态
+function getTodoStatus(value, rowData, rowIndex)
+{  
+	var online = rowData.ackFlag;
+	var html = online == "0" ? "<span style='color:red'>未处理</span>" : "<span style='color:green;font-weight:bold;'>已处理</span>";
+    return html;
+}
 
+//双击表格，弹出报警处理窗口，提请用户处理报警
+AlarmToDoGrid.onDblClickRow = function(rowIndex, rowData){
+	if(rowData.ackFlag == '0'){
+		var url = globalConfig.webPath+"/command/warnMsgTodo.action?msgId="+rowData.id;
+		InfoWindow.open(url, 500,540,"上级平台报警督办消息");
+	}
+}
 
 /**
 * 定时发送ajax请求，更新表格,

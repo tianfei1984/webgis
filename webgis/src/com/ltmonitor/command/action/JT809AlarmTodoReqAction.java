@@ -1,24 +1,17 @@
 package com.ltmonitor.command.action;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.ibatis.sqlmap.client.PageResult;
 import com.ltmonitor.entity.BasicData;
 import com.ltmonitor.entity.JT809Command;
-import com.ltmonitor.entity.StringUtil;
-import com.ltmonitor.entity.T809Constants;
-import com.ltmonitor.entity.TerminalCommand;
 import com.ltmonitor.entity.UserInfo;
 import com.ltmonitor.entity.VehicleData;
 import com.ltmonitor.entity.WarnMsgUrgeTodoReq;
-import com.ltmonitor.service.JT808Constants;
 import com.ltmonitor.service.ITerminalService;
 import com.ltmonitor.service.IVehicleService;
 import com.ltmonitor.util.DateUtil;
-import com.ltmonitor.web.action.GenericAction;
 import com.ltmonitor.web.action.QueryAction;
 /**
  * 报警督办
@@ -125,7 +118,7 @@ public class JT809AlarmTodoReqAction extends QueryAction {
 				rowData.put("warnTime",
 						DateUtil.toStringByFormat(warnTime, "MM-dd HH:mm:ss"));
 
-				Date supervisionEndTime = (Date) rowData.get("supervisionEndTime");
+				Date supervisionEndTime = (Date) rowData.get("supervisionEndtime");
 				rowData.put("supervisionEndtime",
 						DateUtil.toStringByFormat(supervisionEndTime, "MM-dd HH:mm:ss"));
 			}

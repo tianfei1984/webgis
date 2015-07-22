@@ -86,6 +86,7 @@ public class PlatformPostQueryAction extends GenericAction {
 				//jc.setUserId(onlineUser.getEntityId());
 			}
 			getTerminalService().SendPlatformCommand(jc);
+			//TODO:督办状态变更
 			return json(true, "");
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

@@ -135,7 +135,7 @@ body {
 		  <a><img src="<%=imgPath %>/parking.png"  style="vertical-align:middle" width="13" height="13" alt="停车图标"/>停车:<span id="spanParking">0</span></a>
 		  <a><img src="<%=imgPath %>/chart.png"  style="vertical-align:middle" width="13" height="13" alt="上线率图标"/>上线率:<span id="spanOnlineRate">0</span>%</a>
 		  <a style="margin-left:50px">地图车标:<img src="<%=imgPath %>/VehicleGreen.png" width="11" height="17" align="absmiddle"/>行驶 <img src="<%=imgPath %>/VehicleParking.png" width="21" height="19" align="absmiddle"/>停车 <img src="<%=imgPath %>/VehicleRed.png" width="11" height="17" align="absmiddle"/>报警</a>
-          登录时间：<span id="spanLoginTime"></span><span style="margin-left:10px; margin-right:10px;">|</span><img src="<%=imgPath %>/user_add.png"  style="vertical-align:middle" width="13" height="13" alt="在线人数图标"/>当前在线人数:<span id="spanOnlineUserNum">0</span><span style="margin-left:10px; margin-right:10px;">|</span>软件版本：V1.0.0<span style="margin-left:10px; margin-right:10px;">|</span> <img src="<%=imgPath %>/alarm.png"  style="vertical-align:middle;cursor:pointer;" id="imgShowAlarmWindow" width="13" height="13" alt="点击报警窗口" onclick="AlarmGrid.popNotifyWindow();"/>
+          登录时间：<span id="spanLoginTime"></span><span style="margin-left:10px; margin-right:10px;">|</span><img src="<%=imgPath %>/user_add.png"  style="vertical-align:middle" width="13" height="13" alt="在线人数图标"/>当前在线人数:<span id="spanOnlineUserNum">0</span><span style="margin-left:10px; margin-right:10px;">|</span>软件版本：V1.0<span style="margin-left:10px; margin-right:10px;">|</span> <img src="<%=imgPath %>/alarm.png"  style="vertical-align:middle;cursor:pointer;" id="imgShowAlarmWindow" width="13" height="13" title="点击报警窗口" alt="点击报警窗口" onclick="AlarmGrid.popNotifyWindow();"/>
 	</div>
 	<!-- 操作区域 -->
 	<div data-options="region:'center'">
@@ -178,7 +178,7 @@ body {
 									<input type="checkbox" id="muteAlarmSound"/>静音&nbsp;&nbsp;
 									<input type="checkbox"  id="disableAlarmWindow"/>禁止弹窗
 								</div>
-					          <div id="alarmDataGrid"></div>
+					          	<div id="alarmDataGrid"></div>
 						   </div>
 						    <div title="终端命令" style="padding:0px">
 					          <div id="terminalCommandGrid"></div>
@@ -338,11 +338,11 @@ body {
 <script type="text/javascript" src="<%=jsPath%>/InfoWindow.js"></script>
 <script type="text/javascript" src="<%=jsPath%>/historyRoute.js"></script>
 <script type="text/javascript" src="<%=jsPath%>/jquery.tmpl.js"></script>
-<script type="text/javascript" src="<%=jsPath%>/alarmGrid.js"></script>
+<script type="text/javascript" src="<%=jsPath%>/alarmGrid.js"></script><!-- 报警 -->
 <script type="text/javascript" src="<%=jsPath%>/menu.js"></script>
 <script type="text/javascript" src="<%=jsPath%>/md5.js"></script>
-<script type="text/javascript" src="<%=jsPath%>/AlarmToDoGrid.js"></script>
-<script type="text/javascript" src="<%=jsPath%>/jt809CommandGrid.js"></script>
+<script type="text/javascript" src="<%=jsPath%>/AlarmToDoGrid.js"></script><!-- 报警督办 -->
+<script type="text/javascript" src="<%=jsPath%>/jt809CommandGrid.js"></script><!-- 上级政府平台 -->
 <script type="text/javascript" src="<%=jsPath%>/terminalCommandGrid.js"></script>
 <script type="text/javascript" src="<%=jsPath%>/alarmGrid.js"></script>
 <script type="text/javascript" src="<%=jsPath%>/alarmSound.js"></script>

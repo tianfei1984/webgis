@@ -6,11 +6,11 @@ package com.ltmonitor.web.constant;
  */
 public class FunctionConstant {
 	
-	public static String FUNC_809Notify = "809Notify";
+	public static String FUNC_809Notify = "809Notify";	//上级信息显示
 
-	public static String FUNC_808Notify = "808Notify";
+	public static String FUNC_808Notify = "808Notify";//终端信息显示
 	
-	public static String FUNC_AlarmNotify = "alarmNotify";
+	public static String FUNC_AlarmNotify = "alarmNotify";	//报警显示
 	
 	public static String FUNC_MARKER = "markerTool";
 
