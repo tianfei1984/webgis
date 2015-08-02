@@ -135,7 +135,7 @@ MyMap.convertRecord = function(rd)
 	 rd.recordVelocity = parseFloat(rd.recordVelocity).toFixed(1);
 	 if(!realDataId)
 		 realDataId = rd.id;
-      var vehicleInfo = {id:rd.ID, text:rd.plateNo, vehicleId:rd.vehicleId, rLat:rd.latitude,rLng:rd.longitude, tLat:rd.latitude, tLng:rd.longitude,status:rd.status,color:rd.plateColor,validate:rd.valid,direction:rd.direction,
+      var vehicleInfo = {id:rd.vehicleId, text:rd.plateNo, vehicleId:rd.vehicleId, rLat:rd.latitude,rLng:rd.longitude, tLat:rd.latitude, tLng:rd.longitude,status:rd.status,color:rd.plateColor,validate:rd.valid,direction:rd.direction,
 							  angleInt:rd.direction, statusInt:0, speed:rd.velocity, warnTypeId:0, online:rd.online,altitude:rd.altitude,gas:rd.gas};
 	   
 	 var merged = $.extend({}, rd, vehicleInfo);
