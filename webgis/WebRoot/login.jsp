@@ -10,6 +10,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>星通车辆卫星监控系统</title>
+<link rel="Shortcut Icon" href="./logo.jpg" />
+<link rel="icon" href="./logo.jpg" type="image/x-icon" />
 <meta http-equiv="Cache-Control" content="no-store" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />

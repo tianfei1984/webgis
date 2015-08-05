@@ -212,7 +212,7 @@
 		   
            <input type="button" value="下发给平台" title="下发给平台" onclick="doBindArea('platform');"/>
 		   
-           <input type="button" value="解除绑定" title="解除绑定" onclick="doUnbindArea('terminal');"/>
+          <!--  <input type="button" value="解除绑定" title="解除绑定" onclick="doUnbindArea('terminal');"/>与删除功能一致，隐藏 -->
 		  <span style="color:red;"> (注:下发给终端，由终端报警，下发给平台由平台报警)</span>
           
         </td>

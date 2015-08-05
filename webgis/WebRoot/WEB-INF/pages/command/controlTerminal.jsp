@@ -49,7 +49,7 @@ $().ready(function() {
 									 <option value="5">终端恢复出厂设置</option> 
 									 <option value="6">关闭数据通信 、静默</option>
 									 <option value="7">关闭所有无线通信</option>  
-									 <option value="8">单点通讯、退出静默</option>
+									 <!-- <option value="8">单点通讯、退出静默</option> -->
 						   </select></td>
 					</tr>
 

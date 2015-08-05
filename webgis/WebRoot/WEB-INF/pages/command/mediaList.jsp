@@ -50,7 +50,7 @@ function uploadSingle()
 		$.messager.alert("提示","请选择多媒体记录");
 		return;
 	}
-	var params = {mediaId:mediaId,saveType:0,vehicleId:'${vehicleId}'};
+	var params = {mediaId:1,saveType:0,vehicleId:'${vehicleId}'};
 	var url = "<%=ApplicationPath%>/command/mediaSingleUpload.action";
 	$.getJSON(url, params, function(result)
 	{

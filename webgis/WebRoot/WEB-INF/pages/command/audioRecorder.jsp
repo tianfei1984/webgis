@@ -41,7 +41,7 @@ $().ready(function() {
 								if (result.success) {
 									 var commandId = result.data; //下发成功后，获取到命令Id
                                      var url = "<%=ApplicationPath%>/command/getPictureResult.action";
-									 TerminalCommand.times=100;
+									 TerminalCommand.times=500;
 									 TerminalCommand.startQueryResult(commandId,url,onCommandSuccess);//命令下发成功,根据命令id,开始尝试获取检索结果
 								}
 								else {

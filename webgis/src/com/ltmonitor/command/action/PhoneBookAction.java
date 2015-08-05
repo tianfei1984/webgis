@@ -21,9 +21,11 @@ public class PhoneBookAction extends TerminalCommandAction {
 			if (input != null)
 				return "input";
 			StringBuilder sb = new StringBuilder();
-			for (int m = 0; m < tagIds.length; m++) {
-				sb.append(tagIds[m]).append(",").append(phoneNumbers[m])
-						.append(",").append(contacts[m]).append(";");
+			if(getConfigType() != 0){
+				for (int m = 0; m < tagIds.length; m++) {
+					sb.append(tagIds[m]).append(",").append(phoneNumbers[m])
+					.append(",").append(contacts[m]).append(";");
+				}
 			}
 			
 			TerminalCommand tc = new TerminalCommand();

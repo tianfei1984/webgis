@@ -1,21 +1,18 @@
 package com.ltmonitor.command.action;
 
 import java.util.Map;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.ArrayUtils;
-
 import com.ltmonitor.entity.StringUtil;
 import com.ltmonitor.entity.TerminalCommand;
-import com.ltmonitor.entity.UserInfo;
-import com.ltmonitor.entity.VehicleData;
 import com.ltmonitor.service.JT808Constants;
-import com.ltmonitor.service.ITerminalService;
-import com.ltmonitor.service.IVehicleService;
-import com.ltmonitor.web.action.PersistenceAction;
 
+/**
+ * 提问下发
+ * @author tianfei
+ *
+ */
 public class SendQuestionAction extends TerminalCommandAction {
 	// 下发的文本内容
 	private String question;

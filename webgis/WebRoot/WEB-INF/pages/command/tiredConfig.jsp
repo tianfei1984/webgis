@@ -35,7 +35,7 @@ $().ready(function() {
         <input type="hidden"  name="vehicleId"  id="vehicleId" value="${vehicleId}"/>
   <table width="100%"  class="TableBlock">
 					<tbody><tr>
-						<td colspan="2" style="font-weight: bold; background: #EFEFEF;" height="25">超速设置
+						<td colspan="2" style="font-weight: bold; background: #EFEFEF;" height="25">疲劳驾驶设置
 						<span style="color:red;background:blue;">${message}</span>
 						</td>
 					</tr>

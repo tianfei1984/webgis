@@ -136,7 +136,7 @@ InfoWindow.openCommandWindow = function(command, vehicleId,title,icon)
 		InfoWindow.open(url, 720, 500, title);
 	}else if(command == "TERMINAL_TEXT")
 	{
-		//文本信息下发 
+		//文本信息下发(调度)
 		var url = commandPath + "/command/sendText.action";
         url += "?input=true&vehicleId="+vehicleId;
 		InfoWindow.open(url, 620, 300, title);
@@ -214,20 +214,20 @@ InfoWindow.openCommandWindow = function(command, vehicleId,title,icon)
 		InfoWindow.open(url, 520, 250, title);
 	}else if(command == "TERMINAL_ENCLOSURE")
 	{
-		//配置终端区域
+		//配置车辆区域
 		var url = commandPath + "/command/sendEnclosure.action";
         url += "?input=true&vehicleId="+vehicleId;
 		InfoWindow.open(url, 820, 550, title);
 	}else if(command == "TERMINAL_ROUTE")
 	{
-		//配置线路
+		//配置车辆线路
 		var url = commandPath + "/command/sendRoute.action";
         url += "?input=true&vehicleId="+vehicleId;
 		InfoWindow.open(url, 820, 550, title);
 	}
 	else if(command == "VEHICLE_RECORDER")
 	{
-		//行驶记录仪下发窗口
+		//行驶记录仪下发窗口(在用)
 		var url = commandPath + "/command/vehicleRecorder.action";
         url += "?input=true&vehicleId="+vehicleId;
 		InfoWindow.open(url, 820, 580, title);
@@ -263,7 +263,7 @@ InfoWindow.openCommandWindow = function(command, vehicleId,title,icon)
 		InfoWindow.open(url, 520, 350, title);
 	}else if(command == "DOOR_CONTROL")
 	{
-		//车辆控制 门控制
+		//车辆控制门控制
 		var url = commandPath + "/command/doorControl.action";
         url += "?input=true&vehicleId="+vehicleId;
 		InfoWindow.open(url, 520, 180, title);

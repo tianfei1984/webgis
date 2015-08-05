@@ -51,6 +51,7 @@ public class SendEnclosureAction extends TerminalCommandAction {
 					eb.setCommandId(tc.getEntityId());
 					commandId = tc.getEntityId();
 				}
+				eb.setRemark(ec.getEnclosureType());//围栏类型
 				eb.setConfigType(configType);
 				eb.setBindType(bindType);
 				this.baseService.saveOrUpdate(eb);
@@ -76,10 +77,10 @@ public class SendEnclosureAction extends TerminalCommandAction {
 
 	private List<EnclosureBinding> getAllBinding(int vehicleId,
 			String enclosureType) {
-		String hql = "from EnclosureBinding where  vehicleId = ? and terminal = ?";
+		String hql = "from EnclosureBinding where  vehicleId = ? and remark = ? and bindType=?";
 
 		List ebList = (List) this.baseService.query(hql, new Object[] {
-				vehicleId, true });
+				vehicleId, enclosureType ,EnclosureBinding.BINDING_TERMINAL});
 		List<EnclosureBinding> result = new ArrayList<EnclosureBinding>();
 		for (int m = 0; m < ebList.size(); m++) {
 			EnclosureBinding eb = (EnclosureBinding) ebList.get(m);
@@ -123,7 +124,9 @@ public class SendEnclosureAction extends TerminalCommandAction {
 				eb.setCommandId(tc.getEntityId());
 				eb.setConfigType(3);
 			}
-			this.baseService.saveOrUpdateAll(ebList);
+			if(!ebList.isEmpty()){
+				this.baseService.saveOrUpdateAll(ebList);
+			}
 
 			return json(true, commandId);
 		} catch (Exception ex) {

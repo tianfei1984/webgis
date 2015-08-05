@@ -120,7 +120,7 @@
 				<param name="root">paginateResult</param>
 			</result>
 		</action>
-		
+		<!-- 电子围栏列表 -->
 		<action name="enclosureList" class="paginateAction" method="execute">
 			<result name="input">/WEB-INF/pages/vehicle/enclosureList.jsp
 			</result>

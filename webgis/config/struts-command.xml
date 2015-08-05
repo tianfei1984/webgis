@@ -12,11 +12,12 @@
 				<param name="root">commandList</param>
 			</result>
 		</action>
+		<!-- 配置终端参数 查询  -->
 		<action name="terminalParamTemplate" class="terminalParamAction"
 			method="getTemplate">
 			<result name="success">/WEB-INF/pages/command/terminalParam.jsp</result>
 		</action>
-
+		<!-- 终端参数设置 -->
 		<action name="terminalParam" class="terminalParamAction"
 			method="execute">
 			<result name="success">/WEB-INF/pages/command/terminalParam.jsp</result>
@@ -24,6 +25,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 车辆超速设置 -->
 		<action name="overSpeedConfig" class="terminalParamAction"
 			method="overSpeedConfig">
 			<result name="input">/WEB-INF/pages/command/overSpeedConfig.jsp</result>
@@ -31,6 +33,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 疲劳驾驶设置 -->
 		<action name="tiredConfig" class="terminalParamAction"
 			method="tiredConfig">
 			<result name="input">/WEB-INF/pages/command/tiredConfig.jsp</result>
@@ -97,6 +100,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 终端无线升级 -->
 		<action name="wirelessUpdate" class="terminalControlAction"
 			method="execute">
 			<result name="input">/WEB-INF/pages/command/wirelessUpdate.jsp
@@ -105,6 +109,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 终端控制 -->
 		<action name="controlTerminal" class="terminalControlAction"
 			method="execute">
 			<result name="input">/WEB-INF/pages/command/controlTerminal.jsp
@@ -113,6 +118,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 透明传输 -->
 		<action name="transparentSend" class="transparentSendAction"
 			method="execute">
 			<result name="input">/WEB-INF/pages/command/transparentSend.jsp
@@ -121,6 +127,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 终端事件设置 -->
 		<action name="eventConfig" class="terminalEventAction" method="execute">
 			<result name="input">/WEB-INF/pages/command/terminalEventConfig.jsp
 			</result>
@@ -148,13 +155,14 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
-		
+		<!-- 提问下发 -->
 		<action name="sendQuestion" class="sendQuestionAction" method="execute">
 			<result name="input">/WEB-INF/pages/command/sendQuestion.jsp</result>
 			<result name="jsonSuccess" type="json">
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 信息服务下发 -->
 		<action name="sendInformation" class="sendInformationAction"
 			method="execute">
 			<result name="input">/WEB-INF/pages/command/sendInformation.jsp
@@ -163,18 +171,20 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 多媒体上传 -->
 		<action name="mediaUpload" class="mediaAction" method="execute">
 			<result name="input">/WEB-INF/pages/command/mediaUpload.jsp</result>
 			<result name="jsonSuccess" type="json">
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 多媒体数据上传 -->
 		<action name="mediaSingleUpload" class="mediaAction" method="singleUpload">
 			<result name="jsonSuccess" type="json">
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
-		
+		<!-- 单条多媒体检索上传 -->
 		<action name="mediaSearch" class="mediaAction" method="search">
 			<result name="input">/WEB-INF/pages/command/mediaList.jsp</result>
 			<result name="jsonSuccess" type="json">
@@ -186,13 +196,14 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
-
+		<!-- 设置终端电话本 -->
 		<action name="phoneBook" class="phoneBookAction" method="execute">
 			<result name="input">/WEB-INF/pages/command/setPhoneBook.jsp</result>
 			<result name="jsonSuccess" type="json">
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 录音 -->
 		<action name="audioRecorder" class="audioRecorderAction"
 			method="execute">
 			<result name="input">/WEB-INF/pages/command/audioRecorder.jsp</result>
@@ -200,6 +211,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 行车记录仪查询  -->
 		<action name="vehicleRecorder" class="vehicleRecorderAction"
 			method="execute">
 			<result name="input">/WEB-INF/pages/command/vehicleRecorder.jsp
@@ -235,7 +247,7 @@
 			</result>
 		</action>
 
-
+		<!-- 监管平台命令 -->
 		<action name="sendPlatformCmd" class="platformCommandAction"
 			method="execute">
 			<result name="input">/WEB-INF/pages/command/platformCommand.jsp
@@ -289,7 +301,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
-		<!-- 终端线路设置 -->
+		<!-- 车辆线路设置 -->
 		<action name="sendRoute" class="sendEnclosureAction" method="execute">
 			<result name="input">/WEB-INF/pages/command/routeList.jsp</result>
 			<result name="jsonSuccess" type="json">

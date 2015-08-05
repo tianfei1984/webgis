@@ -31,10 +31,9 @@
 			</props>
 		</property>
 	</bean>
-	<bean id="passwordEncoder"
-		class="org.springframework.security.providers.encoding.Md5PasswordEncoder" />
+	<bean id="passwordEncoder" class="org.springframework.security.providers.encoding.Md5PasswordEncoder" />
 		
-	
+	<!-- JT808实时GPS数据接口 -->
 	<bean id="realDataService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"
 		lazy-init="true" scope="prototype">
 		<property name="serviceUrl">
@@ -47,6 +46,7 @@
 		</property>
 	</bean>
 	
+	<!-- 位置接口 -->
 	<bean id="locationService" class="com.ltmonitor.service.impl.LocationService">
 	</bean>
 

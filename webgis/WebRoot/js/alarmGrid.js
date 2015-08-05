@@ -187,7 +187,7 @@ AlarmGrid.addNewAlarm = function(alarmData){
 				{
 					var url = globalConfig.webPath+"/command/postQuery.action?commandId="+alarm.cmdId;
 					InfoWindow.open(url, 630,350,"上级平台查岗");
-				}else if(strType == "0x9302") //查岗请求，弹出查岗的窗口
+				}else if(strType == "0x9302") //平台间报文请求，弹出查岗的窗口
 				{
 					var url = globalConfig.webPath+"/command/postQuery.action?commandId="+alarm.cmdId;
 					InfoWindow.open(url, 630,350,"平台间报文");

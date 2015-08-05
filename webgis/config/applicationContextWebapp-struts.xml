@@ -31,7 +31,8 @@
 	<bean id="queryAction" class="com.ltmonitor.web.action.QueryAction"
 		scope="prototype">
 	</bean>
-
+	
+	<!-- 车辆实时数据 -->
 	<bean id="realDataAction" class="com.ltmonitor.web.action.RealDataAction"
 		scope="prototype">
 		
@@ -141,10 +142,11 @@
 	<bean id="mediaAction" class="com.ltmonitor.command.action.MediaAction"
 		scope="prototype">
 	</bean>
+	<!-- 电话设置 -->
 	<bean id="phoneBookAction" class="com.ltmonitor.command.action.PhoneBookAction"
 		scope="prototype">
 	</bean>
-
+	<!-- 终端录音 -->
 	<bean id="audioRecorderAction" class="com.ltmonitor.command.action.AudioRecorderAction"
 		scope="prototype">
 	</bean>

@@ -1,18 +1,14 @@
 package com.ltmonitor.command.action;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.beanutils.BeanUtils;
-
 import com.ltmonitor.entity.BasicData;
 import com.ltmonitor.entity.TerminalCommand;
 import com.ltmonitor.entity.VehicleRecorder;
 import com.ltmonitor.service.JT808Constants;
-import com.ltmonitor.util.ClassInstantiateException;
 
 /**
  * 车辆行驶记录仪查询

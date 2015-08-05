@@ -40,12 +40,12 @@ function doSubmit()
 		 contacts.push(item.contact);
 		}
 	}
-	if(tagIds.length==0)
+	var configType = $("#configType").val();
+	if(tagIds.length==0  && configType != 0)
 	{
 		$.messager.alert("提示","请添加电话联系人!");
 		return;
 	}
-	var configType = $("#configType").val();
 	if(configType.length == 0)
 	{
 		$.messager.alert("提示","请选择设置类型!");
