@@ -400,6 +400,7 @@ public class RealDataAction extends QueryAction {
 			int direction = (Integer) rowData.get("direction");
 			String directionDescr = this.getDirectionDescr(direction);
 			rowData.put("directionDescr", directionDescr);
+			rowData.put("direction", getDirection(direction));
 
 			int enclosureType = (Integer) rowData.get("enclosureType");
 			int enclosureId = (Integer) rowData.get("enclosureId");
@@ -458,31 +459,56 @@ public class RealDataAction extends QueryAction {
 	protected String getDirectionDescr(int direction) {
 		String descr = "";
 		if (direction == 0) {
-			descr = "正东";
-		} else if (direction == 90) {
 			descr = "正北";
+		} else if (direction == 90) {
+			descr = "正东";
 		} else if (direction == 180) {
-			descr = "正西";
-		} else if (direction == 270) {
 			descr = "正南";
+		} else if (direction == 270) {
+			descr = "正西";
 		} else if (direction == 45) {
 			descr = "东北";
 		} else if (direction == 135) {
-			descr = "西北";
+			descr = "东南";
 		} else if (direction == 225) {
 			descr = "西南";
 		} else if (direction == 315) {
-			descr = "东南";
+			descr = "西北";
 		} else if (direction < 90) {
 			descr = "东偏北" + direction + "度";
 		} else if (direction > 90 && direction < 180) {
-			descr = "西偏北" + (180 - direction) + "度";
+			descr = "东偏南" + (180 - direction) + "度";
 		} else if (direction > 180 && direction < 270) {
 			descr = "西偏南" + (direction - 180) + "度";
 		} else if (direction > 270 && direction < 360) {
-			descr = "东偏南" + (360 - direction) + "度";
+			descr = "西偏北" + (360 - direction) + "度";
 		}
 		return descr;
+	}
+	//用于图片展示
+	protected int getDirection(int direction) {
+		if (direction == 0 || direction == 90 || direction == 180 || direction ==270 || direction == 45 || direction == 135 
+				|| direction == 225 || direction == 315) {
+			return direction;
+		} else if(direction < 10){
+			return 0;
+		} else if (direction < 80) {
+			return 45;
+		} else if(direction < 100){
+			return 90;
+		} else if (direction < 170) {
+			return 135;
+		} else if(direction < 190){
+			return 180;
+		} else if (direction < 260) {
+			return 225;
+		} else if(direction < 280){
+			return 270;
+		}
+		else if (direction < 350) {
+			return 315;
+		} 
+		return 0;
 	}
 
 	protected String getStatusDescr(String status) {

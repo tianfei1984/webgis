@@ -211,7 +211,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
-		<!-- 行车记录仪查询  -->
+		<!-- 行车记录仪查询（命令）  -->
 		<action name="vehicleRecorder" class="vehicleRecorderAction"
 			method="execute">
 			<result name="input">/WEB-INF/pages/command/vehicleRecorder.jsp
@@ -224,6 +224,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
+		<!-- 行车记录仪查询（数据）  -->
 		<action name="queryRecorder" class="vehicleRecorderAction"
 			method="queryResult">
 			<result name="jsonSuccess" type="json">

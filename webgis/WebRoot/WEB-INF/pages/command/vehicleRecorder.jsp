@@ -54,8 +54,8 @@ function queryResult(commandId)
 						}else {
 							if(times == 1)
 						   {
-								 alert("命令执行超时，没有返回结果,请重新查询");
-								 $("#btnQuery").val("发送");
+								alert("命令执行超时，没有返回结果,请重新查询");
+								$("#btnQuery").val("参数查询");
 								$('#btnQuery').attr("disabled",false); 
 								$('body').stopTime ();  
 						   }else
@@ -75,7 +75,7 @@ function queryResult(commandId)
 //ajax提交表单
 function ajaxCommitForm(operation)
 {	
-	var cmdType = $("#cmdTypeId").val();
+	//var cmdType = $("#cmdTypeId").val();
 	var isValid = $("#entityForm_"+cmdType).valid();
 	if(isValid == false)
 		return;
@@ -105,19 +105,19 @@ function ajaxCommitForm(operation)
 
 var cmdType = "";
 $().ready(function() {
-	 $(".entityForm").validate(); //初始化验证信息
+	 //$(".entityForm").validate(); //初始化验证信息
 
 	//ajax填充下拉框数据 填充监听类型 选项
 	// Utility.ajaxSubmitForm("entityForm");
 
 	  $("#btnModify").click(function()
 			 {
-		           $("#operation").val("modify");
+		           $("#operation"+'_'+cmdType).val("modify");
 				  ajaxCommitForm();//提交表单
 			 });
 	 $("#btnQuery").click(function()
 			 {
-		           $("#operation").val("query");
+		           $("#operation"+'_'+cmdType).val("query");
 				   ajaxCommitForm("query");//提交表单
 			 });
 
@@ -130,12 +130,18 @@ $().ready(function() {
 	      //$(".childtable tr").hide();
 		   var id = $(this).attr('id');
 		   cmdType = id;
-		   $("#cmdTypeId").val(id);
+		   $("#cmdTypeId_"+cmdType).val(id);
 		   //alert($(this).html());
 		   $("#msgTip").html($(this).html());
 		   //alert(id);
 		   $("."+id).show();
 		   $("."+id + " tr").show();
+		   //设置按钮
+		   if(id == 'driverInfo' || id == 'vehicleInfo' || id =='clock' || id == 'feature'){
+	   			$("#btnModify").show();
+		   } else {
+		   		$("#btnModify").hide();
+		   }
 	});
     
 	var id = "driverInfo";
@@ -179,8 +185,9 @@ $().ready(function() {
 			<tr>
 				<td width="25%" style="background-color:#99CCFF;">1、驾驶员车辆信息</td>
 				<td><input type="button" class="sendjson" id="btnModify"
-					value="设置" /> <input type="button" class="sendjson" id="btnQuery"
-					value="查询" /> <span id="commandMsg" class="commandMsg">></span> <span
+					value="设置" /> 
+					<input type="button" class="sendjson" id="btnQuery"
+					value="参数查询" /> <span id="commandMsg" class="commandMsg">></span> <span
 					id="msgTip"></span>
 			</tr>
 
@@ -194,9 +201,9 @@ $().ready(function() {
 						method="POST">
 
 						<input type="hidden" name="vehicleId" id="vehicleId"
-							value="${vehicleId}" /> <input type="hidden" name="cmdType"
-							id="cmdTypeId" value="${cmdType}" /> <input type="hidden"
-							name="operation" id="operation" value="modify" />
+							value="${vehicleId}" /> 
+							<input type="hidden" name="cmdType" id="cmdTypeId_driverInfo" value="${cmdType}" /> 
+							<input type="hidden" name="operation" id="operation_driverInfo" value="modify" />
 						<table width="100%" class="childtable driverInfo">
 
 							<tr class="driverInfo">
@@ -217,14 +224,9 @@ $().ready(function() {
 						action='<%=ApplicationPath%>/command/vehicleRecorder.action'
 						method="POST">
 						<table width="100%" class="childtable vehicleInfo">
-
-							<input type="hidden" name="vehicleId" id="vehicleId"
-								value="${vehicleId}" />
-							<input type="hidden" name="cmdType" id="cmdTypeId"
-								value="${cmdType}" />
-
-							<input type="hidden" name="operation" id="operation"
-								value="modify" />
+							<input type="hidden" name="vehicleId" id="vehicleId" value="${vehicleId}" />
+							<input type="hidden" name="cmdType" id="cmdTypeId_vehicleInfo" value="${cmdType}" />
+							<input type="hidden" name="operation" id="operation_vehicleInfo" value="modify" />
 							<tr class="vehicleInfo">
 								<td width="20%">车辆VIN号:</td>
 								<td align=left><input type="text" name="vin" value=""
@@ -242,15 +244,14 @@ $().ready(function() {
 							</tr>
 						</table>
 					</form>
-
+					<!-- 实时时钟 -->
 					<form id="entityForm_clock" name="entityForm" class="entityForm"
 						action='<%=ApplicationPath%>/command/vehicleRecorder.action'
 						method="POST">
 
-						<input type="hidden" name="vehicleId" id="vehicleId"
-							value="${vehicleId}" /> <input type="hidden" name="cmdType"
-							id="cmdTypeId" value="${cmdType}" /> <input type="hidden"
-							name="operation" id="operation" value="modify" />
+						<input type="hidden" name="vehicleId" id="vehicleId" value="${vehicleId}" />
+						<input type="hidden" name="cmdType" id="cmdTypeId_clock" value="${cmdType}" /> 
+						<input type="hidden" name="operation" id="operation_clock" value="modify" />
 						<table width="100%" class="childtable clock">
 							<tr class="clock">
 								<td width="20%">实时时钟:</td>
@@ -259,15 +260,14 @@ $().ready(function() {
 							</tr>
 						</table>
 					</form>
-
+					<!-- 车辆特征系数 -->
 					<form id="entityForm_feature" name="entityForm" class="entityForm"
 						action='<%=ApplicationPath%>/command/vehicleRecorder.action'
 						method="POST">
 
-						<input type="hidden" name="vehicleId" id="vehicleId"
-							value="${vehicleId}" /> <input type="hidden" name="cmdType"
-							id="cmdTypeId" value="${cmdType}" /> <input type="hidden"
-							name="operation" id="operation" value="modify" />
+						<input type="hidden" name="vehicleId" id="vehicleId" value="${vehicleId}" /> 
+						<input type="hidden" name="cmdType" id="cmdTypeId_feature" value="${cmdType}" /> 
+						<input type="hidden" name="operation" id="operation_feature" value="modify" />
 						<table width="100%" class="childtable feature">
 							<tr class="feature">
 								<td width="20%">车辆特征系数:</td>
@@ -276,105 +276,149 @@ $().ready(function() {
 							</tr>
 						</table>
 					</form>
+					
+					<!--  -->
+					<form id="entityForm_mileageIn2d" name="entityForm" class="entityForm"
+						action='<%=ApplicationPath%>/command/vehicleRecorder.action'
+						method="POST">
+						<input type="hidden" name="vehicleId" id="vehicleId" value="${vehicleId}" /> 
+						<input type="hidden" name="cmdType" id="cmdTypeId_mileageIn2d" value="${cmdType}" /> 
+						<input type="hidden" name="operation" id="operation_mileageIn2d" value="modify" />
+						<table width="100%" class="childtable mileageIn2d">
+	
+							<tr class="mileageIn2d">
+								<td width="20%">2天内累计行驶里程(米):</td>
+								<td><input type="text" name="mileageInTwoDays" value="" />
+								</td>
+							</tr>
+							<tr class="mileageIn2d">
+								<td width="20%">截至时间:</td>
+								<td><input type="text" name="byTimeFor2d" value=""
+									class="datetimepicker" /></td>
+							</tr>
+						</table>
+					</form>
+				
+					<form id="entityForm_mileageIn360h" name="entityForm" class="entityForm"
+						action='<%=ApplicationPath%>/command/vehicleRecorder.action'
+						method="POST">
+						<input type="hidden" name="vehicleId" id="vehicleId" value="${vehicleId}" /> 
+						<input type="hidden" name="cmdType" id="cmdTypeId_mileageIn360h" value="${cmdType}" /> 
+						<input type="hidden" name="operation" id="operation_mileageIn360h" value="modify" />
+						<table width="100%" class="childtable mileageIn360h">
+							<tr class="mileageIn360h">
+								<td width="20%">360小时内累计行驶里程(米):</td>
+								<td><input type="text" name="mileageIn360h" value="" /></td>
+							</tr>
+							<tr class="mileageIn360h">
+								<td width="20%">截至时间:</td>
+								<td><input type="text" name="byTimeFor360" value=""
+									class="datetimepicker" /></td>
+							</tr>
+						</table>
+					</form>
+			
+					<form id="entityForm_overdrive" name="entityForm" class="entityForm"
+						action='<%=ApplicationPath%>/command/vehicleRecorder.action'
+						method="POST">
+						<input type="hidden" name="vehicleId" id="vehicleId" value="${vehicleId}" /> 
+						<input type="hidden" name="cmdType" id="cmdTypeId_overdrive" value="${cmdType}" /> 
+						<input type="hidden" name="operation" id="operation_overdrive" value="modify" />			
+						<table width="100%" class="childtable overdrive">
+							<!--2天内疲劳驾驶数据-->
+							<tr class="overdrive">
+								<td>
+									<table id="table_overTimeFor2d" class="easyui-datagrid"
+										title="2天内疲劳驾驶数据" style="width:100%;height:400px;"
+										data-options="singleSelect:true,rownumbers:true,striped:true,fitColumns: true,fit:false">
+										<thead>
+											<tr>
+												<th data-options="field:'No'" width="15%">编号</th>
+												<th data-options="field:'startDate'" width="7%">开始时间</th>
+												<th data-options="field:'endDate'" width="15%">结束时间</th>
+											</tr>
+										<thead>
+									</table></td>
+							</tr>
+						</table>
+					</form>
+					<!--  -->
+					<form id="entityForm_speedIn360h" name="entityForm" class="entityForm"
+						action='<%=ApplicationPath%>/command/vehicleRecorder.action'
+						method="POST">
+						<input type="hidden" name="vehicleId" id="vehicleId" value="${vehicleId}" /> 
+						<input type="hidden" name="cmdType" id="cmdTypeId_speedIn360h" value="${cmdType}" /> 
+						<input type="hidden" name="operation" id="operation_speedIn360h" value="modify" />	
+						<table width="100%" class="childtable speedIn360h">
+							<!--360小时内速度数据-->
+							<tr class="speedIn360h">
+								<td>
+									<table id="table_speedIn360h" class="easyui-datagrid"
+										title="360小时内速度数据" style="width:100%;"
+										data-options="singleSelect:true,rownumbers:true,striped:true,fitColumns: false,fit:true">
+										<thead>
+											<tr>
+												<th data-options="field:'No'" width="15%">编号</th>
+												<th data-options="field:'startDate'" width="7%">开始时间</th>
+												<th data-options="field:'endDate'" width="15%">速度</th>
+											</tr>
+										<thead>
+									</table></td>
+							</tr>
+						</table>
+					</form>
 
-					<table width="100%" class="childtable mileageIn2d">
-
-						<tr class="mileageIn2d">
-							<td width="20%">2天内累计行驶里程(米):</td>
-							<td><input type="text" name="mileageInTwoDays" value="" />
-							</td>
-						</tr>
-						<tr class="mileageIn2d">
-							<td width="20%">截至时间:</td>
-							<td><input type="text" name="byTimeFor2d" value=""
-								class="datetimepicker" /></td>
-						</tr>
-					</table>
-
-					<table width="100%" class="childtable mileageIn360h">
-						<tr class="mileageIn360h">
-							<td width="20%">360小时内累计行驶里程(米):</td>
-							<td><input type="text" name="mileageIn360h" value="" /></td>
-						</tr>
-						<tr class="mileageIn360h">
-							<td width="20%">截至时间:</td>
-							<td><input type="text" name="byTimeFor360" value=""
-								class="datetimepicker" /></td>
-						</tr>
-					</table>
-
-					<table width="100%" class="childtable overdrive">
-						<!--2天内疲劳驾驶数据-->
-						<tr class="overdrive">
-							<td>
-								<table id="table_overTimeFor2d" class="easyui-datagrid"
-									title="2天内疲劳驾驶数据" style="width:100%;height:400px;"
-									data-options="singleSelect:true,rownumbers:true,striped:true,fitColumns: true,fit:false">
-									<thead>
-										<tr>
-											<th data-options="field:'No'" width="15%">编号</th>
-											<th data-options="field:'startDate'" width="7%">开始时间</th>
-											<th data-options="field:'endDate'" width="15%">结束时间</th>
-										</tr>
-									<thead>
-								</table></td>
-						</tr>
-					</table>
-
-					<table width="100%" class="childtable speedIn360h">
-						<!--360小时内速度数据-->
-						<tr class="speedIn360h">
-							<td>
-								<table id="table_speedIn360h" class="easyui-datagrid"
-									title="360小时内速度数据" style="width:100%;"
-									data-options="singleSelect:true,rownumbers:true,striped:true,fitColumns: false,fit:true">
-									<thead>
-										<tr>
-											<th data-options="field:'No'" width="15%">编号</th>
-											<th data-options="field:'startDate'" width="7%">开始时间</th>
-											<th data-options="field:'endDate'" width="15%">速度</th>
-										</tr>
-									<thead>
-								</table></td>
-						</tr>
-					</table>
-
-					<table width="100%" class="childtable speedIn2d">
-						<!--2天内速度数据-->
-						<tr class="speedIn2d">
-							<td>
-								<table id="table_speedIn2d" class="easyui-datagrid"
-									title="2天内速度数据" style="width:100%;"
-									data-options="singleSelect:true,rownumbers:true,striped:true,fitColumns: false,fit:true">
-									<thead>
-										<tr>
-											<th data-options="field:'No'" width="15%">编号</th>
-											<th data-options="field:'startDate'" width="7%">开始时间</th>
-											<th data-options="field:'speed'" width="15%">速度</th>
-										</tr>
-									<thead>
-								</table></td>
-						</tr>
-					</table>
-
-					<table width="100%" class="childtable accident">
-						<!--事故疑点数据-->
-						<tr class="accident">
-							<td>
-								<table id="table_accident" class="easyui-datagrid"
-									title="2天内速度数据" style="width:100%;"
-									data-options="singleSelect:true,rownumbers:true,striped:true,fitColumns: false,fit:true">
-									<thead>
-										<tr>
-											<th data-options="field:'No'" width="15%">编号</th>
-											<th data-options="field:'time'" width="7%">时间</th>
-											<th data-options="field:'speed'" width="15%">速度</th>
-											<th data-options="field:'status'" width="15%">状态</th>
-										</tr>
-									<thead>
-								</table></td>
-						</tr>
-					</table></td>
+					<form id="entityForm_speedIn2d" name="entityForm" class="entityForm"
+						action='<%=ApplicationPath%>/command/vehicleRecorder.action'
+						method="POST">
+						<input type="hidden" name="vehicleId" id="vehicleId" value="${vehicleId}" /> 
+						<input type="hidden" name="cmdType" id="cmdTypeId_speedIn2d" value="${cmdType}" /> 
+						<input type="hidden" name="operation" id="operation_speedIn2d" value="modify" />	
+						<table width="100%" class="childtable speedIn2d">
+							<!--2天内速度数据-->
+							<tr class="speedIn2d">
+								<td>
+									<table id="table_speedIn2d" class="easyui-datagrid"
+										title="2天内速度数据" style="width:100%;"
+										data-options="singleSelect:true,rownumbers:true,striped:true,fitColumns: false,fit:true">
+										<thead>
+											<tr>
+												<th data-options="field:'No'" width="15%">编号</th>
+												<th data-options="field:'startDate'" width="7%">开始时间</th>
+												<th data-options="field:'speed'" width="15%">速度</th>
+											</tr>
+										<thead>
+									</table></td>
+							</tr>
+						</table>
+					</form>
+					
+					<form id="entityForm_accident" name="entityForm" class="entityForm"
+						action='<%=ApplicationPath%>/command/vehicleRecorder.action'
+						method="POST">
+						<input type="hidden" name="vehicleId" id="vehicleId" value="${vehicleId}" /> 
+						<input type="hidden" name="cmdType" id="cmdTypeId_accident" value="${cmdType}" /> 
+						<input type="hidden" name="operation" id="operation_accident" value="modify" />	
+						<table width="100%" class="childtable accident">
+							<!--事故疑点数据-->
+							<tr class="accident">
+								<td>
+									<table id="table_accident" class="easyui-datagrid"
+										title="2天内速度数据" style="width:100%;"
+										data-options="singleSelect:true,rownumbers:true,striped:true,fitColumns: false,fit:true">
+										<thead>
+											<tr>
+												<th data-options="field:'No'" width="15%">编号</th>
+												<th data-options="field:'time'" width="7%">时间</th>
+												<th data-options="field:'speed'" width="15%">速度</th>
+												<th data-options="field:'status'" width="15%">状态</th>
+											</tr>
+										<thead>
+									</table></td>
+							</tr>
+						</table>
+					</form>
+					</td>
 
 			</tr>
 			<tr>
@@ -402,7 +446,7 @@ $().ready(function() {
 				</td>
 			</tr>
 			<tr>
-				<td class="cmdType" id="overdrive"><a href="#">2天内连续驾驶时间超过2h数据>>
+				<td class="cmdType" id="overdrive"><a href="#">2天内连续驾驶时间超过3h数据>>
 				
 				</td>
 			</tr>

@@ -50,7 +50,7 @@ function uploadSingle()
 		$.messager.alert("提示","请选择多媒体记录");
 		return;
 	}
-	var params = {mediaId:1,saveType:0,vehicleId:'${vehicleId}'};
+	var params = {mediaId:mediaId,saveType:0,vehicleId:'${vehicleId}'};
 	var url = "<%=ApplicationPath%>/command/mediaSingleUpload.action";
 	$.getJSON(url, params, function(result)
 	{
@@ -108,7 +108,30 @@ function selectMedia(_mediaId)
 				return html;
 
 			}
-
+			
+			function getCodeFormatColumn(value, rowData, rowIndex)
+			{
+				if(value == 0)
+					return '图像';
+				else if(value == 1)
+					return '音频';
+				else 
+					return '视频';
+			}
+			
+			function getCodeTypeColumn(value, rowData, rowIndex)
+			{
+				if(value == 0)
+					return "平台下发指令";
+				else if(value == 1)
+					return "定时动作";
+				else if(value == 2)
+					return "抢劫报警";
+				else if(value == 3)
+					return "碰撞侧翻报警";
+				else 
+					return "其他";
+			}
 
 			$(document).ready(function() {
 				 $("#entityForm").validate(); //初始化验证信息
@@ -213,9 +236,9 @@ function selectMedia(_mediaId)
 							<th data-options="field:'1',formatter:getRadioColumn" width="7%">选择</th>
 							<th data-options="field:'mediaDataId'" width="10%">多媒体ID</th>
 							<th data-options="field:'sendTime'" width="20%">时间</th>
-							<th data-options="field:'eventCode'" width="15%">事件类型</th>
+							<th data-options="field:'eventCode',formatter:getCodeTypeColumn" width="15%">事件类型</th>
 							<th data-options="field:'channelId'" width="15%">通道号</th>
-							<th data-options="field:'codeFormat'" width="20%">多媒体类型</th>							
+							<th data-options="field:'codeFormat',formatter:getCodeFormatColumn" width="20%">多媒体类型</th>							
 						</tr>
 					</thead>
 					<tbody>
