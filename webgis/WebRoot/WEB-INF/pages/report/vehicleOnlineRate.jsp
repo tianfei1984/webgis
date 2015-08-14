@@ -13,7 +13,7 @@
 				  var now = Utility.now(-1);
 				  $("#startDate").val(now);
 				 
-					  $("#intervalType").lookup({category:"ReportType"}); //统计类型下拉框
+					//  $("#intervalType").lookup({category:"ReportType"}); //统计类型下拉框
 				 
 				$("#btnQuery").click(function(){
 				        Utility.loadGridWithParams();

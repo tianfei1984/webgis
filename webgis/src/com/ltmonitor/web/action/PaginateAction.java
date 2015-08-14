@@ -539,7 +539,7 @@ public class PaginateAction extends GenericAction {
 								getIntervalDescr(seconds));
 					}
 
-				} else if(parentCode.equals("AlarmType"))
+				} else if(parentCode.equals("alarmType"))
 				{
 					String alarmType = fieldValue;
 					String alarmSource = ""+rowData.get("alarmSource");

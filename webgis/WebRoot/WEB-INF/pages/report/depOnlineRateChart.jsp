@@ -18,7 +18,7 @@ function createChart(depName,xSet, ySet)
             type: 'column'
         },
         title: {
-            text: depName+'企业/车组上线率'
+            text: depName+'企业上线率'
         },
         xAxis: {
             categories: xSet,

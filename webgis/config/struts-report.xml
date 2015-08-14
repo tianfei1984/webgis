@@ -60,7 +60,7 @@
 				<param name="root">paginateResult</param>
 			</result>
 		</action>
-		<!-- 报警查询 -->
+		<!-- 停车报警查询 -->
 		<action name="parkingList" class="paginateAction" method="execute">
 			<result name="input">/WEB-INF/pages/report/parkingList.jsp
 			</result>
@@ -183,8 +183,7 @@
 		
 		
 		<!-- 多时段多区域查询车辆 -->
-		<action name="queryVehicleInArea" class="vehicleInAreaAction"
-			method="queryVehicleInArea">
+		<action name="queryVehicleInArea" class="vehicleInAreaAction" method="queryVehicleInArea">
 			<result name="input">/WEB-INF/pages/report/vehicleInAreaList.jsp</result>
 			
 			 <result name="jsonSuccess" type="json">

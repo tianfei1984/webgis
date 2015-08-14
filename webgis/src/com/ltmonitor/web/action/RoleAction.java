@@ -115,7 +115,7 @@ public class RoleAction extends PersistenceAction {
 			for (FuncModel func : funcs) {
 				String nodeId = "" + func.getEntityId();
 				TreeNode node = nodeMap.get(nodeId);
-				if (node != null) {
+				if (node != null && node.getChildren().isEmpty()) {
 					node.setChecked(true);
 				}
 			}

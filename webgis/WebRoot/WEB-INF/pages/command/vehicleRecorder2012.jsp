@@ -121,6 +121,7 @@ function queryResult(commandId)
 			action='<%=ApplicationPath%>/command/vehicleRecorder.action' method="POST">
 	        <input type="hidden"  name="vehicleId"  id="vehicleId" value="${vehicleId}"/>
 	        <input type="hidden" name="ver" value="2012">
+	        <input type="hidden" name="query" value="operation">
 	 		<table width="100%"  class="TableBlock">
 					<tbody><tr>
 						<td colspan="6" style="font-weight: bold; background: #EFEFEF;" height="25">记录仪数据采集
@@ -130,7 +131,7 @@ function queryResult(commandId)
 					<tr>
 						<td align="right">采集命令
 							:</td>
-						<td><select id="cmdType"  style="width: 150px;" name="mediaType">
+						<td><select id="cmdType"  style="width: 150px;" name="cmdType">
 						   </select></td>						
 					</tr>
 					<tr>

@@ -75,7 +75,8 @@ function onDepSelected(depId,depName)
 							<option value="">所有</option>
 							<option value="online">上线</option>
 							<option value="offline">离线</option>
-					</select> <select name="offlineTimeSpan" id="offlineTimeSpan">
+					</select> 
+					<select name="offlineTimeSpan" id="offlineTimeSpan">
 							<option value="">离线时长</option>
 							<option value="-1">超过1天</option>
 							<option value="-2">超过2天</option>
@@ -91,7 +92,7 @@ function onDepSelected(depId,depName)
 						id="btnExport" href="#" class="easyui-linkbutton"
 						data-options="iconCls:'icon-excel'"
 						onclick="Utility.excelExport('<%=ApplicationPath%>/data/excelExport.action');">导出</a>
-					<!--调用utility.js--> <span style="color:red;">(*离线状态下自动按照离线时长排序)</span>
+					<!--调用utility.js<span style="color:red;">(*离线状态下自动按照离线时长排序)</span>--> 
 					</td>
 				</tr>
 			</table>

@@ -128,6 +128,7 @@ $().ready(function() {
 							  $("#termNo").val(term.termNo);
 							  $("#termType").val(term.termType);
 							  $("#state").val(term.state);
+							  $("#simNo").val(term.simNo);
 							  var installTime = term.installTime;
 							  if(installTime.length > 10)
 							  {
@@ -228,25 +229,25 @@ $().ready(function() {
 						<td align="left">
 							<select id="industry"  style="width: 150px;" name="industry" >
 						</td>
-
-						<td align="right">终端卡号
-							:</td>
-						<td><input type="text" name="simNo" size="20" maxlength="11" value="${entity.simNo}" id="simNo" class="required"></td>
-					</tr>
-							<tr>
 						<td align="right">车籍地:</td>
 						<td align="left">
 						
 							<select id="region"  style="width: 150px;" name="region" >
 						</td>
+					</tr>
+							<tr>
+						
 						<td align="right">绑定终端:
 							</td>
 						<td><select name="termId" id="termId" style="width: 150px;">
 
                              </select>
-							 <input type="button" class="button gray medium" value="编辑" onclick="viewTerminal();">
+							 <!-- <input type="button" class="button gray medium" value="编辑" onclick="viewTerminal();"> -->
 							
 						</td>
+						<td align="right">终端卡号
+							:</td>
+						<td><input type="text" name="simNo" size="20" maxlength="11" value="${entity.simNo}" id="simNo" class="required"></td>
 					</tr>
 
 					<tr>				

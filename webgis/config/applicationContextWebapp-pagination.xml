@@ -20,6 +20,8 @@
 				<value>endTime</value>
 				<value>staticDate</value>
 				<value>sendTime</value>
+				<value>operTime</value>
+				<value>processedTime</value>
 			</list>
 		</property>
 		<!-- 数据列转换，将引用列的Id显示成可读的名称 -->
@@ -507,6 +509,17 @@
 						<value>createDate,操作时间</value>
 						<value>url,http地址</value>
 						<value>ip,用户IP</value>
+					</list>
+				</entry>
+				<entry key="selectMembers">
+					<list>
+						<value>name,名称</value>
+						<value>licenseNo,营业执照</value>
+						<value>orgNo,组织机构代码</value>
+						<value>businessScope,营业范围</value>
+						<value>contact,联系人</value>
+						<value>contactPhone,联系电话</value>
+						<value>address,办公地址</value>
 					</list>
 				</entry>
 			</map>

@@ -320,7 +320,8 @@ MapOperationHandler.prototype.changeMarkerImage = function(id, flag){
  * online  true false 是否上线
  */
 MapOperationHandler.prototype.getImageUrl = function(header, angleInt, statusInt, speed, alarm, online){
-	var img = header + setAngleImage(angleInt);
+	//var img = header + setAngleImage(angleInt);
+	var img = angleInt+".png";
 	if(online)
 	{
 		if (typeof(alarm) != "undefined" && parseInt(alarm) != 0){

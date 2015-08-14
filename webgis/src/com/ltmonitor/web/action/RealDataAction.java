@@ -475,15 +475,15 @@ public class RealDataAction extends QueryAction {
 		} else if (direction == 315) {
 			descr = "西北";
 		} else if (direction < 90) {
-			descr = "东偏北" + direction + "度";
-		} else if (direction > 90 && direction < 180) {
-			descr = "东偏南" + (180 - direction) + "度";
-		} else if (direction > 180 && direction < 270) {
-			descr = "西偏南" + (direction - 180) + "度";
-		} else if (direction > 270 && direction < 360) {
-			descr = "西偏北" + (360 - direction) + "度";
+			descr = "东偏北" + (direction) + "度";
+		} else if (direction < 180) {
+			descr = "东偏南" + (direction - 90) + "度";
+		} else if (direction < 270) {
+			descr = "西偏南" + (270 - direction) + "度";
+		} else if (direction < 360) {
+			descr = "西偏北" + (direction - 270) + "度";
 		}
-		return descr;
+		return direction + "度/"+descr;
 	}
 	//用于图片展示
 	protected int getDirection(int direction) {

@@ -94,7 +94,7 @@
 		<action name="viewAlarm" class="alarmAction" method="view">
 			<result name="input">/WEB-INF/pages/report/processAlarm.jsp</result>
 		</action>
-
+		<!-- 报警处理 -->
 		<action name="processAlarm" class="alarmAction" method="process">
 			<result name="jsonSuccess" type="json">
 				<param name="root">jsonMessage</param>

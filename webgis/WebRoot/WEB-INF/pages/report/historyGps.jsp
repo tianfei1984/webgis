@@ -127,7 +127,7 @@ function queryVehicle()
 						<thead>
 							<tr>
 								<th data-options="field:'plateNo'" width="6%">车牌号</th>
-								<th data-options="field:'plateColor'" width="4%">颜色</th>
+								<!-- <th data-options="field:'plateColor'" width="4%">颜色</th> -->
 								<th data-options="field:'depName'" width="10%">车组</th>
 								<th data-options="field:'sendTime'" width="12%">GPS时间</th>
 								<th data-options="field:'longitude'" width="6%">经度</th>

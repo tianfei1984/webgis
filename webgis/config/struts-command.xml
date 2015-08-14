@@ -240,7 +240,7 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
-
+		<!--   文本下发-->
 		<action name="sendText" class="sendTextAction" method="execute">
 			<result name="input">/WEB-INF/pages/command/sendText.jsp</result>
 			<result name="jsonSuccess" type="json">

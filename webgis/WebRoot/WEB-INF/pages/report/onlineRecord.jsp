@@ -22,8 +22,13 @@
 			{
 				var endTime = rowData.endTime;
 				var status = rowData.status;
-				if(status == 'New')
-				   return '<span style="color:red;font-weight:bold;">在线中..</span>';
+				if(status == 'New'){
+					if(rowData.childType == '终端离线')
+				   		return '<span style="color:red;font-weight:bold;">离线中</span>';
+				   	else 
+				   		return '<span style="color:red;font-weight:bold;">上线中</span>';
+				   	
+				}
 				return endTime;
 			}
 			

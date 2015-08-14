@@ -60,21 +60,19 @@ $().ready(function() {
 				<td align="left"><select name="state" id="state" style="width:150px;" class="required">
 </select>
 				</td>
-				<td align="right">安装时间:</td>
+				<td align="right">手机号码:</td>
 				<td align="left">
-							  <input type="text" name="installTime"  class="datepicker" value='<s:date name="entity.installTime" format="yyyy-MM-dd"/>'></input>
+				<input id="simNo" value="${entity.simNo}" name="simNo" class="{required:true,maxlength:11}" maxLength="11" size="20" /><span class="star">*</span> 
 				</td>
-				</tr>
+				
 				<tr>
 				<td align="right">Sim卡流水号:</td>
 				<td align="left"><input 	id="seqNo" value="${entity.seqNo}" name="seqNo"
 					maxLength="11" size="20" /> 
 				</td>
-				<td align="right">手机号码:</td>
-				<td align="left"><input class="digits" id="simNo"
-					value="${entity.simNo}" name="simNo"
-					maxLength="11"
-					size="20" /> 
+				<td align="right">安装时间:</td>
+				<td align="left">
+							  <input type="text" name="installTime"  class="datepicker" value='<s:date name="entity.installTime" format="yyyy-MM-dd"/>'></input>
 				</td>
 			</tr>
 			<tr>

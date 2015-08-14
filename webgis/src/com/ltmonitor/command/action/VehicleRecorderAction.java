@@ -103,12 +103,15 @@ public class VehicleRecorderAction extends TerminalCommandAction {
 		if ("query".equals(operation)) {
 			TerminalCommand tc = new TerminalCommand();
 			tc.setCmdType(JT808Constants.CMD_VEHICLE_RECORDER);
-
-			Integer cmd = JT808Constants.getRecorderCmd(cmdType);
-			if (cmd != null) {
-				tc.setCmd("" + cmd);
-				tc.setCmdData("" + cmd+";"+startDate+";"+ endDate);
+			if(ver == null || ver.isEmpty()){
+				Integer cmd = JT808Constants.getRecorderCmd(cmdType);
+				if (cmd != null) {
+					tc.setCmd("" + cmd);
+				}
+			} else if("2012".equals(ver)){
+				tc.setCmd(cmdType);
 			}
+			tc.setCmdData(cmdType+";"+startDate+";"+endDate);
 			this.SendCommand(tc);
 			return json(true, tc);
 		}
@@ -126,17 +129,23 @@ public class VehicleRecorderAction extends TerminalCommandAction {
 				tc.setCmd("" + cmd);
 			}
 			StringBuilder sb = new StringBuilder();
-			if ("vehicleInfo".equals(cmdType)) {// 存储的车辆VIN号、车牌号码、分类
-				sb.append(cmd).append(";").append(rp.getVin()).append(";")
-						.append(rp.getVehicleNo()).append(";")
-						.append(rp.getVehicleType()).append(";");
-			} else if ("clock".equals(cmdType)) {
-				sb.append(cmd).append(";").append(rp.getClock());
-			} else if ("driverInfo".equals(cmdType)) {
-				sb.append(cmd).append(";").append(rp.getDriverNo()).append(";")
-						.append(rp.getDriverLicense());
-			} else if ("feature".equals(cmdType)) {
-				sb.append(cmd).append(";").append(rp.getFeature());
+			if(ver == null || ver.isEmpty()){
+				//2003
+				if ("vehicleInfo".equals(cmdType)) {// 存储的车辆VIN号、车牌号码、分类
+					sb.append(cmd).append(";").append(rp.getVin()).append(";")
+					.append(rp.getVehicleNo()).append(";")
+					.append(rp.getVehicleType()).append(";");
+				} else if ("clock".equals(cmdType)) {
+					sb.append(cmd).append(";").append(rp.getClock());
+				} else if ("driverInfo".equals(cmdType)) {
+					sb.append(cmd).append(";").append(rp.getDriverNo()).append(";")
+					.append(rp.getDriverLicense());
+				} else if ("feature".equals(cmdType)) {
+					sb.append(cmd).append(";").append(rp.getFeature());
+				}
+			} else {
+				//2012
+				
 			}
 			tc.setCmdData(sb.toString());
 			this.SendCommand(tc);

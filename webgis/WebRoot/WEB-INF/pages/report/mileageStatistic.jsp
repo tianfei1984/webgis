@@ -29,6 +29,7 @@
 								      $("#queryId").val("selectMileageStaticByTimeSpan");
 								}else
 								{ 
+									$('#startDate').attr("class","datepicker required date");
 									$("#queryId").val("selectMileageStatic");
 								}
 						});
@@ -66,8 +67,8 @@
             </tr>
  <tr>
 			   <td> 统计日期: </td>
-			    <td colspan="2">			    <input type="text" name="startDate" size="15"  class="datepicker required date">
-              至<input type="text" name="endDate" size="15"   class="datepicker required date">   </td>
+			    <td colspan="2">			    <input type="text" name="startDate" id="startDate" size="25"  class="datepicker required datetimepicker">
+              至<input type="text" name="endDate" size="25"   class="datepicker required datetimepicker">   </td>
              
         <td  align="left" colspan=3>
 	      <a id="btnQuery" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" >查询</a>&nbsp;

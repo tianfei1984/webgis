@@ -207,7 +207,7 @@ font-size:12px;
 			   <td> 统计日期 </td>
 			    <td >			    
 			    <input type="text" id="startDate" name="startDate" size="15"  class="datepicker">
-              至<input type="text" name="endDate" size="15"   class="datepicker">   </td>
+              <!-- 至<input type="text" name="endDate" size="15"   class="datepicker"> -->   </td>
              
         <td  align="left" colspan=2>
 	       <a id="btnQuery" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="submitForm();">查询</a>&nbsp;

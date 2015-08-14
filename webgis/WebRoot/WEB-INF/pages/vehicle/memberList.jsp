@@ -41,10 +41,10 @@
 			   	<td>			    <input type="text" name="name" size="10"  id="name">   </td>
            
         <td colspan="" align="left">
-	       <input type="button" value="查询"  title="查询" id="btnQuery"/>&nbsp;&nbsp;
-           <input type="reset" value="重置" title="重置"/>&nbsp;&nbsp;
-           <input type="button" value="新增" title="新增" onclick="InfoWindow.viewMember(0);"/>
-		  
+         	<a id="btnQuery" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" >查询</a>&nbsp;
+		   <a id="btnReset" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear'" >重置</a>&nbsp;
+		   <a id="btnNew" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="InfoWindow.viewMember(0);" >新增</a>&nbsp;
+		   <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-excel'" onclick="Utility.excelExport('<%=ApplicationPath%>/data/excelExport.action');">导出</a><!--调用utility.js-->
         </td>
     </tr>
 	</table>
@@ -59,7 +59,7 @@
 						<tr>
 							<th data-options="field:'name'"  width="13%">名称</th>
 							<th data-options="field:'licenseNo'"  width="13%">营业执照</th>
-							<th data-options="field:'orgNo'"  width="13%">代码证</th>
+							<th data-options="field:'orgNo'"  width="13%">组织机构代码</th>
 							<th data-options="field:'businessScope'" width="13%" >经营范围</th>
 							<th data-options="field:'contact'"  width="13%">联系人</th>
 							<th data-options="field:'contactPhone'" width="12%" >联系电话</th>

@@ -105,15 +105,14 @@
 						url:'<%=ApplicationPath%>/report/driverCardList.action',method:'post'">
 					<thead>
 						<tr>
-							<tr>
-								<th data-options="field:'driverName'"  width="8%">驾驶员</th>
+								<th data-options="field:'driverName'"  width="18%">驾驶员</th>
 								<th data-options="field:'certificationCode'"  width="6%">驾驶证</th>
 								<th data-options="field:'agencyName'"  width="6%">发证机构</th>
 								<th data-options="field:'validateDate'"  width="10%">证件有效期</th>
 								<th data-options="field:'operTime'"  width="15%">操作时间</th>
 								<th data-options="field:'cardState',formatter:getCardStateColumn"  width="15%">IC卡状态</th>
 								<th data-options="field:'readResult',formatter:getReadResultColumn"  width="10%">读卡结果</th>
-								<th data-options="field:'createDate'"  width="10%">创建时间</th>
+								<th data-options="field:'createDate'"  width="15%">创建时间</th>
 						</tr>
 					</thead>
 					<tbody>

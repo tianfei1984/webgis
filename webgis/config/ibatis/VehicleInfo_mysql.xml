@@ -280,7 +280,7 @@
          order by v.plateNo 
 	</select>
 
-
+	<!-- 在线车辆查询 -->
 	<select id="selectOnlineVehicles" parameterClass="java.util.HashMap"
 		resultClass="java.util.HashMap">
 		select  v.*, d.name as
@@ -1192,7 +1192,7 @@
 	<select id="selectOnlineRecord" parameterClass="java.util.HashMap"
 		resultClass="java.util.HashMap">
 		<![CDATA[
-		select a.*,
+		select a.*,a.type as alarmSource,
 		v.plateColor,v.simNo,d.name as depName from OnlineRecord a,
 		vehicle v ,
 		department d
@@ -1267,7 +1267,7 @@
 	<select id="selectAlarms" parameterClass="java.util.HashMap"
 		resultClass="java.util.HashMap">
 		select d.* from  (
-		select a.*,v.plateColor,v.simNo,d.name as depName from AlarmRecord a,
+		select a.*,a.type as alarmSource,v.plateColor,v.simNo,d.name as depName from AlarmRecord a,
 		vehicle v ,
 		department d
 		where a.plateNo = v.plateNo and v.depId =
@@ -1285,7 +1285,7 @@
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="endTime">
 				<![CDATA[
-				(startTime <= #endTime#)
+				(endtime <= #endTime#)
 				]]>
 			</isNotEmpty>
 			<!-- 报警子类型 -->
@@ -1326,7 +1326,7 @@
 			</isNotEmpty>
 		</dynamic>
 		union all 
-		select a.*,
+		select a.*,a.type as alarmSource,
 		v.plateColor,v.simNo,d.name as depName from hisAlarmRecord a,
 		vehicle v ,
 		department d
@@ -1345,7 +1345,7 @@
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="endTime">
 				<![CDATA[
-				(startTime <= #endTime#)
+				(endtime <= #endTime#)
 				]]>
 			</isNotEmpty>
 			<!-- 报警子类型 -->
@@ -1906,7 +1906,7 @@ left join department d on v.depId = d.depId ]]>
 	<select id="selectVehicleMileage" parameterClass="java.util.HashMap"
 		resultClass="java.util.HashMap">
 		select v.vehicleId, v.plateNo,g.mileage, g.gas from vehicle v left join gpsrealdata g
-		 where v.vehicleid = g.vehicleId and v.deleted = 0 
+		 on v.vehicleid = g.vehicleId where v.deleted = 0 
 	
 	</select>
 	<!-- 查询油量和里程统计 -->
@@ -1925,7 +1925,7 @@ left join department d on v.depId = d.depId ]]>
 		</dynamic>
 		<dynamic prepend="and">
 			<isNotNull property="endDate">
-                <![CDATA[StaticDate <= date_add(#endDate#,INTERVAL 1 DAY)]]>
+                <![CDATA[StaticDate <= #endDate#]]>
 			</isNotNull>
 		</dynamic>
 		<dynamic prepend="and">
@@ -2035,7 +2035,7 @@ left join department d on v.depId = d.depId ]]>
 				StaticDate >= #startDate#
 			</isNotNull>
 			<isNotNull prepend="AND" property="endDate">
-          		<![CDATA[StaticDate <= DATE_ADD(#endDate#,INTERVAL 1 DAY)]]>
+          		<![CDATA[StaticDate <= #endDate#]]>
 			</isNotNull>
 			<isNotNull prepend="AND" property="plateNo">
 				V.PlateNo like '%$plateNo$%'

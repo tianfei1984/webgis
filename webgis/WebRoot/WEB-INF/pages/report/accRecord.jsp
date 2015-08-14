@@ -115,7 +115,7 @@
 					<thead>
 						<tr>
 								<th data-options="field:'plateNo'"  width="8%">车牌号</th>
-								<th data-options="field:'plateColor'"  width="6%">颜色</th>
+								<th data-options="field:'plateColor'"  width="6%">车牌颜色</th>
 								<th data-options="field:'startTime'"  width="15%">点火时间</th>
 								<th data-options="field:'endTime',formatter:getEndTimeColumn"  width="15%">熄火时间</th>
 								<th data-options="field:'timeSpan'"  width="12%">时长</th>

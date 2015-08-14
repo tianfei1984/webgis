@@ -45,6 +45,7 @@
 			<result name="view">/WEB-INF/pages/system/editRole.jsp
 			</result>
 		</action>
+		<!-- 保存角色 -->
 		<action name="saveRole" class="roleAction" method="save">
 			<result name="save">/WEB-INF/pages/system/editRole.jsp
 			</result>

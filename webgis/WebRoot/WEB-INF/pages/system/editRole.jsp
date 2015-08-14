@@ -26,6 +26,7 @@ function onCheck(node,checked)
 	//this.treeManager.tree("check",node.target);
 	 var treeManager = $("#funcTree");
 	var nodes = treeManager.tree('getChecked');
+	alert
     var s = '';
     for (var i = 0; i < nodes.length; i++) {
 		var node = nodes[i];

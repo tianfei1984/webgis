@@ -14,7 +14,7 @@
 				  var now = Utility.now(-1);
 				  $("#startDate").val(now);
 
-					  $("#intervalType").lookup({category:"ReportType"}); //统计类型下拉框
+				  //$("#intervalType").lookup({category:"ReportType"}); //统计类型下拉框
 				 
 				$("#btnQuery").click(function(){
 				        Utility.loadGridWithParams();
@@ -42,9 +42,8 @@
 			    <td>			
 				<select id="depId" name="depId" style="width:200px;"></select>
 				</td>
-            <td>统计类型</td>
-			    <td>	<select id="intervalType"  name="intervalType"></select>   </td>
-            </tr>
+           <!-- <td>统计类型</td>
+			    <td>	<select id="intervalType"  name="intervalType"></select>   </td> --> 
  <tr>
 			   <td> 统计日期 </td>
 			    <td >			    <input type="text" id="startDate" name="startDate" size="15"  class="datepicker">
