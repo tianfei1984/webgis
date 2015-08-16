@@ -130,12 +130,16 @@ AlarmGrid.addNewAlarm = function(alarmData){
 			if(ps.mainLinkState == "已建立连接" || ps.mainLinkState == "连接成功")
 			{
 				src =  globalConfig.webPath + "/image/ok.png";
+			} else{
+				src =  globalConfig.webPath + "/image/no.png";
 			}
 			$("#mainLinkState").attr("src",src);
             src = globalConfig.webPath + "/image/no.png";
 			if(ps.subLinkState == "已建立连接" || ps.subLinkState == "连接成功")
 			{
 				src =  globalConfig.webPath + "/image/ok.png";
+			} else {
+				src =  globalConfig.webPath + "/image/no.png";
 			}
 			$("#subLinkState").attr("src",src);
 			//Ext.getCmp("lbl_mainLinkState").setText(ps.mainLinkState);

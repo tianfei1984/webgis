@@ -289,10 +289,10 @@ public class VehicleAction extends PersistenceAction {
 				t.setInstallTime(terminal.getInstallTime());
 				t.setBind(true);
 				t.setSimNo(vd.getSimNo());
-				vehicleService.saveTerminal(t);
 			}
 			vd.setTermId(t.getEntityId());
 			vehicleService.saveVehicleData(vd, modifyRecordList);
+			vehicleService.saveTerminal(t);
 			entityID = "" + ((TenantEntity) entity).getEntityId();
 			setMessage("保存成功!");
 		} catch (Exception ex) {
