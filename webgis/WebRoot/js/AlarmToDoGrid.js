@@ -11,7 +11,7 @@ AlarmToDoGrid.create = function()
                     { title: '车牌号', field: 'plateNo', width: 80,minWidth:80 },
                     { title: '颜色', field: 'plateColor', width: 60,minWidth:60 },
                     //{ title: '车组', field: 'depName', width: 100,minWidth:40 },
-                    { title: '报警来源', field: 'warnSrc', width: 100,minWidth:100 },
+                    //{ title: '报警来源', field: 'warnSrc', width: 100,minWidth:100 },
                     { title: '报警类型', field: 'warnType', width: 100,minWidth:100 },
                     { title: '报警时间', field: 'warnTime', width: 120,minWidth:120 },
                     { title: '处理', field: 'ackFlag', width: 90,minWidth:80 ,formatter:getTodoStatus},
@@ -47,6 +47,27 @@ AlarmToDoGrid.create = function()
         var autoRefresh = $(this).is(":checked");
 		me.refresh(autoRefresh);
     });
+	 
+	 $("#todoExport").click(function(){
+			var url = globalConfig.webPath+"/data/excelExport.action?queryId=selectMsgTodoReq";
+			//Excel下载地址
+			$("#queryForm").attr("action",url); 
+			$("#queryForm").attr("method","POST"); 
+			$("#queryForm").attr("target","_blank"); //弹屏下载
+			document.getElementById("queryForm").submit();
+			$("#queryForm").attr("action",""); //恢复到原来的查询地址
+			$("#queryForm").attr("target",""); 
+		});
+	 
+	 $("#btnQueryTodo").click(function(){
+		 var plateNo = $("#todoPlateNo").val();
+		 me.params = {plateNo:plateNo};
+		 me.alarmToDoGrid.datagrid('load',me.params);
+	 });
+	 $("#btnResetTodo").click(function(){
+		 $("#todoPlateNo").val("");
+	 });
+	 
      return this.alarmToDoGrid;
 	
 }
@@ -54,16 +75,21 @@ AlarmToDoGrid.create = function()
 function getTodoStatus(value, rowData, rowIndex)
 {  
 	var online = rowData.ackFlag;
-	var html = online == "0" ? "<span style='color:red'>未处理</span>" : "<span style='color:green;font-weight:bold;'>已处理</span>";
+	var html = "<span style='color:red'>未处理</span>";
+	if(online == 1){
+		html = "<span style='color:green;font-weight:bold;'>已处理</span>";
+	} else if(online == 2){
+		html = "<span style='color:green;font-weight:bold;'>不作处理</span>";
+	} else if(online == 3){
+		html = "<span style='color:green;font-weight:bold;'>将来处理</span>";
+	}
     return html;
 }
 
 //双击表格，弹出报警处理窗口，提请用户处理报警
 AlarmToDoGrid.onDblClickRow = function(rowIndex, rowData){
-	if(rowData.ackFlag == '0'){
-		var url = globalConfig.webPath+"/command/warnMsgTodo.action?msgId="+rowData.id;
-		InfoWindow.open(url, 500,540,"上级平台报警督办消息");
-	}
+	var url = globalConfig.webPath+"/command/warnMsgTodo.action?msgId="+rowData.id;
+	InfoWindow.open(url, 500,550,"上级平台报警督办消息");
 }
 
 /**

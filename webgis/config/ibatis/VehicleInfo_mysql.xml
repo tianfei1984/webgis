@@ -826,6 +826,9 @@
 			<isNotEmpty prepend="AND" property="createDate">
 				<![CDATA[w.createDate >= #createDate#]]>
 			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="plateNo">
+				<![CDATA[w.plateNo like '%$plateNo$%']]>
+			</isNotEmpty>
 		</dynamic> 
 		 order by w.createDate desc
 	</select>

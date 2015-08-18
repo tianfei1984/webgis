@@ -38,6 +38,10 @@ public class JT809AlarmTodoReqAction extends QueryAction {
 	private int msgId;
 
 	private Map entity = new HashMap();
+	
+	private int ackResult;
+	
+	private String plateNo;
 
 	/**
 	 * 查看报警督办应答
@@ -67,6 +71,7 @@ public class JT809AlarmTodoReqAction extends QueryAction {
 		entity.put("supervisor", req.getSupervisor());
 		entity.put("supervisorTel", req.getSupervisorTel());
 		entity.put("supervisorEmail", req.getSupervisorEmail());
+		entity.put("msgId", msgId);
 		
 		return "success";
 	}
@@ -80,6 +85,7 @@ public class JT809AlarmTodoReqAction extends QueryAction {
 	public String query() {
 		Map params = new HashMap();
 		String queryId = "selectMsgTodoReq";
+		params.put("plateNo", this.plateNo);
 		if(getOnlineUser() != null)
 		{
 			//只查询用户自己下发的命令
@@ -129,6 +135,42 @@ public class JT809AlarmTodoReqAction extends QueryAction {
 			log.error(ex.getMessage(), ex);
 		}
 		return "jsonSuccess";
+	}
+	
+	/**
+	 * 报警督办应答
+	 * @return
+	 */
+	public String postAck(){
+		try{
+			WarnMsgUrgeTodoReq warn = (WarnMsgUrgeTodoReq) this.getBaseService()
+					.load(WarnMsgUrgeTodoReq.class, msgId);
+			JT809Command jc = new JT809Command();
+			jc.setCmd(0x1400);
+			jc.setSubCmd(0x1401);
+			StringBuilder sb = new StringBuilder();
+			sb.append(warn.getSupervicsionId()).append(";").append(ackResult);
+			jc.setCmdData(sb.toString());
+			jc.setUserId(this.getOnlineUser().getEntityId());
+			jc.setPlateColor((byte)warn.getPlateColor());
+			jc.setPlateNo(warn.getPlateNo());
+			
+			UserInfo onlineUser = getOnlineUser();
+			if (onlineUser != null) {
+				jc.setOwner(onlineUser.getName());
+				//jc.setUserId(onlineUser.getEntityId());
+			}
+			getTerminalService().SendPlatformCommand(jc);
+			warn.setAckFlag(ackResult);
+			warn.setAckTime(new Date());
+			getBaseService().saveOrUpdate(warn);
+			
+			return json(true, "");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			setMessage(e.getMessage());
+			return json(false, e.getMessage());
+		}
 	}
 
 	protected void SendCommand(JT809Command tc) {
@@ -225,4 +267,23 @@ public class JT809AlarmTodoReqAction extends QueryAction {
 		this.rows = rows;
 	}
 
+
+	public int getAckResult() {
+		return ackResult;
+	}
+
+
+	public void setAckResult(int ackResult) {
+		this.ackResult = ackResult;
+	}
+
+
+	public String getPlateNo() {
+		return plateNo;
+	}
+
+
+	public void setPlateNo(String plateNo) {
+		this.plateNo = plateNo;
+	}
 }

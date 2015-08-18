@@ -254,11 +254,57 @@
 						</entry>
 					</map>
 				</entry>
+				<!-- 报警督办 -->
+				<entry key="selectMsgTodoReq">
+					<map>
+						<entry key="plateColor" value="plateColor"></entry>
+						<entry key="warnType" value="warnType"></entry>
+						<entry key="supervisionLevel" value="supervisionLevel"></entry>
+						<entry key="ackFlag" value="ackFlag"></entry>
+					</map>
+				</entry>
+				<!-- 政府平台命令 -->
+				<entry key="selectJT809Command">
+					<map>
+						<entry key="plateColor" value="plateColor"></entry>
+						<entry key="cmdType" value="cmdType"></entry>
+						<entry key="subDescr" value="subDescr"></entry>
+						<entry key="status" value="status"></entry>
+					</map>
+				</entry>
 			</map>
 		</property>
 		<!-- 单元格的列号与数据表的列名及中文名对照 -->
 		<property name="columnMap">
 			<map>
+			<!-- 报警督办 -->
+				<entry key="selectMsgTodoReq">
+					<list>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,颜色</value>
+						<value>warnType,报警类型</value>
+						<value>warnTime,报警时间</value>
+						<value>ackFlag,处理</value>
+						<value>supervisionEndtime,督办截至时间</value>
+						<value>supervisionLevel,督办级别</value>
+						<value>supervisor,督办人</value>
+						<value>supervisorEmail,电子邮件</value>
+						<value>supervisorTel,联系电话</value>
+					</list>
+				</entry>
+				<!-- 政府平台命令 -->
+				<entry key="selectJT809Command">
+					<list>
+						<value>cmdType,命令类型</value>
+						<value>subDescr,类型描述</value>
+						<value>plateNo,车牌号</value>
+						<value>plateColor,车牌颜色</value>
+						<value>cmdData,命令内容</value>
+						<value>status,状态</value>
+						<value>createDate,下发时间</value>
+						<value>updateDate,执行时间</value>
+					</list>
+				</entry>
 				<entry key="selectVehicles">
 					<list>
 						<value>plateNo,车牌号</value>
@@ -438,7 +484,7 @@
 						<value>plateNo,车牌号</value>
 						<value>plateColor,车牌颜色</value>
 						<value>simNo,卡号</value>
-						<value>remark,信息显示类型</value>
+						<value>cmdType,命令类型</value>
 						<value>cmdData,信息内容</value>
 						<value>status,执行结果</value>
 						<value>createDate,下发时间</value>
@@ -705,6 +751,12 @@
 						<value>endDate,操作结束时间</value>
 					</list>
 				</entry>
+				<!-- 报警督办查询 -->
+				<entry key="selectMsgTodoReq">
+					<list>
+						<value>plateNo,车牌号</value>
+					</list>
+				</entry>	
 			</map>
 		</property>
 	</bean>

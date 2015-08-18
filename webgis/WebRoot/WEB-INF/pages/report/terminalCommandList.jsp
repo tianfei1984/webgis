@@ -37,7 +37,9 @@
 					<td align="left"><a id="btnQuery" href="#"
 						class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>&nbsp;
 						<a id="btnReset" href="#" class="easyui-linkbutton"
-						data-options="iconCls:'icon-clear'">重置</a>&nbsp;</td>
+						data-options="iconCls:'icon-clear'">重置</a>&nbsp;
+						<a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-excel'" onclick="Utility.excelExport('<%=ApplicationPath%>/data/excelExport.action');">导出</a><!--调用utility.js-->
+						</td>
 				</tr>
 				</form>
 			</table>

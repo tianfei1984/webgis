@@ -65,6 +65,18 @@ Jt809CommandGrid.create = function()
 			me.sendRequest(0x1008);
 		}
 	 );
+	 
+	 $("#jt809Export").click(function(){
+			var url = globalConfig.webPath+"/data/excelExport.action?queryId=selectJT809Command";
+			//Excel下载地址
+			$("#queryForm").attr("action",url); 
+			$("#queryForm").attr("method","POST"); 
+			$("#queryForm").attr("target","_blank"); //弹屏下载
+			document.getElementById("queryForm").submit();
+			$("#queryForm").attr("action",""); //恢复到原来的查询地址
+			$("#queryForm").attr("target",""); 
+		});
+	 
 	 return this.jt809Grid;
 	
 }

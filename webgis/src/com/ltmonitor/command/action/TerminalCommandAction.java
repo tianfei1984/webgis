@@ -117,6 +117,7 @@ public class TerminalCommandAction extends QueryAction {
 			// 只查询用户自己下发的命令
 			// params.put("userId", getOnlineUser().getEntityId());
 		}
+		params.put("plateNo", this.plateNo);
 		try {
 			PageResult result = getQueryDao().queryByPagination(queryId,
 					params, page, rows);
@@ -309,4 +310,11 @@ public class TerminalCommandAction extends QueryAction {
 		this.rows = rows;
 	}
 
+	public String getPlateNo() {
+		return plateNo;
+	}
+
+	public void setPlateNo(String plateNo) {
+		this.plateNo = plateNo;
+	}
 }

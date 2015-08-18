@@ -93,7 +93,7 @@ public class VehicleRecorderAction extends TerminalCommandAction {
 	 * 行车记录仪设置和数据采集
 	 */
 	public String execute() {
-		if(ver != null)
+		if(ver != null && operation == null)
 		{
 			return "input2012";
 		}

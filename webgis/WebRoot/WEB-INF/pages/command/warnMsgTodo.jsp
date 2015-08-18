@@ -26,10 +26,9 @@ $().ready(function() {
 
 
 	<form id="entityForm" name="entityForm" 
-			action='<%=ApplicationPath%>/command/postQueryAck.action' method="POST">
-				<input type="hidden" name="entityId"
-					value="${entity.entityId}"/>
-  <table width="100%"  class="TableBlock">
+			action='<%=ApplicationPath%>/command/warnMsgTodoAck.action' method="POST">
+				<input type="hidden" name="msgId" value="${entity.msgId}"/>
+  				<table width="100%"  class="TableBlock">
 					<tbody><tr>
 						<td colspan="4" style="font-weight: bold; background: #EFEFEF;" height="25">报警督办信息
 						<span class="MessageFromServer">${message}</span>
@@ -90,6 +89,16 @@ $().ready(function() {
                          </td>
 					</tr>
 					<tr>
+						<td align="right">处理方式:</td>
+						<td align="left">
+						<select name="ackResult" id="ackResult">
+							<option value="1" selected="selected">已处理</option>
+							<option value="0">处理中</option>
+							<option value="2">不作处理</option>
+							<option value="3">将来处理</option>
+						</select>
+                         </td>
+					</tr>
 					<tr>
 						<td colspan=4 align=center>						
 						   <button type="submit" class="sendjson" >确定</button> 

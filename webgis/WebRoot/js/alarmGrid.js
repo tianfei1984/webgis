@@ -85,7 +85,16 @@ AlarmGrid.create = function()
 			}
 		});
 
-	
+	$("#alarmExport").click(function(){
+		var url = globalConfig.webPath+"/data/excelExport.action?queryId=selectProcessedAlarms";
+		//Excel下载地址
+		$("#queryForm").attr("action",url); 
+		$("#queryForm").attr("method","POST"); 
+		$("#queryForm").attr("target","_blank"); //弹屏下载
+		document.getElementById("queryForm").submit();
+		$("#queryForm").attr("action",""); //恢复到原来的查询地址
+		$("#queryForm").attr("target",""); 
+	});
 
 	$("#btnQueryAlarmData").click(function()
 		{

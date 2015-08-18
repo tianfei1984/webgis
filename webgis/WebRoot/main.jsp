@@ -148,7 +148,7 @@ body {
 					   <iframe id="mapFrame" scrolling="no" frameborder="0"  src="" style="width:100%;height:99%;"></iframe>
 					</div>
 					<div data-options="region:'south',split:true,border:true" style="height:240px">
-					
+						<form id="queryForm"></form>
 	                   <div id="realDataTab" class="easyui-tabs" data-options="fit:true,border:false,plain:true,onSelect:onTabSelect,tools:'#tab-tools'">
 			               <div title="实时数据" style="padding:0px" data-options="">
 						      <div id="commandToolbar" style=" margin :0px; padding :5px;">     
@@ -173,20 +173,33 @@ body {
 									
 									  <a id="btnQueryAlarmData" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >查询</a>
 									  <a id="btnResetAlarm" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >重置</a>
+		  							 <a id="alarmExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-excel'">导出</a><!--调用utility.js-->
 									  <input type="checkbox"  id="autoRefreshAlarmGrid"/>自动刷新表格
-
 									<input type="checkbox" id="muteAlarmSound"/>静音&nbsp;&nbsp;
 									<input type="checkbox"  id="disableAlarmWindow"/>禁止弹窗
 								</div>
 					          	<div id="alarmDataGrid"></div>
 						   </div>
 						    <div title="终端命令" style="padding:0px">
+						     <div id="tmnlGridToolbar" style=" margin :0px; padding :5px;">     
+							    &nbsp;&nbsp;&nbsp;车牌号：
+								<input id="tmnlPlateNo" name="alarmPlateNo" type="text" onfocus="" style="width:80px;"/>&nbsp;&nbsp;&nbsp;
+								 <a id="btnQueryTmnlData" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >查询</a>
+								 <a id="btnResetTmnl" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >重置</a>
+							     <a id="tmnlExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-excel'">导出</a>
+							     </div>
 					          <div id="terminalCommandGrid"></div>
 							</div>
 							
 						    <div title="报警督办" style="padding:0px">
 							  <div id="alarmToDoGridToolbar" style=" margin :0px; padding :5px;"> 
-							     双击进行报警督办应答,<input type="checkbox" id="autoRefresh809AlarmGrid" />自动刷新
+							      <span style="color:red">双击进行报警督办应答</span>&nbsp;&nbsp;|&nbsp;
+							     &nbsp;车牌号：
+								<input id="todoPlateNo" name="alarmPlateNo" type="text" onfocus="" style="width:80px;"/>&nbsp;&nbsp;&nbsp;
+								 <a id="btnQueryTodo" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >查询</a>
+								 <a id="btnResetTodo" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >重置</a>
+							     <a id="todoExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-excel'">导出</a>
+							     <input type="checkbox" id="autoRefresh809AlarmGrid" />自动刷新
 							  </div>
 					          <div id="alarmToDoGrid"></div>
 							</div>
@@ -197,7 +210,9 @@ body {
 									  <a id="btnCloseMainLinkRequest" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-function'" >下发主链路注销请求</a>
 									  <a id="btnCloseMainLinkNotify" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-function'" >下发主链路断开通知</a>
 									  <a id="btnCloseLinkNotify" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-no'" >下发主动关闭主从链路通知消息</a>
-									  &nbsp;&nbsp;&nbsp;&nbsp;
+									  &nbsp;&nbsp;
+									   <a id="jt809Export" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-excel'">导出</a>
+									  &nbsp;&nbsp;
 							       主链路状态:<img id="mainLinkState" src="<%=ApplicationPath%>/image/no.png" align="absmiddle" />&nbsp;| 
 									从链路状态:<img id="subLinkState" src="<%=ApplicationPath%>/image/no.png" align="absmiddle" />
 

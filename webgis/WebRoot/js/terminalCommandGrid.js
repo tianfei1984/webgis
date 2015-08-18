@@ -24,6 +24,7 @@ TerminalCommandGrid.create = function()
                     ]],
 				url: url,
 				fit:true,
+				toolbar:"#tmnlGridToolbar",
 				method: 'POST',
 				queryParams: { 'id': 2 },
 				striped: true,
@@ -44,6 +45,26 @@ TerminalCommandGrid.create = function()
 		//do something...
 		//me.refresh();//更新模式
 		//me.terminalGrid.datagrid('reload');  
+	 });
+	 
+	 $("#tmnlExport").click(function(){
+			var url = globalConfig.webPath+"/data/excelExport.action?queryId=selectTerminalCommand";
+			//Excel下载地址
+			$("#queryForm").attr("action",url); 
+			$("#queryForm").attr("method","POST"); 
+			$("#queryForm").attr("target","_blank"); //弹屏下载
+			document.getElementById("queryForm").submit();
+			$("#queryForm").attr("action",""); //恢复到原来的查询地址
+			$("#queryForm").attr("target",""); 
+		});
+	 
+	 $("#btnQueryTmnlData").click(function(){
+		 var plateNo = $("#tmnlPlateNo").val();
+		 me.params = {plateNo:plateNo};
+		 me.terminalGrid.datagrid('load',me.params);
+	 });
+	 $("#btnResetTmnl").click(function(){
+		 $("#tmnlPlateNo").val("");
 	 });
 	 
      return this.terminalGrid;

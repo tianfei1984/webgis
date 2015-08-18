@@ -30,7 +30,7 @@ var times=7;
 	$('.sendjson').attr("disabled","disabled");
 	$(".sendjson").val("等待终端返回查询结果("+times+" )");
 	  //最多执行5次
-	$('body').oneTime('500ms', timerName,function(){  
+	$('body').oneTime('1000ms', timerName,function(){  
 		 queryResult(commandId); //查询命令的返回结果
 	});
 }
@@ -41,11 +41,11 @@ function queryResult(commandId)
     times--;
 	$(".sendjson").val("等待终端返回查询结果("+times+" )");
 	//alert(times);
-       var url = "<%=ApplicationPath%>/data/queryMediaInfo.action";
+       var url = "<%=ApplicationPath%>/report/queryRecorder.action";
 	  //var commandId = 0;
-	  var params = {commandId:commandId};
+	  var params = {commandId:commandId,queryId:"selectVehicleRecorders"};
 	   $.getJSON(url, params, 
-			function(result){		
+			function(result){	
 				  if(result.success == true)
 				 {
 					    if(first == false)
@@ -69,8 +69,7 @@ function queryResult(commandId)
 						 $(".sendjson").val("发送");
 						$('.sendjson').attr("disabled",false); 
 					    $('body').stopTime ();  
-				   }else
-					{
+				   }else {
 					     //最多执行5次
 						 $('body').oneTime('500ms', timerName,function(){  
 								 queryResult(commandId); //查询命令的返回结果
@@ -93,23 +92,20 @@ function queryResult(commandId)
 				 //创建下拉部门树
 				Utility.createDepTree("depId");
 				 //初始化数据表格
-				 //var dataTable = Utility.initTable(columns, "<%=ApplicationPath%>/report/queryRecorder.action");
-				 
-	             Utility.ajaxSubmitForm("entityForm", {
-						 success:function(responseText)
-						 {
-							   var result = responseText;
-								if (result.success) {
-									 //alert("命令已经下发,请等待处理!");
-									 var commandId = result.data; //下发成功后，获取到命令Id
-									 startQueryResult(commandId);	   //命令下发成功,根据命令id,开始尝试获取检索结果
-								}
-								else {
-									alert("提交失败! 错误原因：" + (result.message ? result.message : result.Data));
-									//停止所有的在$('body')上定时器  
-									$('body').stopTime ();  
-								  }
-						 }
+				 $("#sendBtn").click(function(){
+				    $("#entityForm").ajaxSubmit(function(result){
+			    		if (result.success) {
+							 //alert("命令已经下发,请等待处理!");
+							 var commandId = result.data.entityId; //下发成功后，获取到命令Id
+							 startQueryResult(commandId);	   //命令下发成功,根据命令id,开始尝试获取检索结果
+						}
+						else {
+							alert("提交失败! 错误原因：" + (result.message ? result.message : result.Data));
+							//停止所有的在$('body')上定时器  
+							$('body').stopTime ();  
+						}
+				    	
+				    });
 				 });
 			} );
 		</script>
@@ -121,7 +117,7 @@ function queryResult(commandId)
 			action='<%=ApplicationPath%>/command/vehicleRecorder.action' method="POST">
 	        <input type="hidden"  name="vehicleId"  id="vehicleId" value="${vehicleId}"/>
 	        <input type="hidden" name="ver" value="2012">
-	        <input type="hidden" name="query" value="operation">
+	        <input type="hidden" name="operation" value="query">
 	 		<table width="100%"  class="TableBlock">
 					<tbody><tr>
 						<td colspan="6" style="font-weight: bold; background: #EFEFEF;" height="25">记录仪数据采集
@@ -143,7 +139,7 @@ function queryResult(commandId)
 					    <td>
 							  <input type="text" name="endDate" class="datetimepicker"></input>
 						</td>
-						<td  align="left" colspan=2><input type="submit" class="sendjson" value="发送"> </td>
+						<td  align="left" colspan=2><input type="button" class="sendjson" id="sendBtn" value="发送"> </td>
 					</tr>
 				</tbody></table>
 		</form>

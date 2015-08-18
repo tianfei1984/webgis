@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.ltmonitor.entity.JT809Command;
 import com.ltmonitor.entity.UserInfo;
-import com.ltmonitor.entity.VehicleData;
 import com.ltmonitor.service.ITerminalService;
 import com.ltmonitor.web.action.GenericAction;
 

@@ -5,7 +5,7 @@
 	<!-- Actions in this package will be prefixed with /user/ -->
 	<package name="command" extends="default" namespace="/command">
 
-
+		<!-- 查询终端命令 -->
 		<action name="queryTerminalCommand" class="terminalCommandAction"
 			method="query">
 			<result name="jsonSuccess" type="json">
@@ -71,9 +71,18 @@
 				<param name="root">jsonMessage</param>
 			</result>
 		</action>
-		<!-- 报警督办请求 -->
+		<!-- 报警督办请求详细 -->
 		<action name="warnMsgTodo" class="warnMsgTodoReqAction"
 			method="view">
+			<result name="success">/WEB-INF/pages/command/warnMsgTodo.jsp</result>
+			<result name="jsonSuccess" type="json">
+				<param name="root">jsonMessage</param>
+			</result>
+		</action>
+		
+		<!-- 报警督办应答 -->
+		<action name="warnMsgTodoAck" class="warnMsgTodoReqAction"
+			method="postAck">
 			<result name="success">/WEB-INF/pages/command/warnMsgTodo.jsp</result>
 			<result name="jsonSuccess" type="json">
 				<param name="root">jsonMessage</param>
@@ -258,7 +267,7 @@
 			</result>
 		</action>
 		
-
+		<!-- 政府平台命令 -->
 		<action name="queryJT809Command" class="platformCommandAction"
 			method="query">
 			<result name="jsonSuccess" type="json">

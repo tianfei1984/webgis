@@ -30,6 +30,7 @@ import com.ltmonitor.entity.BasicData;
 import com.ltmonitor.entity.Department;
 import com.ltmonitor.entity.GPSRealData;
 import com.ltmonitor.entity.StringUtil;
+import com.ltmonitor.entity.T809Constants;
 import com.ltmonitor.entity.UserInfo;
 import com.ltmonitor.service.IBasicDataService;
 import com.ltmonitor.service.IRealDataService;
@@ -266,11 +267,16 @@ public class PaginateAction extends GenericAction {
 					queryId = "selectGpsInfosIn2Days";
 				}
 			} else if (this.queryId.equals("selectProcessedAlarms")) {
-
 				String startTime = "" + params.get("startTime");
 				String endTime = "" + params.get("endTime");
-				startTime = startTime.substring(0, 7).replace("-", "");
-				endTime = endTime.substring(0, 7).replace("-", "");
+				if (params.get("startTime") == null) {
+					Date d = new Date();
+					startTime = DateUtil.toStringByFormat(d, "yyyyMM");
+					endTime = DateUtil.toStringByFormat(d, "yyyyMM");
+				} else {
+					startTime = startTime.substring(0, 7).replace("-", "");
+					endTime = endTime.substring(0, 7).replace("-", "");
+				}
 				String today = DateUtil.toStringByFormat(new Date(), "yyyyMM");
 				if (endTime.compareTo(today) > 0)
 					endTime = today;
@@ -566,6 +572,45 @@ public class PaginateAction extends GenericAction {
 						rowData.put(field, descr);
 					} catch (Exception e) {
 						log.error(e.getMessage(), e);
+					}
+				} else if("warnType".equals(parentCode)){
+					BasicData bd = getBasicDataService().getBasicDataByCode(fieldValue, "GovAlarmType");
+					rowData.put(field, bd.getName());
+				} else if("ackFlag".equals(parentCode)){
+					String value = "未处理";
+					switch (Integer.parseInt(fieldValue)) {
+					case 1:
+						value = "已处理";
+						break;
+					case 2:
+						value = "不作处理";
+						break;
+					case 3:
+						value ="将来处理";
+						break;
+					}
+					rowData.put(field, value);
+				} else if("supervisionLevel".equals(parentCode)){
+					String supervisionLevel = "0".equals(fieldValue) ? "紧急" : "一般";
+					rowData.put(field, supervisionLevel);
+				} else if("cmdType".equals(parentCode)){
+					Integer cmdType = Integer.parseInt(rowData.get("cmd").toString());
+					String strCmd = "0x" + Integer.toHexString(cmdType);
+					rowData.put(field, strCmd);
+				} else if("subDescr".equals(parentCode)) {
+					Integer cmdType = (Integer) rowData.get("cmd");
+					Integer subType = (Integer) rowData.get("subCmd");
+					subType = subType == 0 ? cmdType : subType;
+					String subDescr = T809Constants.getMsgDescr(subType);
+					rowData.put(field, subDescr);
+				} else if("status".equals(parentCode)){
+					String commandStatus = "" + rowData.get("status");
+					BasicData bd = getBasicDataService().getBasicDataByCode(commandStatus,
+							"TCommandStatus");
+					if (bd != null) {
+						rowData.put("status", bd.getName());
+					} else {
+						rowData.put("status", "未知");
 					}
 				} else {
 					this.convert(rowData, field, parentCode);
